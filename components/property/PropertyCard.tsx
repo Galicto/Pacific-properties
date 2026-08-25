@@ -28,7 +28,7 @@ export function PropertyCard({
         price: property.price,
       }}
       variant="link"
-      className="mt-3 min-h-11 px-0 text-[11px] uppercase tracking-[0.16em] text-ink-muted hover:text-ink"
+      className="mt-3 hidden min-h-11 px-0 text-[11px] uppercase tracking-[0.16em] text-ink-muted hover:text-ink sm:inline-flex"
     />
   );
 
@@ -74,7 +74,7 @@ export function PropertyCard({
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           quality={60}
         />
-        <div className="media-shift flex items-start justify-between gap-3 pt-4">
+        <div className="media-shift flex items-start justify-between gap-3 pt-5">
           <div>
             <p className="text-[11px] uppercase tracking-[0.18em] text-ink-muted">
               {property.area} · {categoryLabels[property.category]}

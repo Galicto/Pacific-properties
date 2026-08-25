@@ -24,7 +24,7 @@ export default function JournalPage() {
         a house. This is a beginning — not a magazine.
       </p>
 
-      <div className="mt-16 grid gap-12 lg:grid-cols-3">
+      <div className="mt-16 grid gap-14 lg:grid-cols-3">
         {journalArticles.map((article) => (
           <Link key={article.slug} href={`/journal/${article.slug}`} className="group">
             <SmartImage

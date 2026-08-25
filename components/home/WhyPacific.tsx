@@ -27,7 +27,7 @@ const points = [
 
 export function WhyPacific() {
   return (
-    <section className="cv-auto border-t border-ink/8 py-20 lg:py-32">
+    <section className="cv-auto border-t border-ink/8 py-24 lg:py-32">
       <Container>
         <div className="grid gap-14 lg:grid-cols-12">
           <Reveal className="lg:col-span-5">
@@ -57,12 +57,12 @@ export function WhyPacific() {
             <ul>
               {points.map((point, index) => (
                 <li key={point.n} className="group border-t border-ink/10 last:border-b">
-                  <Reveal delay={index * 0.06} className="py-8">
-                    <div className="flex items-baseline justify-between gap-6">
-                      <span className="font-serif text-3xl text-brass/80 transition-colors duration-500 group-hover:text-brass">
+                  <Reveal delay={index * 0.06} className="py-9 sm:py-8">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+                      <span className="font-serif text-2xl text-brass/80 transition-colors duration-500 group-hover:text-brass sm:text-3xl">
                         {point.n}
                       </span>
-                      <h3 className="flex-1 font-serif text-2xl tracking-tight sm:text-3xl">
+                      <h3 className="font-serif text-[1.65rem] leading-tight tracking-tight sm:flex-1 sm:text-3xl">
                         {point.title}
                       </h3>
                     </div>

@@ -266,7 +266,7 @@ export function EmiCalculator({
         </aside>
 
         <div className="order-2 min-w-0 w-full lg:order-1 lg:col-span-6">
-          <section className="border border-ink/10 bg-ivory px-4 py-6 shadow-[0_12px_40px_rgba(23,23,21,0.05)] sm:px-8 sm:py-8">
+          <section className="border border-ink/10 bg-ivory px-6 py-8 shadow-[0_12px_40px_rgba(23,23,21,0.05)] sm:px-8 sm:py-8">
             <h2 className="font-serif text-[clamp(1.55rem,5vw,1.85rem)] leading-tight tracking-tight">
               Your Finance Plan
             </h2>
@@ -556,28 +556,22 @@ function ResultCard({
   return (
     <aside className="emi-result box-border w-full min-w-0 max-w-full overflow-hidden border border-ink/10 bg-ink text-ivory">
       <div className="h-px bg-brass-soft/80" />
-      <div className="box-border px-4 py-6 sm:px-8 sm:py-8">
+      <div className="box-border px-7 py-9 sm:px-8 sm:py-8">
         <p className="text-[11px] uppercase tracking-[0.16em] text-brass-soft sm:tracking-[0.22em]">
-          Your Estimated EMI
-        </p>
-        <p className="mt-5 text-[11px] uppercase tracking-[0.14em] text-ivory/55 sm:tracking-[0.18em]">
           Estimated monthly EMI
         </p>
         <p
-          className="mt-2 break-words font-serif text-[clamp(1.85rem,10vw,3.15rem)] leading-[1.05] tabular-nums"
+          className="mt-4 break-words font-serif text-[clamp(2.15rem,11vw,3.15rem)] leading-[1.05] tabular-nums"
           aria-live="polite"
         >
           {valid ? formatInrExact(estimate.emi) : "—"}
         </p>
-        <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-ivory/55">
-          / month
-        </p>
-        <p className="mt-4 break-words text-sm leading-relaxed text-ivory/65">
+        <p className="mt-5 break-words text-sm leading-relaxed text-ivory/65">
           Based on {formatInrExact(estimate.principal)} over {years} year
           {years === 1 ? "" : "s"} at {rate.toFixed(2)}% p.a.
         </p>
 
-        <div className="mt-8 flex flex-wrap items-center gap-5">
+        <div className="mt-8 hidden flex-wrap items-center gap-5 sm:flex">
           <svg
             viewBox="0 0 140 140"
             className="h-28 w-28 shrink-0 sm:h-[156px] sm:w-[156px]"
@@ -629,12 +623,14 @@ function ResultCard({
           </ul>
         </div>
 
-        <dl className="mt-8 space-y-3 border-t border-ivory/15 pt-6 text-sm">
+        <dl className="mt-8 space-y-4 border-t border-ivory/15 pt-7 text-sm">
           <Row label="Loan amount" value={formatInrExact(estimate.principal)} />
-          <Row
-            label="Down payment"
-            value={formatInrExact(estimate.downPayment)}
-          />
+          {estimate.downPayment > 0 ? (
+            <Row
+              label="Down payment"
+              value={formatInrExact(estimate.downPayment)}
+            />
+          ) : null}
           <Row
             label="Total interest"
             value={formatInrExact(estimate.totalInterest)}
@@ -643,14 +639,12 @@ function ResultCard({
             label="Total repayment"
             value={formatInrExact(estimate.totalPayment)}
           />
-          <Row
-            label="Processing fee"
-            value={
-              estimate.processingFee > 0
-                ? formatInrExact(estimate.processingFee)
-                : "₹—"
-            }
-          />
+          {estimate.processingFee > 0 ? (
+            <Row
+              label="Processing fee"
+              value={formatInrExact(estimate.processingFee)}
+            />
+          ) : null}
         </dl>
 
         <p className="mt-6 text-xs leading-relaxed text-ivory/55">
@@ -662,7 +656,7 @@ function ResultCard({
           href={whatsapp}
           variant="primary"
           external
-          className="emi-no-print mt-7 h-auto w-full flex-wrap whitespace-normal px-4 py-3 text-center leading-snug tracking-[0.12em]"
+          className="emi-no-print mt-8 h-auto w-full px-5 py-3.5 text-center leading-snug"
         >
           <span className="max-w-full text-pretty">
             Discuss financing on WhatsApp

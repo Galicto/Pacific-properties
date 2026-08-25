@@ -32,25 +32,22 @@ export default async function EmiCalculatorPage({
 
   return (
     <>
-      <section className="overflow-x-clip bg-ivory pb-10 pt-32">
-        <div className="mx-auto w-full min-w-0 max-w-[1240px] px-4 sm:px-8">
+      <section className="overflow-x-clip bg-ivory pb-14 pt-32">
+        <div className="mx-auto w-full min-w-0 max-w-[1240px] px-7 sm:px-8">
           <p className="text-[11px] uppercase tracking-[0.16em] text-brass sm:tracking-[0.28em]">
-            Pacific Properties Goa
+            Home loan estimate
           </p>
-          <h1 className="mt-4 max-w-3xl break-words font-serif text-[clamp(1.75rem,8vw,3.8rem)] leading-[1.1] tracking-tight">
+          <h1 className="mt-5 max-w-3xl break-words font-serif text-[clamp(2rem,8vw,3.8rem)] leading-[1.1] tracking-tight">
             Plan your purchase with clarity.
           </h1>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-muted">
-            An indicative EMI estimate for your next property decision.
-          </p>
-          <p className="mt-4 max-w-xl text-xs leading-relaxed text-ink-muted">
-            No personal details required. Your calculation remains on this
-            device.
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-muted">
+            An indicative EMI estimate for your next property decision. No
+            personal details required.
           </p>
         </div>
       </section>
-      <section className="overflow-x-clip bg-ivory pb-16 lg:pb-24">
-        <div className="mx-auto w-full min-w-0 max-w-[1240px] px-4 sm:px-8">
+      <section className="overflow-x-clip bg-ivory pb-20 lg:pb-24">
+        <div className="mx-auto w-full min-w-0 max-w-[1240px] px-7 sm:px-8">
           <EmiCalculator
             propertyPrice={seeded.propertyPrice || listed?.price || null}
             propertyTitle={title}

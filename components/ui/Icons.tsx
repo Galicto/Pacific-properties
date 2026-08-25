@@ -273,3 +273,69 @@ export function IconReset({ className }: IconProps) {
     </svg>
   );
 }
+
+/** Neutral crest — not an official association mark. */
+export function IconCrest({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.25"
+      aria-hidden="true"
+    >
+      <path d="M12 3.5 19 6.2v5.2c0 4.4-3 6.8-7 8.6-4-1.8-7-4.2-7-8.6V6.2L12 3.5Z" />
+      <path d="M12 8.2v7.2M9.4 11.4h5.2" />
+    </svg>
+  );
+}
+
+/** Nested square — architectural, not an official NAR mark. */
+export function IconMemberMark({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.25"
+      aria-hidden="true"
+    >
+      <rect x="4.5" y="4.5" width="15" height="15" rx="1.2" />
+      <rect x="8" y="8" width="8" height="8" rx="0.6" />
+    </svg>
+  );
+}
+
+/** Line check in a square — not an official RERA logo. */
+export function IconRegistered({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.25"
+      aria-hidden="true"
+    >
+      <rect x="4.5" y="4.5" width="15" height="15" rx="1.2" />
+      <path d="m8.2 12.2 2.4 2.4 5.2-5.4" />
+    </svg>
+  );
+}
+
+export function IconCheckLine({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      aria-hidden="true"
+    >
+      <path d="m5 12.5 4.2 4.2L19 7.2" />
+    </svg>
+  );
+}

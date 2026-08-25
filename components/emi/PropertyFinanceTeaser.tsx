@@ -1,6 +1,5 @@
 import { ButtonLink } from "@/components/ui/Button";
 import { emiCalculatorHref } from "@/lib/emi";
-import { propertyWhatsAppUrl } from "@/lib/whatsapp";
 import Link from "next/link";
 
 type PropertyFinance = {
@@ -54,18 +53,12 @@ export function PropertyFinanceTeaser({
 
   if (compact) {
     return (
-      <div className="mt-4 max-w-xs lg:ml-auto lg:text-right">
-        <p className="text-[11px] uppercase tracking-[0.2em] text-brass">
-          Planning your purchase?
-        </p>
-        <p className="mt-1 text-sm text-ink-muted">
-          Estimate your monthly payment.
-        </p>
+      <div className="mt-5 max-w-xs lg:ml-auto lg:text-right">
         <Link
           href={href}
-          className="mt-2 inline-flex min-h-11 items-center text-[11px] uppercase tracking-[0.18em] text-ink hover:text-brass"
+          className="inline-flex min-h-11 items-center text-sm text-ink-muted underline-offset-4 hover:text-ink hover:underline"
         >
-          Calculate EMI →
+          Estimate monthly EMI
         </Link>
       </div>
     );
@@ -76,20 +69,12 @@ export function PropertyFinanceTeaser({
       <h2 className="font-serif text-2xl tracking-tight">
         Planning your purchase?
       </h2>
-      <p className="mt-2 max-w-md text-sm leading-relaxed text-ink-muted">
+      <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-muted">
         Estimate your monthly payment for this residence.
       </p>
-      <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+      <div className="mt-7">
         <ButtonLink href={href} variant="dark" className="w-full sm:w-auto">
           Calculate EMI
-        </ButtonLink>
-        <ButtonLink
-          href={propertyWhatsAppUrl(property.title, property.area)}
-          variant="ghostInk"
-          external
-          className="h-auto w-full flex-wrap whitespace-normal px-4 text-center leading-snug tracking-[0.12em] sm:w-auto"
-        >
-          Discuss on WhatsApp
         </ButtonLink>
       </div>
     </div>

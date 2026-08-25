@@ -196,8 +196,8 @@ export function CollectionClient({
   );
 
   return (
-    <Container className="py-10">
-      <div className="flex flex-col gap-4 border-b border-ink/10 pb-6 lg:flex-row lg:items-end lg:justify-between">
+    <Container className="py-12 lg:py-10">
+      <div className="flex flex-col gap-6 border-b border-ink/10 pb-8 lg:flex-row lg:items-end lg:justify-between">
         <button
           type="button"
           className="flex min-h-11 w-full items-center justify-between gap-3 border border-ink/15 px-4 text-[11px] uppercase tracking-[0.2em] text-ink lg:hidden"
@@ -255,7 +255,7 @@ export function CollectionClient({
             role="dialog"
             aria-modal="true"
             aria-label="Filters"
-            className="filter-sheet absolute inset-x-0 bottom-0 max-h-[88vh] overflow-y-auto border-t border-ink/10 bg-ivory px-5 pt-5"
+            className="filter-sheet absolute inset-x-0 bottom-0 max-h-[88vh] overflow-y-auto border-t border-ink/10 bg-ivory px-6 pt-6"
             style={{
               paddingBottom: "calc(1.25rem + env(safe-area-inset-bottom))",
             }}
@@ -312,7 +312,7 @@ export function CollectionClient({
           </Button>
         </div>
       ) : layout === "grid" ? (
-        <div className="mt-10 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
           {shown.map((property) => (
             <PropertyCard key={property.id} property={property} />
           ))}

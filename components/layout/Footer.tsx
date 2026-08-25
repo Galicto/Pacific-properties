@@ -1,5 +1,6 @@
 import { areas } from "@/data/areas";
 import { FooterCtaSpace } from "@/components/layout/MobileCtaBar";
+import { FooterCredentials } from "@/components/brand/TrustLines";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { InstagramIcon, LinkedInIcon } from "@/components/ui/SocialIcons";
 import { siteConfig } from "@/lib/config";
@@ -18,10 +19,10 @@ const footerNav = [
 
 export function Footer() {
   return (
-    <footer className="bg-ink text-ivory">
-      <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-16 sm:px-8 lg:grid-cols-12 lg:px-12 lg:py-20">
+    <footer className="bg-tide text-ivory">
+      <div className="mx-auto grid max-w-[1400px] gap-14 px-7 py-16 sm:px-8 lg:grid-cols-12 lg:px-12 lg:py-20">
         <div className="lg:col-span-5">
-          <Wordmark inverted />
+          <Wordmark inverted lockup />
           <p className="mt-8 max-w-sm text-sm leading-relaxed text-ivory/65">
             A boutique brokerage for considered property in Goa — villas,
             residences, land and investment, represented with discretion.
@@ -32,7 +33,7 @@ export function Footer() {
           <p className="text-[11px] uppercase tracking-[0.22em] text-brass-soft">
             Navigate
           </p>
-          <ul className="mt-5 space-y-2.5">
+          <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-1">
             {footerNav.map((item) => (
               <li key={item.href}>
                 <Link
@@ -94,9 +95,12 @@ export function Footer() {
       </div>
 
       <div className="border-t border-ivory/10">
-        <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-5 py-6 text-[12px] text-ivory/70 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12">
-          <p>© 2026 Pacific Properties Goa. All rights reserved.</p>
-          <p>Designed for considered property decisions.</p>
+        <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-7 py-6 text-[12px] text-ivory/70 sm:px-8 lg:px-12">
+          <FooterCredentials />
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p>© 2026 Pacific Properties Goa. All rights reserved.</p>
+            <p>Designed for considered property decisions.</p>
+          </div>
         </div>
       </div>
       <FooterCtaSpace />

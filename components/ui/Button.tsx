@@ -36,7 +36,7 @@ export function ButtonLink({
   external?: boolean;
 }) {
   const classes = cn(
-    "inline-flex min-h-11 min-w-0 items-center justify-center px-6 py-3 text-center text-[11px] font-medium uppercase tracking-[0.18em] transition-colors duration-300 ease-[var(--ease-cinematic)]",
+    "inline-flex min-h-11 min-w-0 items-center justify-center px-6 py-3 text-center text-[11px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 ease-[var(--ease-cinematic)] sm:tracking-[0.18em]",
     variants[variant],
     className,
   );
@@ -69,7 +69,7 @@ export function Button({
     <button
       type={type}
       className={cn(
-        "inline-flex min-h-11 min-w-0 items-center justify-center px-6 py-3 text-center text-[11px] font-medium uppercase tracking-[0.18em] transition-colors duration-300 ease-[var(--ease-cinematic)] disabled:opacity-50",
+        "inline-flex min-h-11 min-w-0 items-center justify-center px-6 py-3 text-center text-[11px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 ease-[var(--ease-cinematic)] disabled:opacity-50 sm:tracking-[0.18em]",
         variants[variant],
         className,
       )}

@@ -1,12 +1,11 @@
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { defaultWhatsAppUrl } from "@/lib/whatsapp";
 
 export function ConsultationCta() {
   return (
     <section className="bg-forest text-ivory">
-      <Container className="py-24 lg:py-32">
+      <Container className="py-24 pb-[calc(8rem+env(safe-area-inset-bottom))] md:pb-24 lg:py-32 lg:pb-32">
         <Reveal>
           <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-brass-soft">
             Private consultation
@@ -18,12 +17,9 @@ export function ConsultationCta() {
             Tell us what you are looking for. We will return with opportunities
             worth your time.
           </p>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <ButtonLink href="/contact" variant="primary" className="w-full px-4 tracking-[0.12em] sm:w-auto sm:px-6 sm:tracking-[0.18em]">
+          <div className="mt-10">
+            <ButtonLink href="/contact" variant="primary" className="w-full sm:w-auto">
               Start a Private Enquiry
-            </ButtonLink>
-            <ButtonLink href={defaultWhatsAppUrl} variant="ghost" external className="w-full px-4 tracking-[0.12em] sm:w-auto sm:px-6 sm:tracking-[0.18em]">
-              WhatsApp Pacific Properties
             </ButtonLink>
           </div>
         </Reveal>

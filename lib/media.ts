@@ -17,15 +17,10 @@ export function getConnectionQuality(): "slow" | "fast" | "unknown" {
   return "fast";
 }
 
-/** Autoplay only on desktop, with motion allowed, on a fast-enough link. */
+/** Autoplay the muted hero film unless the visitor asked for reduced motion. */
 export function shouldAutoplayHeroVideo() {
-  if (typeof window === "undefined") return false;
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    return false;
-  }
-  if (window.matchMedia("(max-width: 767px)").matches) return false;
-  if (getConnectionQuality() === "slow") return false;
-  return true;
+  if (typeof window === "undefined") return true;
+  return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
 export function prefersReducedMotion() {

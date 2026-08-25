@@ -47,11 +47,52 @@ export const siteConfig = {
     "https://maps.google.com/maps?q=Assagao%2C%20Goa%2C%20India&z=12&output=embed",
 
   /**
-   * Open Graph / social share image.
-   * REPLACE: add a 1200×630 branded still at /public/og.jpg and point this at `${url}/og.jpg`.
+   * Official lock-up and P-mark. Replace files in `public/brand/` — do not
+   * redraw, stretch, or recolour the artwork. Intrinsic sizes must match
+   * the files so the header does not shift.
    */
-  ogImage:
-    "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1200&h=630&q=80",
+  brand: {
+    logoOnDark: "/brand/logo-on-dark.webp",
+    logoOnLight: "/brand/logo-on-light.webp",
+    mark: "/brand/mark.webp",
+    /** PNG lock-up for JSON-LD and crawlers that prefer a still raster. */
+    logoPng: "/brand/logo-on-dark.png",
+    lockup: { width: 720, height: 236 },
+    markSize: { width: 156, height: 157 },
+  },
+
+  /**
+   * Open Graph / social share image. 1200×630 branded still at /public/og.jpg.
+   */
+  ogImage: "/og.jpg",
+
+  /**
+   * Professional credentials shown on Home, About, Contact, listing pages, and footer.
+   *
+   * TODO(client): Paste the verified Goa RERA registration number into
+   * `reraRegistrationNumber` once the client supplies it in writing.
+   * Leave the string empty until then. Never invent, guess, or copy a
+   * number from another listing. When a real value is present the site
+   * will show “RERA Registration No. {number}” and add it to JSON-LD.
+   */
+  credentials: {
+    reraRegistrationNumber: "",
+    heading: "Trusted by profession. Rooted in Goa.",
+    supporting:
+      "Pacific Properties combines local market intelligence with recognised professional standards.",
+    founderMember: {
+      title: "Founder Member",
+      body: "Goa Association of Realtors (GAR)",
+    },
+    narIndia: {
+      title: "Member",
+      body: "National Association of Realtors – India (NAR-India)",
+    },
+    rera: {
+      title: "RERA Registered",
+      body: "Registered real-estate professional in Goa",
+    },
+  },
 
   /**
    * EMI calculator defaults. Single source of truth: `emiDefaults` in `lib/emi.ts`.

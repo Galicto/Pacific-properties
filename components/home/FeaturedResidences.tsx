@@ -1,6 +1,5 @@
 "use client";
 
-import { CalculateEmiLink } from "@/components/emi/PropertyFinanceTeaser";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import {
@@ -63,7 +62,7 @@ export function FeaturedResidences() {
 
   if (!property) {
     return (
-      <section className="cv-auto border-t border-ink/8 py-20 lg:py-32">
+      <section className="cv-auto border-t border-ink/8 py-24 lg:py-32">
         <Container>
           <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-brass">
             Selected Residences
@@ -72,7 +71,7 @@ export function FeaturedResidences() {
             A considered collection of homes and opportunities across Goa.
           </h2>
           <div
-            className="mt-10 flex gap-1 overflow-x-auto no-scrollbar border-b border-ink/10"
+            className="mt-12 flex gap-2 overflow-x-auto no-scrollbar border-b border-ink/10"
             role="tablist"
             aria-label="Property types"
           >
@@ -84,7 +83,7 @@ export function FeaturedResidences() {
                 aria-selected={tab === item.id}
                 onClick={() => selectTab(item.id)}
                 className={cn(
-                  "min-h-11 shrink-0 border-b-2 px-4 text-[11px] uppercase tracking-[0.18em]",
+                  "min-h-11 shrink-0 border-b-2 px-3 text-[11px] tracking-[0.12em] sm:px-4 sm:uppercase sm:tracking-[0.18em]",
                   tab === item.id
                     ? "border-ink text-ink"
                     : "border-transparent text-ink-muted",
@@ -106,7 +105,7 @@ export function FeaturedResidences() {
   const saved = has(property.id);
 
   return (
-    <section className="cv-auto border-t border-ink/8 py-20 lg:py-32">
+    <section className="cv-auto border-t border-ink/8 py-24 lg:py-32">
       <Container>
         <Reveal>
           <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
@@ -125,7 +124,7 @@ export function FeaturedResidences() {
         </Reveal>
 
         <div
-          className="mt-10 flex gap-1 overflow-x-auto no-scrollbar border-b border-ink/10"
+          className="mt-12 flex gap-2 overflow-x-auto no-scrollbar border-b border-ink/10"
           role="tablist"
           aria-label="Property types"
         >
@@ -137,7 +136,7 @@ export function FeaturedResidences() {
               aria-selected={tab === item.id}
               onClick={() => selectTab(item.id)}
               className={cn(
-                "min-h-11 shrink-0 border-b-2 px-4 text-[11px] uppercase tracking-[0.18em] transition-colors duration-300",
+                "min-h-11 shrink-0 border-b-2 px-3 text-[11px] tracking-[0.12em] sm:px-4 sm:uppercase sm:tracking-[0.18em] transition-colors duration-300",
                 tab === item.id
                   ? "border-ink text-ink"
                   : "border-transparent text-ink-muted hover:text-ink",
@@ -148,7 +147,7 @@ export function FeaturedResidences() {
           ))}
         </div>
 
-        <div className="mt-10 grid items-stretch gap-8 lg:grid-cols-12 lg:gap-12">
+        <div className="mt-12 grid items-stretch gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="relative lg:col-span-7">
             <div
               className="relative overflow-hidden rounded-[4px]"
@@ -236,7 +235,7 @@ export function FeaturedResidences() {
               {property.shortDescription}
             </p>
 
-            <dl className="mt-8 grid grid-cols-2 gap-px border border-ink/10 bg-ink/10">
+            <dl className="mt-10 grid grid-cols-2 gap-px border border-ink/10 bg-ink/10">
               <Fact
                 label="Bedrooms"
                 value={property.bedrooms ? `${property.bedrooms}` : "—"}
@@ -246,7 +245,7 @@ export function FeaturedResidences() {
               <Fact label="Price" value={property.priceDisplay} />
             </dl>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-10 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
               <ButtonLink href={`/collection/${property.slug}`} variant="dark">
                 View Property
               </ButtonLink>
@@ -254,17 +253,10 @@ export function FeaturedResidences() {
                 href={propertyWhatsAppUrl(property.title, property.area)}
                 variant="ghostInk"
                 external
+                className="hidden sm:inline-flex"
               >
                 Enquire Privately
               </ButtonLink>
-              <CalculateEmiLink
-                property={{
-                  title: property.title,
-                  area: property.area,
-                  slug: property.slug,
-                  price: property.price,
-                }}
-              />
             </div>
           </div>
         </div>
@@ -275,7 +267,7 @@ export function FeaturedResidences() {
 
 function Fact({ label, value }: { label: string; value: string }) {
   return (
-    <div className="bg-ivory px-4 py-4">
+    <div className="bg-ivory px-5 py-5">
       <dt className="text-[10px] uppercase tracking-[0.18em] text-ink-muted">
         {label}
       </dt>

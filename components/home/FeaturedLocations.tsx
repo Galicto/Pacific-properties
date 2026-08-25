@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export function FeaturedLocations() {
   return (
-    <section className="cv-auto border-t border-ink/8 py-20 lg:py-32">
+    <section className="cv-auto border-t border-ink/8 py-24 lg:py-32">
       <Container>
         <Reveal>
           <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-brass">
@@ -17,7 +17,7 @@ export function FeaturedLocations() {
           </h2>
         </Reveal>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-5 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {areas.map((area, index) => (
             <Reveal key={area.slug} delay={index * 0.05}>
               <Link
@@ -34,14 +34,14 @@ export function FeaturedLocations() {
                   objectPosition="center 40%"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/25 to-ink/10" />
-                <div className="absolute inset-x-0 bottom-0 p-5 text-ivory sm:p-6">
-                  <p className="text-[10px] uppercase tracking-[0.22em] text-ivory/60">
+                <div className="absolute inset-x-0 bottom-0 p-6 text-ivory sm:p-6">
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-ivory/60 sm:tracking-[0.22em]">
                     {area.region}
                   </p>
-                  <h3 className="mt-2 font-serif text-[clamp(1.6rem,4vw,1.9rem)]">
+                  <h3 className="mt-2 font-serif text-[clamp(1.7rem,6vw,1.9rem)]">
                     {area.name}
                   </h3>
-                  <p className="mt-3 max-w-xs text-sm leading-relaxed text-ivory/80">
+                  <p className="mt-3 max-w-xs text-sm leading-relaxed text-ivory/80 line-clamp-3">
                     {area.descriptor}
                   </p>
                 </div>

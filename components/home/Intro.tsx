@@ -4,7 +4,7 @@ import { SmartImage } from "@/components/ui/SmartImage";
 
 export function Intro() {
   return (
-    <section id="intro" className="py-20 lg:py-32">
+    <section id="intro" className="py-24 lg:py-32">
       <Container>
         <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-6">
@@ -25,7 +25,7 @@ export function Intro() {
           </Reveal>
         </div>
 
-        <div className="mt-16 grid gap-5 md:grid-cols-12 md:gap-6">
+        <div className="mt-16 grid gap-8 md:grid-cols-12 md:gap-6">
           <Reveal className="md:col-span-7">
             <SmartImage
               src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop"

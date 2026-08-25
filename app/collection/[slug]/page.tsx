@@ -1,5 +1,6 @@
 import { PropertyFinanceTeaser } from "@/components/emi/PropertyFinanceTeaser";
 import { PropertyActions } from "@/components/property/PropertyActions";
+import { PropertyTrustStrip } from "@/components/brand/TrustLines";
 import { PropertyEnquiry } from "@/components/property/PropertyEnquiry";
 import { PropertyGallery } from "@/components/property/PropertyGallery";
 import { RelatedProperties } from "@/components/property/RelatedProperties";
@@ -82,43 +83,41 @@ export default async function PropertyPage({
           objectPosition="center 40%"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/20 to-ink/30" />
-        <div className="absolute bottom-10 left-5 right-5 sm:left-8 lg:left-12">
+        <div className="absolute bottom-10 left-7 right-7 sm:left-8 lg:left-12">
           <nav
             aria-label="Breadcrumb"
-            className="text-[11px] uppercase tracking-[0.18em] text-ivory/70"
+            className="text-[11px] uppercase tracking-[0.14em] text-ivory/70 sm:tracking-[0.18em]"
           >
             <Link href="/collection" className="hover:text-ivory">
               Collection
             </Link>
-            <span className="mx-2 text-ivory/40">/</span>
+            <span className="mx-2 hidden text-ivory/40 sm:inline">/</span>
             <Link
               href={`/collection?type=${property.category}`}
-              className="hover:text-ivory"
+              className="hidden hover:text-ivory sm:inline"
             >
               {categoryLabels[property.category]}
             </Link>
-            <span className="mx-2 text-ivory/40">/</span>
-            <span className="text-ivory">{property.title}</span>
           </nav>
         </div>
       </section>
 
-      <Container className="pt-12">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-brass">
+      <Container className="pt-14">
+        <p className="text-[11px] uppercase tracking-[0.18em] text-brass sm:tracking-[0.22em]">
           {categoryLabels[property.category]} · {property.statusLabel}
         </p>
-        <div className="mt-3 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+        <div className="mt-4 flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <div>
-            <h1 className="mt-3 break-words font-serif text-[clamp(1.85rem,7vw,3.75rem)] tracking-tight">
+            <h1 className="break-words font-serif text-[clamp(2.1rem,8vw,3.75rem)] tracking-tight">
               {property.title}
             </h1>
-            <p className="mt-3 flex items-center gap-2 text-ink-muted">
+            <p className="mt-4 flex items-center gap-2 text-ink-muted">
               <IconPin className="h-4 w-4 text-brass" />
               {property.location}
             </p>
           </div>
           <div>
-            <p className="font-serif text-3xl sm:text-4xl">{property.priceDisplay}</p>
+            <p className="font-serif text-[1.85rem] leading-tight sm:text-4xl">{property.priceDisplay}</p>
             <PropertyFinanceTeaser
               compact
               property={{
@@ -145,9 +144,9 @@ export default async function PropertyPage({
           <div className="lg:col-span-8">
             <PropertyGallery images={property.images} title={property.title} />
 
-            <dl className="mt-10 grid grid-cols-2 gap-px border border-ink/10 bg-ink/10 sm:grid-cols-3">
+            <dl className="mt-12 grid grid-cols-2 gap-px border border-ink/10 bg-ink/10 sm:grid-cols-3">
               {facts.map((fact) => (
-                <div key={fact.label} className="bg-ivory px-4 py-5">
+                <div key={fact.label} className="bg-ivory px-5 py-6">
                   <dt className="text-[10px] uppercase tracking-[0.16em] text-ink-muted">
                     {fact.label}
                   </dt>
@@ -155,6 +154,8 @@ export default async function PropertyPage({
                 </div>
               ))}
             </dl>
+
+            <PropertyTrustStrip className="mt-8" />
 
             <div className="mt-12 max-w-3xl space-y-5 text-base leading-relaxed text-ink-muted">
               {property.longDescription.map((paragraph) => (

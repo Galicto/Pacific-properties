@@ -1,5 +1,6 @@
 "use client";
 
+import { PropertyEnquiryTrust } from "@/components/brand/TrustLines";
 import { ButtonLink } from "@/components/ui/Button";
 import { propertyWhatsAppUrl } from "@/lib/whatsapp";
 import dynamic from "next/dynamic";
@@ -24,7 +25,7 @@ export function PropertyEnquiry({
   slug: string;
 }) {
   return (
-    <aside className="border border-ink/10 bg-ivory-deep/50 p-6 sm:p-8">
+    <aside className="border border-ink/10 bg-ivory-deep/50 p-7 sm:p-8">
       <p className="text-[11px] uppercase tracking-[0.22em] text-brass">
         Private enquiry
       </p>
@@ -41,8 +42,9 @@ export function PropertyEnquiry({
         external
         className="mt-6 w-full"
       >
-        WhatsApp about {title}
+        Message on WhatsApp
       </ButtonLink>
+      <PropertyEnquiryTrust />
       <div className="mt-8 border-t border-ink/10 pt-8">
         <EnquiryForm compact propertyTitle={title} propertySlug={slug} />
       </div>

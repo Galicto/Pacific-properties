@@ -17,7 +17,7 @@ export default async function CollectionPage({
   const initial = await searchParams;
   return (
     <>
-      <section className="border-b border-ink/8 bg-ivory-deep/40 pb-16 pt-32">
+      <section className="border-b border-ink/8 bg-ivory-deep/40 pb-20 pt-32">
         <Container>
           <p className="text-[11px] uppercase tracking-[0.28em] text-brass">
             Residences & land
@@ -31,9 +31,9 @@ export default async function CollectionPage({
           </p>
           <Link
             href="/emi-calculator"
-            className="mt-8 inline-flex min-h-11 items-center text-[11px] uppercase tracking-[0.2em] text-ink-muted transition-colors hover:text-ink"
+            className="mt-10 inline-flex min-h-11 items-center text-sm text-ink-muted underline-offset-4 hover:text-ink hover:underline"
           >
-            Calculate EMI
+            Estimate monthly EMI
           </Link>
         </Container>
       </section>

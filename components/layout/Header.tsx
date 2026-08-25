@@ -92,8 +92,8 @@ export function Header() {
           : "border-transparent bg-transparent",
       )}
     >
-      <div className="mx-auto flex h-[4.5rem] min-w-0 max-w-[1400px] items-center justify-between px-4 sm:h-20 sm:px-8 lg:px-12">
-        <Wordmark inverted={dark} />
+      <div className="mx-auto flex h-16 min-w-0 max-w-[1400px] items-center justify-between px-7 sm:h-20 sm:px-8 lg:px-12">
+        <Wordmark inverted={dark} priority />
 
         <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary">
           <Link
@@ -197,12 +197,12 @@ export function Header() {
         aria-hidden={!open}
         {...(!open ? { inert: true } : {})}
         className={cn(
-          "fixed inset-0 z-[60] overflow-y-auto bg-ivory px-6 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-[calc(1.25rem+env(safe-area-inset-top))] transition-transform duration-300 ease-[var(--ease-cinematic)] lg:hidden",
+          "fixed inset-0 z-[60] overflow-y-auto bg-ivory px-7 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-[calc(1.25rem+env(safe-area-inset-top))] transition-transform duration-300 ease-[var(--ease-cinematic)] lg:hidden",
           open ? "translate-x-0" : "pointer-events-none translate-x-full",
         )}
       >
         <div className="flex items-center justify-between">
-          <Wordmark />
+          <Wordmark lockup />
           <button
             ref={closeRef}
             type="button"

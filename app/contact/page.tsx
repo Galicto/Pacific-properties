@@ -1,3 +1,4 @@
+import { CredentialsContactLine } from "@/components/brand/TrustLines";
 import { EnquiryForm } from "@/components/contact/EnquiryForm";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -34,7 +35,7 @@ export default async function ContactPage({
   return (
     <>
       <section className="grid min-h-[100svh] lg:grid-cols-2">
-        <div className="flex flex-col justify-center bg-ink px-5 py-28 text-ivory sm:px-10 lg:px-16" style={{ colorScheme: "dark" }}>
+        <div className="flex flex-col justify-center bg-ink px-7 py-28 text-ivory sm:px-10 lg:px-16" style={{ colorScheme: "dark" }}>
           <p className="text-[11px] uppercase tracking-[0.28em] text-brass-soft">
             Enquire
           </p>
@@ -46,36 +47,39 @@ export default async function ContactPage({
             Goa, start with a confidential conversation.
           </p>
 
-          <div className="mt-10 flex flex-wrap gap-3">
-            <ButtonLink href={defaultWhatsAppUrl} variant="primary" external>
+          <div className="mt-12 flex flex-col gap-5">
+            <ButtonLink href={defaultWhatsAppUrl} variant="primary" external className="w-full sm:w-auto">
               WhatsApp
             </ButtonLink>
-            <a
-              href={siteConfig.linkedinUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-12 w-12 items-center justify-center border border-ivory/25 text-ivory"
-              aria-label="LinkedIn"
-            >
-              <LinkedInIcon className="h-4 w-4" />
-            </a>
-            <a
-              href={siteConfig.instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-12 w-12 items-center justify-center border border-ivory/25 text-ivory"
-              aria-label="Instagram"
-            >
-              <InstagramIcon className="h-4 w-4" />
-            </a>
+            <div className="flex gap-3">
+              <a
+                href={siteConfig.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 w-12 items-center justify-center border border-ivory/25 text-ivory"
+                aria-label="LinkedIn"
+              >
+                <LinkedInIcon className="h-4 w-4" />
+              </a>
+              <a
+                href={siteConfig.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 w-12 items-center justify-center border border-ivory/25 text-ivory"
+                aria-label="Instagram"
+              >
+                <InstagramIcon className="h-4 w-4" />
+              </a>
+            </div>
           </div>
 
-          <div className="mt-12 max-w-lg">
+          <div className="mt-14 max-w-lg">
             <EnquiryForm
               dark
               propertyTitle={property?.title}
               propertySlug={property?.slug}
             />
+            <CredentialsContactLine />
           </div>
         </div>
 
@@ -86,7 +90,7 @@ export default async function ContactPage({
             className="absolute inset-0"
             heightClass="h-full min-h-[55vh] lg:min-h-full"
           />
-          <div className="absolute bottom-8 left-5 right-5 max-w-sm border border-ivory/15 bg-ink/85 p-6 text-ivory md:bottom-8 md:left-8 md:right-8">
+          <div className="absolute bottom-8 left-6 right-6 max-w-sm border border-ivory/15 bg-ink/85 p-7 text-ivory md:bottom-8 md:left-8 md:right-8">
             <p className="text-[11px] uppercase tracking-[0.2em] text-brass-soft">
               By appointment
             </p>

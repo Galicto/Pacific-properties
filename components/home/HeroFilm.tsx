@@ -3,16 +3,17 @@
 import { IconPause, IconPlay } from "@/components/ui/Icons";
 import type { HeroVideo } from "@/lib/config";
 import { useInView } from "@/lib/hooks";
-import { cancelIdle, scheduleIdle, shouldAutoplayHeroVideo } from "@/lib/media";
+import { shouldAutoplayHeroVideo } from "@/lib/media";
 import { cn } from "@/lib/utils";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export function HeroFilm({ videos }: { videos: readonly HeroVideo[] }) {
   const [index, setIndex] = useState(0);
-  const [loadVideo, setLoadVideo] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [failed, setFailed] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const userPaused = useRef(false);
+  const seenHero = useRef(false);
   const barRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const indexRef = useRef(0);
   const { ref, inView } = useInView<HTMLDivElement>("0px");
@@ -22,8 +23,9 @@ export function HeroFilm({ videos }: { videos: readonly HeroVideo[] }) {
 
   const play = useCallback(async () => {
     const el = videoRef.current;
-    if (!el) return;
+    if (!el || userPaused.current) return;
     try {
+      el.muted = true;
       await el.play();
       setPlaying(true);
       setFailed(false);
@@ -32,31 +34,52 @@ export function HeroFilm({ videos }: { videos: readonly HeroVideo[] }) {
     }
   }, []);
 
-  useEffect(() => {
-    if (!shouldAutoplayHeroVideo()) return;
-    const idle = scheduleIdle(() => setLoadVideo(true), 2200);
-    return () => cancelIdle(idle);
-  }, []);
+  const setVideoRef = useCallback(
+    (el: HTMLVideoElement | null) => {
+      videoRef.current = el;
+      if (!el) return;
+      el.muted = true;
+      el.playsInline = true;
+      el.autoplay = true;
+      if (shouldAutoplayHeroVideo() && !userPaused.current) {
+        void el.play().then(
+          () => {
+            setPlaying(true);
+            setFailed(false);
+          },
+          () => setPlaying(false),
+        );
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
-    if (!loadVideo) return;
-    void play();
-  }, [loadVideo, index, play]);
-
-  useEffect(() => {
-    const el = videoRef.current;
-    if (!el || !loadVideo) return;
-    if (!inView) {
-      el.pause();
+    if (!shouldAutoplayHeroVideo()) {
+      userPaused.current = true;
+      videoRef.current?.pause();
       setPlaying(false);
       return;
     }
-    if (shouldAutoplayHeroVideo()) void play();
-  }, [inView, loadVideo, play]);
+    void play();
+  }, [index, play]);
 
   useEffect(() => {
     const el = videoRef.current;
-    if (!el || !loadVideo) return;
+    if (!el) return;
+    if (inView) {
+      seenHero.current = true;
+      if (shouldAutoplayHeroVideo()) void play();
+      return;
+    }
+    if (!seenHero.current) return;
+    el.pause();
+    setPlaying(false);
+  }, [inView, play]);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
 
     const onTime = () => {
       if (!el.duration) return;
@@ -72,7 +95,7 @@ export function HeroFilm({ videos }: { videos: readonly HeroVideo[] }) {
         setIndex((value) => (value + 1) % videos.length);
       } else {
         el.currentTime = 0;
-        void el.play();
+        if (!userPaused.current) void el.play();
       }
     };
 
@@ -82,76 +105,67 @@ export function HeroFilm({ videos }: { videos: readonly HeroVideo[] }) {
       el.removeEventListener("timeupdate", onTime);
       el.removeEventListener("ended", onEnded);
     };
-  }, [videos.length, loadVideo]);
-
-  const requestPlay = () => {
-    setFailed(false);
-    setLoadVideo(true);
-  };
+  }, [videos.length, index]);
 
   const toggle = () => {
     const el = videoRef.current;
-    if (!loadVideo) {
-      requestPlay();
-      return;
-    }
-    if (!el) {
-      requestPlay();
-      return;
-    }
+    if (!el) return;
     if (playing) {
+      userPaused.current = true;
       el.pause();
       setPlaying(false);
-    } else {
-      void play();
+      return;
     }
+    userPaused.current = false;
+    void play();
   };
-
-  const showPlay = !loadVideo || !playing;
 
   return (
     <div ref={ref} className="absolute inset-0">
-      {loadVideo ? (
-        <video
-          key={current.id}
-          ref={videoRef}
-          className={cn(
-            "absolute inset-0 h-full w-full object-cover object-[center_28%] sm:object-center",
-            failed || !playing ? "opacity-0" : "opacity-100",
-          )}
-          style={{
-            transition: "opacity 0.7s var(--ease-cinematic)",
-          }}
-          muted
-          playsInline
-          loop={videos.length === 1}
-          preload="metadata"
-          aria-label={current.alt}
-          onError={() => setFailed(true)}
-        >
-          <source src={current.src} type="video/mp4" />
-        </video>
-      ) : null}
+      <video
+        key={current.id}
+        ref={setVideoRef}
+        className={cn(
+          "absolute inset-0 h-full w-full object-cover object-[center_28%] sm:object-center",
+          failed || !playing ? "opacity-0" : "opacity-100",
+        )}
+        style={{
+          transition: "opacity 0.7s var(--ease-cinematic)",
+        }}
+        autoPlay
+        muted
+        playsInline
+        loop={videos.length === 1}
+        preload="auto"
+        aria-label={current.alt}
+        onLoadedData={() => {
+          if (shouldAutoplayHeroVideo() && !userPaused.current) void play();
+        }}
+        onPlaying={() => setPlaying(true)}
+        onPause={() => {
+          if (userPaused.current) setPlaying(false);
+        }}
+        onError={() => setFailed(true)}
+      >
+        <source src={current.src} type="video/mp4" />
+      </video>
 
-      <div className="absolute bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-5 z-10 flex items-center gap-3 sm:bottom-8 sm:right-8 lg:right-12">
+      <div className="absolute right-7 top-[calc(5.25rem+env(safe-area-inset-top))] z-10 flex items-center gap-3 sm:bottom-8 sm:right-8 sm:top-auto lg:right-12">
         <button
           type="button"
           onClick={toggle}
-          className="flex min-h-11 items-center gap-2 rounded-full border border-ivory/30 px-3 text-ivory transition-colors duration-300 hover:bg-ivory/10 sm:h-11 sm:w-11 sm:justify-center sm:px-0"
-          aria-label={showPlay ? "Play film" : "Pause film"}
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/30 text-ivory transition-colors duration-300 hover:bg-ivory/10"
+          aria-label={playing ? "Pause film" : "Play film"}
         >
-          {showPlay ? (
-            <IconPlay className="h-4 w-4" />
-          ) : (
+          {playing ? (
             <IconPause className="h-4 w-4" />
+          ) : (
+            <IconPlay className="h-4 w-4" />
           )}
-          <span className="pr-1 text-[10px] uppercase tracking-[0.18em] sm:hidden">
-            {showPlay ? "Play film" : "Pause"}
-          </span>
         </button>
 
         <div
-          className="flex items-center gap-1"
+          className="hidden items-center gap-1 sm:flex"
           role="tablist"
           aria-label="Hero films"
         >
@@ -163,8 +177,8 @@ export function HeroFilm({ videos }: { videos: readonly HeroVideo[] }) {
               aria-selected={i === index}
               aria-label={`Show film ${i + 1}`}
               onClick={() => {
+                userPaused.current = false;
                 setIndex(i);
-                setLoadVideo(true);
                 const bar = barRefs.current[i];
                 if (bar) bar.style.transform = "translateY(-50%) scaleX(0.04)";
               }}

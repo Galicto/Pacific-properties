@@ -96,6 +96,44 @@ Indicative home-loan estimates live on **`/emi-calculator`**. Defaults are in **
 
 Property pages link to the calculator with `property`, `price`, `location` and `slug` query parameters — they do not open a modal. Price-on-request listings omit `price`. WhatsApp financing messages use `financingWhatsAppText` in `lib/emi.ts` and `buildWhatsAppUrl` in `lib/whatsapp.ts`.
 
+### 7. How to replace the official logo
+
+The live lock-up and P-mark live in **`public/brand/`**. Paths and intrinsic sizes are in **`lib/config.ts` → `siteConfig.brand`**.
+
+| File | Use |
+| --- | --- |
+| `logo-on-dark.webp` / `.png` | Transparent lock-up with white type — header over the hero, footer, JSON-LD `logo` |
+| `logo-on-light.webp` / `.png` | Same lock-up with ink type — sticky ivory header and the mobile menu |
+| `mark.webp` / `.png` | Square “P” mark — mobile header, loading state, compact chrome |
+| `app/icon.png`, `app/apple-icon.png` | Favicon / home-screen icon, generated from the P-mark on the native teal field |
+| `public/og.jpg` | 1200×630 social preview on teal |
+
+Do **not** stretch, recolour, crop tightly, redraw the wordmark in type, or sit the artwork in a white box. Keep the transparent padding around the lock-up.
+
+To replace the artwork:
+
+1. Place a high-resolution official lock-up (PNG, dark-teal or transparent) at `scripts/logo-source.jpg` or export web-ready files directly into `public/brand/` using the filenames above.
+2. If starting from the supplied source, run `python3 scripts/process-logo.py` (requires Pillow). Update `siteConfig.brand.lockup` and `markSize` if the pixel dimensions change.
+3. Match header/footer surfaces to the asset: dark-teal footer (`bg-tide`), ivory header, transparent hero overlay — not a white tile behind the logo.
+
+### 8. How to add the verified RERA registration number
+
+**Do not invent or guess a number.**
+
+Edit **`lib/config.ts` → `siteConfig.credentials.reraRegistrationNumber`**.
+
+```ts
+credentials: {
+  // TODO(client): paste the verified Goa RERA registration number here.
+  reraRegistrationNumber: "",
+}
+```
+
+- Leave `""` until the client supplies a number **in writing**.
+- When a real value is present, the site shows `RERA Registration No. [NUMBER]` on the home credentials band and in compact trust lines, and adds it to Organisation / RealEstateAgent JSON-LD plus a `rera:registrationNumber` meta tag.
+- While empty, copy stays **“RERA Registered”** with no fabricated number.
+
+Do not add official GAR, NAR-India, or RERA logos unless the client provides licensed assets. The site uses neutral line marks only.
 ---
 
 ## Routes

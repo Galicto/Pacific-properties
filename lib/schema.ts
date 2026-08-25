@@ -1,13 +1,22 @@
 import { siteConfig } from "@/lib/config";
+import { verifiedReraNumber } from "@/lib/credentials";
 
 export function localBusinessJsonLd() {
+  const logo = `${siteConfig.url}${siteConfig.brand.logoPng}`;
+  const rera = verifiedReraNumber();
+
   return {
     "@context": "https://schema.org",
-    "@type": ["RealEstateAgent", "LocalBusiness"],
+    "@type": ["RealEstateAgent", "LocalBusiness", "Organization"],
+    "@id": `${siteConfig.url}#organization`,
     name: siteConfig.companyName,
+    legalName: siteConfig.companyName,
     description: siteConfig.description,
     url: siteConfig.url,
-    image: siteConfig.ogImage,
+    logo,
+    image: siteConfig.ogImage.startsWith("http")
+      ? siteConfig.ogImage
+      : `${siteConfig.url}${siteConfig.ogImage}`,
     telephone: siteConfig.phoneDisplay,
     email: siteConfig.email,
     address: {
@@ -20,6 +29,38 @@ export function localBusinessJsonLd() {
     },
     areaServed: ["North Goa", "Central Goa", "South Goa", "Goa"],
     sameAs: [siteConfig.linkedinUrl, siteConfig.instagramUrl],
+    hasCredential: [
+      {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: siteConfig.credentials.founderMember.title,
+        recognizedBy: {
+          "@type": "Organization",
+          name: "Goa Association of Realtors",
+        },
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: siteConfig.credentials.narIndia.title,
+        recognizedBy: {
+          "@type": "Organization",
+          name: "National Association of Realtors – India",
+        },
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: siteConfig.credentials.rera.title,
+        ...(rera ? { identifier: rera } : {}),
+      },
+    ],
+    ...(rera
+      ? {
+          identifier: {
+            "@type": "PropertyValue",
+            name: "RERA Registration Number",
+            value: rera,
+          },
+        }
+      : {}),
   };
 }
 
@@ -37,6 +78,7 @@ export function propertyJsonLd(property: {
     description: property.shortDescription,
     url: `${siteConfig.url}/collection/${property.slug}`,
     image: property.images.map((image) => image.src),
+    broker: { "@id": `${siteConfig.url}#organization` },
     ...(property.price
       ? {
           offers: {

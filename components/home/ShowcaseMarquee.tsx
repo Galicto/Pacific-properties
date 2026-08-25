@@ -17,8 +17,8 @@ export function ShowcaseMarquee() {
   const bottom = marqueeImages.filter((_, i) => i % 2 === 1);
 
   return (
-    <section className="cv-auto overflow-hidden border-t border-ink/8 py-16 sm:py-20 lg:py-32">
-      <div className="mx-auto max-w-[1400px] px-5 text-center sm:px-8 lg:px-12">
+    <section className="cv-auto overflow-hidden border-t border-ink/8 py-20 sm:py-20 lg:py-32">
+      <div className="mx-auto max-w-[1400px] px-7 text-center sm:px-8 lg:px-12">
         <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-brass">
           A life in Goa
         </p>

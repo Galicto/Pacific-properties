@@ -13,7 +13,7 @@ function hideMobileCta(pathname: string) {
   );
 }
 
-/** Keeps footer copy clear of the sticky WhatsApp/Enquire bar on phones. */
+/** Keeps footer copy clear of the sticky bar on phones. */
 export function FooterCtaSpace() {
   const pathname = usePathname();
   if (hideMobileCta(pathname)) return null;
@@ -21,7 +21,7 @@ export function FooterCtaSpace() {
   return (
     <div
       className="md:hidden"
-      style={{ height: "calc(5.25rem + env(safe-area-inset-bottom))" }}
+      style={{ height: "calc(5.75rem + env(safe-area-inset-bottom))" }}
       aria-hidden
     />
   );
@@ -33,29 +33,30 @@ export function MobileCtaBar() {
 
   return (
     <div
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-ivory/95 px-4 pt-3 print:hidden md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-ivory print:hidden md:hidden"
       style={{
-        paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))",
-        paddingLeft: "max(1rem, env(safe-area-inset-left))",
-        paddingRight: "max(1rem, env(safe-area-inset-right))",
+        paddingTop: "0.85rem",
+        paddingBottom: "calc(0.85rem + env(safe-area-inset-bottom))",
+        paddingLeft: "max(1.75rem, env(safe-area-inset-left))",
+        paddingRight: "max(1.75rem, env(safe-area-inset-right))",
       }}
     >
-      <div className="mx-auto flex max-w-lg min-w-0 gap-2 sm:gap-3">
+      <div className="mx-auto flex max-w-lg min-w-0 items-center gap-3">
         <a
           href={defaultWhatsAppUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-2 border border-ink/15 bg-transparent px-3 text-[10px] font-medium uppercase tracking-[0.14em] text-ink sm:px-4 sm:text-[11px] sm:tracking-[0.18em]"
+          className="inline-flex h-12 min-w-12 shrink-0 items-center justify-center border border-ink/15 text-ink"
+          aria-label="WhatsApp Pacific Properties Goa"
         >
-          <IconWhatsApp className="h-4 w-4 shrink-0" />
-          WhatsApp
+          <IconWhatsApp className="h-5 w-5" />
         </a>
         <ButtonLink
           href="/contact"
-          className="min-h-11 min-w-0 flex-1 px-3 sm:px-6"
+          className="h-12 min-w-0 flex-1 px-5 tracking-[0.14em]"
           variant="dark"
         >
-          Enquire
+          Private enquiry
         </ButtonLink>
       </div>
     </div>

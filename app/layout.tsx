@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { MobileCtaBar } from "@/components/layout/MobileCtaBar";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { siteConfig } from "@/lib/config";
+import { verifiedReraNumber } from "@/lib/credentials";
 import { localBusinessJsonLd } from "@/lib/schema";
 import "./globals.css";
 
@@ -26,6 +27,8 @@ const manrope = Manrope({
   adjustFontFallback: true,
 });
 
+const reraRegistrationMeta = verifiedReraNumber();
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
@@ -39,6 +42,9 @@ export const metadata: Metadata = {
     "Assagao homes",
     "North Goa real estate",
     "Goa property advisory",
+    "Goa Association of Realtors",
+    "NAR-India",
+    "RERA registered Goa",
   ],
   authors: [{ name: siteConfig.companyName }],
   openGraph: {
@@ -53,7 +59,7 @@ export const metadata: Metadata = {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "Pacific Properties Goa",
+        alt: "Pacific Properties",
       },
     ],
   },
@@ -65,6 +71,13 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   alternates: { canonical: siteConfig.url },
+  ...(reraRegistrationMeta
+    ? {
+        other: {
+          "rera:registrationNumber": reraRegistrationMeta,
+        },
+      }
+    : {}),
 };
 
 export const viewport: Viewport = {

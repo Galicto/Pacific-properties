@@ -1,8 +1,8 @@
+import { CredentialsCompact } from "@/components/brand/TrustLines";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SmartImage } from "@/components/ui/SmartImage";
-import { defaultWhatsAppUrl } from "@/lib/whatsapp";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -89,6 +89,8 @@ export default function AboutPage() {
           </div>
         </Reveal>
 
+        <CredentialsCompact />
+
         <div className="mt-24 grid gap-12 border-t border-ink/10 pt-16 lg:grid-cols-3">
           {principles.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.08}>
@@ -148,12 +150,9 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="mt-24 flex flex-wrap gap-3">
-          <ButtonLink href="/contact" variant="dark">
+        <div className="mt-24">
+          <ButtonLink href="/contact" variant="dark" className="w-full sm:w-auto">
             Start a private conversation
-          </ButtonLink>
-          <ButtonLink href={defaultWhatsAppUrl} variant="ghostInk" external>
-            WhatsApp Pacific Properties
           </ButtonLink>
         </div>
       </Container>

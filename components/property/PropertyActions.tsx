@@ -1,6 +1,5 @@
 "use client";
 
-import { CalculateEmiLink } from "@/components/emi/PropertyFinanceTeaser";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/Button";
 import { IconCheck, IconShare } from "@/components/ui/Icons";
@@ -11,7 +10,6 @@ export function PropertyActions({
   title,
   area,
   slug,
-  price,
 }: {
   title: string;
   area: string;
@@ -47,35 +45,33 @@ export function PropertyActions({
   };
 
   return (
-    <div className="sticky top-[calc(4.5rem+env(safe-area-inset-top))] z-30 -mx-5 mb-12 border-y border-ink/10 bg-ivory px-5 py-3 print:hidden sm:top-[calc(5rem+env(safe-area-inset-top))] sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0">
+    <div className="sticky top-[calc(4rem+env(safe-area-inset-top))] z-30 -mx-7 mb-14 border-y border-ink/10 bg-ivory px-7 py-3.5 print:hidden sm:top-[calc(5rem+env(safe-area-inset-top))] sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0">
       <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-3">
         <p className="hidden truncate font-serif text-xl lg:block">{title}</p>
-        <div className="flex w-full min-w-0 flex-wrap gap-2 lg:w-auto lg:justify-end">
-          <ButtonLink href={whatsapp} variant="dark" external className="min-h-11 flex-1 sm:flex-none">
-            WhatsApp
-          </ButtonLink>
+        <div className="flex w-full min-w-0 items-center gap-2 sm:gap-3 lg:w-auto lg:justify-end">
           <ButtonLink
             href={`/contact?property=${slug}`}
-            variant="ghostInk"
-            className="min-h-11 flex-1 sm:flex-none"
+            variant="dark"
+            className="min-h-11 min-w-0 flex-1 sm:flex-none"
           >
             Enquire
           </ButtonLink>
-          <CalculateEmiLink
-            property={{ title, area, slug, price }}
-            className="min-h-11 min-w-0 flex-[1_1_auto] px-3 text-[10px] tracking-[0.12em] sm:flex-none sm:px-4 sm:text-[11px] sm:tracking-[0.18em]"
+          <ButtonLink
+            href={whatsapp}
+            variant="ghostInk"
+            external
+            className="min-h-11 min-w-0 flex-1 sm:flex-none"
           >
-            <span className="sm:hidden">EMI</span>
-            <span className="hidden sm:inline">Calculate EMI</span>
-          </CalculateEmiLink>
+            WhatsApp
+          </ButtonLink>
           <Button
             variant="ghostInk"
             onClick={() => void share()}
             aria-label="Share this property"
-            className="min-h-11 px-4"
+            className="h-11 w-11 shrink-0 px-0"
           >
             {copied ? <IconCheck className="h-4 w-4" /> : <IconShare className="h-4 w-4" />}
-            <span className="hidden sm:inline">{copied ? "Copied" : "Share"}</span>
+            <span className="sr-only">{copied ? "Copied" : "Share"}</span>
           </Button>
         </div>
       </div>
