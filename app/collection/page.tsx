@@ -1,7 +1,7 @@
 import { CollectionClient } from "@/components/property/CollectionClient";
-import { Container } from "@/components/ui/Container";
+import { PageIntro } from "@/components/layout/PageIntro";
+import { ButtonLink } from "@/components/ui/Button";
 import type { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "The Collection",
@@ -17,26 +17,24 @@ export default async function CollectionPage({
   const initial = await searchParams;
   return (
     <>
-      <section className="border-b border-ink/8 bg-ivory-deep/40 pb-20 pt-32">
-        <Container>
-          <p className="text-[11px] uppercase tracking-[0.28em] text-brass">
-            Residences, land & commercial
-          </p>
-          <h1 className="mt-4 font-serif text-[clamp(2.4rem,8vw,4.4rem)] tracking-tight">
-            The Collection
-          </h1>
-          <p className="mt-5 max-w-xl text-base text-ink-muted">
-            Current inventory from Pacific Properties — villas, a penthouse,
-            an apartment, land and warehouse space across Goa.
-          </p>
-          <Link
-            href="/emi-calculator"
-            className="mt-10 inline-flex min-h-11 items-center text-sm text-ink-muted underline-offset-4 hover:text-ink hover:underline"
-          >
-            Estimate monthly EMI
-          </Link>
-        </Container>
-      </section>
+      <PageIntro
+        eyebrow="Residences, land & commercial"
+        title="The Collection"
+        image="/properties/pilerne-villa-collection/24.webp"
+        imageAlt="Private swimming pool and garden at the Pilerne villa collection."
+      >
+        <p>
+          Current inventory from Pacific Properties Goa — villas, a penthouse,
+          an apartment, land and warehouse space across Goa.
+        </p>
+        <ButtonLink
+          href="/emi-calculator"
+          variant="ghost"
+          className="mt-8 w-fit border-ivory/35 text-ivory hover:border-ivory hover:bg-ivory/10"
+        >
+          Estimate monthly EMI
+        </ButtonLink>
+      </PageIntro>
       <CollectionClient key={JSON.stringify(initial)} initial={initial} />
     </>
   );

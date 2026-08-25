@@ -1,3 +1,5 @@
+"use client";
+
 import { ButtonLink } from "@/components/ui/Button";
 import { emiCalculatorHref } from "@/lib/emi";
 import Link from "next/link";
@@ -70,7 +72,7 @@ export function PropertyFinanceTeaser({
         Planning your purchase?
       </h2>
       <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-muted">
-        Estimate your monthly payment for this residence.
+        Estimate your monthly payment for this property.
       </p>
       <div className="mt-7">
         <ButtonLink href={href} variant="dark" className="w-full sm:w-auto">

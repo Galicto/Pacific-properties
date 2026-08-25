@@ -175,8 +175,8 @@ export function FeaturedResidences() {
                 value={property.bedroomsDisplay ?? "—"}
               />
               <Fact
-                label="Built-up"
-                value={property.builtUpArea ?? "Available on request"}
+                label="Built-up Area"
+                value={property.builtUpArea ?? "—"}
               />
               <Fact
                 label="Plot"

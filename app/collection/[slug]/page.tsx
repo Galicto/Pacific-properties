@@ -11,7 +11,6 @@ import { IconArrowLeft, IconArrowRight, IconPin } from "@/components/ui/Icons";
 import { LazyMap } from "@/components/media/LazyMap";
 import { SmartImage } from "@/components/ui/SmartImage";
 import {
-  categoryLabels,
   getAdjacentProperties,
   getPropertyBySlug,
   getRelatedProperties,
@@ -64,17 +63,18 @@ function factRows(property: Property) {
   if (property.bedroomsDisplay) {
     rows.push({ label: "Bedrooms", value: property.bedroomsDisplay });
   }
-  if (property.category !== "land" && property.category !== "commercial") {
+  if (
+    property.bathrooms != null &&
+    property.category !== "land" &&
+    property.category !== "commercial"
+  ) {
     rows.push({
       label: "Bathrooms",
-      value:
-        property.bathrooms != null
-          ? String(property.bathrooms)
-          : "Available on request",
+      value: String(property.bathrooms),
     });
   }
   if (property.builtUpArea) {
-    rows.push({ label: "Built-up", value: property.builtUpArea });
+    rows.push({ label: "Built-up Area", value: property.builtUpArea });
   }
   if (property.plotArea) {
     rows.push({ label: "Plot", value: property.plotArea });
@@ -89,7 +89,7 @@ function factRows(property: Property) {
     rows.push({ label: "Community", value: property.communitySize });
   }
   if (property.roadAccess) {
-    rows.push({ label: "Road access", value: property.roadAccess });
+    rows.push({ label: "Road Access", value: property.roadAccess });
   }
   if (property.parking) {
     rows.push({ label: "Parking", value: property.parking });
@@ -160,13 +160,8 @@ export default async function PropertyPage({
             <Link href="/collection" className="hover:text-ivory">
               Collection
             </Link>
-            <span className="mx-2 hidden text-ivory/40 sm:inline">/</span>
-            <Link
-              href={`/collection?type=${property.category}`}
-              className="hidden hover:text-ivory sm:inline"
-            >
-              {categoryLabels[property.category]}
-            </Link>
+            <span className="mx-2 text-ivory/40">/</span>
+            <span className="break-words text-ivory">{property.title}</span>
           </nav>
         </div>
       </section>
@@ -213,9 +208,9 @@ export default async function PropertyPage({
         price={property.price}
       />
 
-      <Container>
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-8">
+      <Container className="pb-8 pt-4 lg:pb-24 lg:pt-6">
+        <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
+          <div className="min-w-0 lg:col-span-7 xl:col-span-8">
             {property.video ? (
               <div className="mb-8">
                 <PropertyFilm video={property.video} title={property.title} />
@@ -225,11 +220,13 @@ export default async function PropertyPage({
 
             <dl className="mt-12 grid grid-cols-2 gap-px border border-ink/10 bg-ink/10 sm:grid-cols-3">
               {facts.map((fact) => (
-                <div key={fact.label} className="bg-ivory px-5 py-6">
+                <div key={fact.label} className="min-w-0 bg-ivory px-4 py-5 sm:px-5 sm:py-6">
                   <dt className="text-[10px] uppercase tracking-[0.16em] text-ink-muted">
                     {fact.label}
                   </dt>
-                  <dd className="mt-1 font-serif text-xl">{fact.value}</dd>
+                  <dd className="mt-1 break-words font-serif text-lg sm:text-xl">
+                    {fact.value}
+                  </dd>
                 </div>
               ))}
             </dl>
@@ -253,15 +250,9 @@ export default async function PropertyPage({
                 }}
               />
             ) : null}
-          </div>
-        </div>
-      </Container>
 
-      <Container className="mt-16 lg:mt-20">
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-7">
             {property.amenities.length > 0 ? (
-              <div>
+              <div className="mt-16">
                 <h2 className="font-serif text-2xl">Amenities</h2>
                 <ul className="mt-4 space-y-2 text-sm text-ink-muted">
                   {property.amenities.map((item) => (
@@ -274,11 +265,11 @@ export default async function PropertyPage({
             ) : null}
 
             <section className="mt-16">
-              <h2 className="font-serif text-3xl">The Location</h2>
+              <h2 className="scroll-mt-28 font-serif text-3xl">The Location</h2>
               <p className="mt-3 max-w-xl text-sm text-ink-muted">
-                {property.location}.
+                {property.location}
               </p>
-              <div className="mt-6 overflow-hidden border border-ink/10 bg-ivory-deep">
+              <div className="mt-6 overflow-hidden rounded-[4px] border border-ink/10 bg-ivory-deep">
                 {property.mapEmbedUrl ? (
                   <LazyMap
                     src={property.mapEmbedUrl}
@@ -301,7 +292,7 @@ export default async function PropertyPage({
             </section>
           </div>
 
-          <div className="lg:col-span-5">
+          <div className="min-w-0 lg:col-span-5 xl:col-span-4">
             <div className="lg:sticky lg:top-28">
               <PropertyEnquiry
                 title={property.title}
@@ -315,18 +306,18 @@ export default async function PropertyPage({
 
         <RelatedProperties properties={related} />
 
-        <nav className="flex items-center justify-between border-t border-ink/10 py-10">
+        <nav className="flex items-center justify-between gap-4 border-t border-ink/10 py-10">
           {prev ? (
             <Link
               href={`/collection/${prev.slug}`}
-              className="group flex max-w-[45%] items-center gap-3"
+              className="group flex min-w-0 max-w-[48%] items-center gap-3"
             >
-              <IconArrowLeft className="h-4 w-4" />
-              <span>
+              <IconArrowLeft className="h-4 w-4 shrink-0" />
+              <span className="min-w-0">
                 <span className="block text-[10px] uppercase tracking-[0.16em] text-ink-muted">
                   Previous
                 </span>
-                <span className="font-serif text-xl group-hover:text-brass">
+                <span className="block truncate font-serif text-lg sm:text-xl group-hover:text-brass">
                   {prev.title}
                 </span>
               </span>
@@ -337,17 +328,17 @@ export default async function PropertyPage({
           {next ? (
             <Link
               href={`/collection/${next.slug}`}
-              className="group flex max-w-[45%] items-center justify-end gap-3 text-right"
+              className="group flex min-w-0 max-w-[48%] items-center justify-end gap-3 text-right"
             >
-              <span>
+              <span className="min-w-0">
                 <span className="block text-[10px] uppercase tracking-[0.16em] text-ink-muted">
                   Next
                 </span>
-                <span className="font-serif text-xl group-hover:text-brass">
+                <span className="block truncate font-serif text-lg sm:text-xl group-hover:text-brass">
                   {next.title}
                 </span>
               </span>
-              <IconArrowRight className="h-4 w-4" />
+              <IconArrowRight className="h-4 w-4 shrink-0" />
             </Link>
           ) : null}
         </nav>

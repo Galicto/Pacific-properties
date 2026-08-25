@@ -18,7 +18,7 @@ export function reraShortLabel(): string {
 
 /** Contact page reassurance, beside or below the enquiry form. */
 export function credentialsContactLine(): string {
-  return `Founder Member GAR · Member NAR-India · ${reraShortLabel()}`;
+  return `Founder Member, GAR · Member, NAR-India · ${reraShortLabel()}`;
 }
 
 /** Footer legal/trust line, above the copyright. */

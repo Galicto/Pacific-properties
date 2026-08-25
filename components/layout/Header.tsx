@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
+import { useFocusTrap } from "@/lib/hooks";
 
 const nav = [
   { href: "/collection", label: "Collection" },
@@ -16,10 +17,17 @@ const nav = [
   { href: "/contact", label: "Contact" },
 ];
 
-const darkHeroRoutes = ["/", "/about"];
-
 function isDarkHero(pathname: string) {
-  if (darkHeroRoutes.includes(pathname)) return true;
+  if (
+    pathname === "/" ||
+    pathname === "/about" ||
+    pathname === "/collection" ||
+    pathname === "/journal" ||
+    pathname.startsWith("/journal/") ||
+    pathname === "/contact"
+  ) {
+    return true;
+  }
   if (pathname.startsWith("/collection/") && pathname !== "/collection") {
     return true;
   }
@@ -34,13 +42,15 @@ export function Header() {
   const menuId = useId();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const dark = isDarkHero(pathname) && !scrolled && !open;
   const solid = scrolled || open || !isDarkHero(pathname);
+  useFocusTrap(open, menuRef, false);
 
   useEffect(() => {
     const sentinel = document.getElementById("nav-sentinel");
     if (!sentinel) {
-      setScrolled(window.scrollY > 24);
+      queueMicrotask(() => setScrolled(window.scrollY > 24));
       return;
     }
     const io = new IntersectionObserver(
@@ -52,8 +62,10 @@ export function Header() {
   }, [pathname]);
 
   useEffect(() => {
-    setOpen(false);
-    setAreasOpen(false);
+    queueMicrotask(() => {
+      setOpen(false);
+      setAreasOpen(false);
+    });
   }, [pathname]);
 
   useEffect(() => {
@@ -158,6 +170,13 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <Link
+            href="/emi-calculator"
+            aria-label="EMI Calculator"
+            className={linkClass(pathname.startsWith("/emi-calculator"))}
+          >
+            EMI
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3">
@@ -190,6 +209,7 @@ export function Header() {
       </div>
 
       <div
+        ref={menuRef}
         id={menuId}
         role="dialog"
         aria-modal="true"

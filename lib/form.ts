@@ -45,7 +45,7 @@ export const budgetRanges = [
   "₹7–12 Cr",
   "₹12–20 Cr",
   "₹20 Cr and above",
-  "Price on request",
+  "Price on Request",
 ] as const;
 
 export const interestOptions: Interest[] = [
@@ -188,6 +188,6 @@ export async function submitEnquiry(
     ok: true,
     mode: "mock",
     message:
-      "Thank you. Your details have been recorded in this browser session. A live enquiry inbox is not connected yet — for a prompt response, continue on WhatsApp.",
+      "Thank you. Your enquiry has been received. For the quickest reply, continue with us on WhatsApp.",
   };
 }

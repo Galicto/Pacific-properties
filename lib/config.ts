@@ -24,8 +24,7 @@ export const siteConfig = {
     "Hello Pacific Properties Goa, I would like to know more about your properties.",
 
   linkedinUrl: "https://www.linkedin.com/company/pacificpropertiesgoa/",
-  instagramUrl:
-    "https://www.instagram.com/pacificpropertiesindia?igsi=cTA5NGllcjdvcm50",
+  instagramUrl: "https://www.instagram.com/pacificpropertiesindia/",
 
   email: "hello@pacificpropertiesgoa.com",
   phoneDisplay: "+91 70578 60921",

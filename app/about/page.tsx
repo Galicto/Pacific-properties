@@ -3,6 +3,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SmartImage } from "@/components/ui/SmartImage";
+import { Wordmark } from "@/components/ui/Wordmark";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -33,7 +34,7 @@ const timeline = [
   },
   {
     year: "The work",
-    text: "Private sales, second homes, land, and a handful of commercial and investment introductions. Always by conversation.",
+    text: "Private sales, second homes, land, and a handful of commercial introductions. Always by conversation.",
   },
   {
     year: "Today",
@@ -77,8 +78,8 @@ export default function AboutPage() {
                 Pacific Properties Goa is a boutique brokerage. We are not a
                 portal, and we are not in a hurry. Our work is regional
                 insight, careful curation, and client-first advisory — for
-                residences, land, and the occasional investment that deserves
-                the same attention as a home.
+                residences, land, and the occasional commercial introduction
+                that deserves the same attention as a home.
               </p>
               <p>
                 Most of what we do happens in conversation: a walk through a
@@ -124,35 +125,37 @@ export default function AboutPage() {
           </ol>
         </div>
 
-        <div className="mt-24 grid items-center gap-10 border-t border-ink/10 pt-16 lg:grid-cols-12">
-          <div className="lg:col-span-5">
+        <div className="mt-24 grid items-stretch gap-10 border-t border-ink/10 pt-16 lg:grid-cols-12">
+          <div className="flex flex-col justify-between bg-tide px-8 py-12 text-ivory sm:px-10 lg:col-span-5">
+            <Wordmark inverted lockup asLink={false} />
+            <div className="mt-12">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-brass-soft">
+                Pacific Properties Goa
+              </p>
+              <p className="mt-4 max-w-sm font-serif text-2xl leading-snug sm:text-3xl">
+                A boutique brokerage for considered property in Goa.
+              </p>
+            </div>
+          </div>
+          <div className="lg:col-span-6 lg:col-start-7">
             <SmartImage
-              src="https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop"
-              alt="Placeholder portrait setting — REPLACE with a founder or principal advisor photograph."
-              className="aspect-[4/5] w-full max-w-md"
+              src="/properties/pilerne-villa-collection/18.webp"
+              alt="Staircase and double-height volume in the Pilerne villa collection."
+              className="aspect-[4/5] w-full max-w-md rounded-[4px]"
               sizes="(min-width: 1024px) 40vw, 100vw"
               quality={65}
             />
-          </div>
-          <div className="lg:col-span-6 lg:col-start-7">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-brass">
-              Principal
-            </p>
-            <h2 className="mt-3 font-serif text-3xl">
-              Advisor portrait, to be replaced
-            </h2>
             <p className="mt-5 max-w-md text-sm leading-relaxed text-ink-muted">
-              A short biography of the founding advisor will sit here —
-              background in Goa, the shape of the practice, and the manner in
-              which clients are received. Until then, this space is reserved
-              with intention rather than stock copy.
+              We work from Assagao, by appointment, across the addresses we
+              currently represent. Introductions are made with care, and only
+              when they fit.
             </p>
           </div>
         </div>
 
         <div className="mt-24">
           <ButtonLink href="/contact" variant="dark" className="w-full sm:w-auto">
-            Start a private conversation
+            Start a Private Enquiry
           </ButtonLink>
         </div>
       </Container>

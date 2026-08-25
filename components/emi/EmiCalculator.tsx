@@ -8,7 +8,6 @@ import {
   derivedLoanAmount,
   downPaymentPercent,
   emiDefaults,
-  emiStateToQuery,
   estimateEmi,
   financingWhatsAppText,
   formatInrCompact,
@@ -107,12 +106,6 @@ export function EmiCalculator({
       window.clearTimeout(persistTimer.current);
       const write = () => {
         persistEmiState(next);
-        const params = emiStateToQuery(next);
-        window.history.replaceState(
-          null,
-          "",
-          `${window.location.pathname}?${params.toString()}`,
-        );
       };
       if (immediate || !dragging.current) {
         persistTimer.current = window.setTimeout(write, immediate ? 0 : 280);
@@ -248,7 +241,7 @@ export function EmiCalculator({
 
       {priceOnRequest ? (
         <p className="mb-8 text-sm text-ink-muted">
-          Price on request — enter a figure that matches your brief. The result
+          Price on Request — enter a figure that matches your brief. The result
           is an indicative estimate, not a quote.
         </p>
       ) : null}
@@ -523,7 +516,7 @@ function ModeTab({
       aria-selected={active}
       onClick={onClick}
       className={cn(
-        "min-h-11 min-w-0 px-1 text-[9px] uppercase leading-tight tracking-[0.08em] sm:px-3 sm:text-[11px] sm:tracking-[0.16em] transition-colors duration-300",
+        "min-h-11 min-w-0 px-2 text-[11px] uppercase leading-tight tracking-[0.12em] sm:px-3 sm:tracking-[0.16em] transition-colors duration-300",
         active ? "bg-ink text-ivory" : "bg-transparent text-ink/70 hover:text-ink",
       )}
     >
@@ -567,8 +560,8 @@ function ResultCard({
           {valid ? formatInrExact(estimate.emi) : "—"}
         </p>
         <p className="mt-5 break-words text-sm leading-relaxed text-ivory/65">
-          Based on {formatInrExact(estimate.principal)} over {years} year
-          {years === 1 ? "" : "s"} at {rate.toFixed(2)}% p.a.
+          Based on {formatInrExact(estimate.principal)} over {years}{" "}
+          {years === 1 ? "year" : "years"} at {rate.toFixed(2)}% p.a.
         </p>
 
         <div className="mt-8 hidden flex-wrap items-center gap-5 sm:flex">

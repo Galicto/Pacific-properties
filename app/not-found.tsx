@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <Container className="flex min-h-[70vh] flex-col justify-center py-32">
       <p className="text-[11px] uppercase tracking-[0.28em] text-brass">404</p>
-      <h1 className="mt-4 font-serif text-5xl tracking-tight sm:text-6xl">
+      <h1 className="mt-4 max-w-3xl font-serif text-[clamp(2rem,8vw,3.75rem)] leading-[1.1] tracking-tight">
         This address is not in the collection.
       </h1>
       <p className="mt-5 max-w-md text-ink-muted">
@@ -19,7 +19,7 @@ export default function NotFound() {
         </ButtonLink>
         <Link
           href="/contact"
-          className="inline-flex items-center px-2 text-[11px] uppercase tracking-[0.18em] text-ink-muted hover:text-ink"
+          className="inline-flex min-h-11 items-center px-2 text-[11px] uppercase tracking-[0.18em] text-ink-muted hover:text-ink"
         >
           Speak to an advisor
         </Link>

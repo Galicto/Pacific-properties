@@ -73,6 +73,21 @@ const nextConfig: NextConfig = {
         destination: "/collection",
         permanent: true,
       },
+      {
+        source: "/journal/assagao-after-the-noise",
+        destination: "/journal/what-to-look-for-in-a-north-goa-villa",
+        permanent: true,
+      },
+      {
+        source: "/journal/buying-land-in-goa",
+        destination: "/journal/a-considered-guide-to-buying-property-in-goa",
+        permanent: true,
+      },
+      {
+        source: "/journal/the-quiet-calculus-of-a-second-home",
+        destination: "/journal/understanding-goa-property-investment",
+        permanent: true,
+      },
     ];
   },
 };

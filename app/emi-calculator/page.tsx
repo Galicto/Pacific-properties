@@ -1,4 +1,5 @@
 import { EmiCalculator } from "@/components/emi/EmiCalculator";
+import { PageIntro } from "@/components/layout/PageIntro";
 import { emiStateFromQuery } from "@/lib/emi";
 import { findPropertyForEmi } from "@/data/properties";
 import type { Metadata } from "next";
@@ -27,27 +28,22 @@ export default async function EmiCalculatorPage({
   });
   const seeded = emiStateFromQuery(query, listed?.price ?? null);
   const title = listed?.title || seeded.propertyTitle;
-  const location =
-    listed?.location || seeded.propertyLocation;
+  const location = listed?.location || seeded.propertyLocation;
 
   return (
     <>
-      <section className="overflow-x-clip bg-ivory pb-14 pt-32">
-        <div className="mx-auto w-full min-w-0 max-w-[1240px] px-7 sm:px-8">
-          <p className="text-[11px] uppercase tracking-[0.16em] text-brass sm:tracking-[0.28em]">
-            Home loan estimate
-          </p>
-          <h1 className="mt-5 max-w-3xl break-words font-serif text-[clamp(2rem,8vw,3.8rem)] leading-[1.1] tracking-tight">
-            Plan your purchase with clarity.
-          </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-muted">
-            An indicative EMI estimate for your next property decision. No
-            personal details required.
-          </p>
-        </div>
-      </section>
+      <PageIntro
+        eyebrow="Home loan estimate"
+        title="Plan your purchase with clarity."
+      >
+        <p>
+          An indicative EMI estimate for your next property decision. No
+          personal details required. Figures are calculated in your browser
+          and are not a lender quote.
+        </p>
+      </PageIntro>
       <section className="overflow-x-clip bg-ivory pb-20 lg:pb-24">
-        <div className="mx-auto w-full min-w-0 max-w-[1240px] px-7 sm:px-8">
+        <div className="mx-auto w-full min-w-0 max-w-[1240px] px-7 sm:px-8 lg:px-12">
           <EmiCalculator
             propertyPrice={seeded.propertyPrice || listed?.price || null}
             propertyTitle={title}

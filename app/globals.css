@@ -24,6 +24,7 @@ html {
   color-scheme: light;
   overflow-x: clip;
   scroll-behavior: smooth;
+  scroll-padding-top: calc(5.5rem + env(safe-area-inset-top));
 }
 
 html,

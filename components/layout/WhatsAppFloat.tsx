@@ -2,15 +2,27 @@
 
 import { IconWhatsApp } from "@/components/ui/Icons";
 import { defaultWhatsAppUrl } from "@/lib/whatsapp";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+function hideFloat(pathname: string) {
+  return (
+    pathname === "/contact" ||
+    pathname === "/emi-calculator" ||
+    (pathname.startsWith("/collection/") && pathname !== "/collection")
+  );
+}
+
 export function WhatsAppFloat() {
+  const pathname = usePathname();
   const [pulse, setPulse] = useState(true);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setPulse(false), 5200);
     return () => window.clearTimeout(timer);
   }, []);
+
+  if (hideFloat(pathname)) return null;
 
   return (
     <a

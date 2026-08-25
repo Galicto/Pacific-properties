@@ -56,7 +56,7 @@ export function MobileCtaBar() {
           className="h-12 min-w-0 flex-1 px-5 tracking-[0.14em]"
           variant="dark"
         >
-          Private enquiry
+          Private Enquiry
         </ButtonLink>
       </div>
     </div>

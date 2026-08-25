@@ -13,7 +13,8 @@ import {
   type PropertyStatus,
 } from "@/data/properties";
 import { cn } from "@/lib/utils";
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useFocusTrap } from "@/lib/hooks";
 
 type Filters = {
   purpose: "all" | PropertyPurpose;
@@ -52,7 +53,7 @@ const typeOptions: { id: Filters["type"]; label: string }[] = [
 
 const statusOptions: { id: Filters["status"]; label: string }[] = [
   { id: "all", label: "Any status" },
-  { id: "available", label: "Ready" },
+  { id: "available", label: "Available" },
   { id: "under-construction", label: "Under Construction" },
 ];
 
@@ -120,6 +121,8 @@ export function CollectionClient({
   const [sheet, setSheet] = useState(false);
   const [layout, setLayout] = useState<"grid" | "list">("grid");
   const [visible, setVisible] = useState(PAGE_SIZE);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(sheet, sheetRef);
 
   useEffect(() => {
     document.body.style.overflow = sheet ? "hidden" : "";
@@ -179,6 +182,11 @@ export function CollectionClient({
   }, [filters]);
 
   const shown = results.slice(0, visible);
+  const filtersActive =
+    filters.purpose !== "all" ||
+    filters.type !== "all" ||
+    filters.status !== "all" ||
+    Boolean(filters.area || filters.bedrooms || filters.price);
 
   const update = (partial: Partial<Filters>) => {
     setFilters((current) => ({ ...current, ...partial }));
@@ -267,57 +275,76 @@ export function CollectionClient({
           <option value="under-8">Under ₹8 Cr</option>
           <option value="8-15">₹8–15 Cr</option>
           <option value="15+">₹15 Cr and above</option>
-          <option value="por">Price on request</option>
+          <option value="por">Price on Request</option>
         </select>
       </label>
     </>
   );
 
   return (
-    <Container className="py-12 lg:py-10">
+    <Container className="py-12 pb-[calc(2rem+env(safe-area-inset-bottom))] lg:py-10">
       <div className="flex flex-col gap-6 border-b border-ink/10 pb-8">
         <button
           type="button"
           className="flex min-h-11 w-full items-center justify-between gap-3 border border-ink/15 px-4 text-[11px] uppercase tracking-[0.2em] text-ink lg:hidden"
           aria-expanded={sheet}
+          aria-controls="collection-filters"
           onClick={() => setSheet(true)}
         >
           Filters
-          <IconChevronDown className="h-4 w-4" />
+          {filtersActive ? (
+            <span className="normal-case tracking-normal text-brass">Active</span>
+          ) : (
+            <IconChevronDown className="h-4 w-4" />
+          )}
         </button>
 
         <div className="hidden lg:block">{chips}</div>
         <div className="hidden grid-cols-3 gap-4 lg:grid">{extraFields}</div>
 
         <div className="flex items-center justify-between gap-4">
-          <p className="text-sm text-ink-muted">
+          <p className="text-sm text-ink-muted" aria-live="polite">
             {results.length} {results.length === 1 ? "listing" : "listings"}
           </p>
-          <div className="flex border border-ink/15">
-            <button
-              type="button"
-              aria-label="Grid view"
-              aria-pressed={layout === "grid"}
-              onClick={() => setLayout("grid")}
-              className={cn(
-                "flex h-11 w-11 items-center justify-center",
-                layout === "grid" ? "bg-ink text-ivory" : "text-ink/50",
-              )}
-            >
-              <IconGrid className="h-4 w-4" />
-            </button>
-            <button
-              type="button"
-              aria-label="List view"
-              aria-pressed={layout === "list"}
-              onClick={() => setLayout("list")}
-              className={cn(
-                "flex h-11 w-11 items-center justify-center",
-                layout === "list" ? "bg-ink text-ivory" : "text-ink/50",
-              )}
-            >
-              <IconList className="h-4 w-4" />
-            </button>
+          <div className="flex items-center gap-3">
+            {filtersActive ? (
+              <button
+                type="button"
+                className="hidden min-h-11 text-[11px] uppercase tracking-[0.16em] text-ink-muted hover:text-ink lg:inline-flex"
+                onClick={() => {
+                  setFilters(emptyFilters);
+                  setVisible(PAGE_SIZE);
+                }}
+              >
+                Clear filters
+              </button>
+            ) : null}
+            <div className="flex border border-ink/15">
+              <button
+                type="button"
+                aria-label="Grid view"
+                aria-pressed={layout === "grid"}
+                onClick={() => setLayout("grid")}
+                className={cn(
+                  "flex h-11 w-11 items-center justify-center",
+                  layout === "grid" ? "bg-ink text-ivory" : "text-ink/50",
+                )}
+              >
+                <IconGrid className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                aria-label="List view"
+                aria-pressed={layout === "list"}
+                onClick={() => setLayout("list")}
+                className={cn(
+                  "flex h-11 w-11 items-center justify-center",
+                  layout === "list" ? "bg-ink text-ivory" : "text-ink/50",
+                )}
+              >
+                <IconList className="h-4 w-4" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -331,10 +358,12 @@ export function CollectionClient({
             onClick={() => setSheet(false)}
           />
           <div
+            ref={sheetRef}
             role="dialog"
             aria-modal="true"
             aria-label="Filters"
-            className="filter-sheet absolute inset-x-0 bottom-0 max-h-[88vh] overflow-y-auto border-t border-ink/10 bg-ivory px-6 pt-6"
+            id="collection-filters"
+            className="filter-sheet absolute inset-x-0 bottom-0 max-h-[88vh] overflow-y-auto overscroll-contain border-t border-ink/10 bg-ivory px-6 pt-6"
             style={{
               paddingBottom: "calc(1.25rem + env(safe-area-inset-bottom))",
             }}

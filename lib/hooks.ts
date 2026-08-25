@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { prefersReducedMotion } from "@/lib/media";
 
 export function usePrefersReducedMotion() {
@@ -27,7 +27,7 @@ export function useInViewOnce<T extends HTMLElement>(
     const el = ref.current;
     if (!el) return;
     if (prefersReducedMotion()) {
-      setInView(true);
+      queueMicrotask(() => setInView(true));
       return;
     }
     const io = new IntersectionObserver(
@@ -64,6 +64,48 @@ export function useInView<T extends HTMLElement>(
   }, [margin]);
 
   return { ref, inView };
+}
+
+export function useFocusTrap(
+  active: boolean,
+  containerRef: RefObject<HTMLElement | null>,
+  autoFocus = true,
+) {
+  useEffect(() => {
+    if (!active) return;
+    const root = containerRef.current;
+    if (!root) return;
+
+    const selectors =
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+
+    const focusables = () =>
+      [...root.querySelectorAll<HTMLElement>(selectors)].filter(
+        (el) => !el.hasAttribute("disabled") && el.getClientRects().length > 0,
+      );
+
+    if (autoFocus) {
+      focusables()[0]?.focus();
+    }
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Tab") return;
+      const list = focusables();
+      if (list.length === 0) return;
+      const first = list[0];
+      const last = list[list.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [active, autoFocus, containerRef]);
 }
 
 export function useSwipe(

@@ -138,6 +138,15 @@ function still(
   };
 }
 
+function uniqueImages(images: PropertyImage[]) {
+  const seen = new Set<string>();
+  return images.filter((image) => {
+    if (seen.has(image.src)) return false;
+    seen.add(image.src);
+    return true;
+  });
+}
+
 function listing(
   property: Omit<Property, "images" | "whatsAppEnquiryText" | "currency"> & {
     images?: PropertyImage[];
@@ -145,13 +154,15 @@ function listing(
     currency?: "INR";
   },
 ): Property {
-  const images =
-    property.images ??
-    (property.media.length > 0 ? property.media : [property.heroImage]);
+  const media = uniqueImages(property.media);
+  const images = uniqueImages(
+    property.images ?? (media.length > 0 ? media : [property.heroImage]),
+  );
   return {
     currency: "INR",
     whatsAppEnquiryText: enquiry(property.title, property.location),
     ...property,
+    media,
     images,
   };
 }
@@ -187,15 +198,15 @@ export const properties: Property[] = [
     areaRange: null,
     communitySize: null,
     roadAccess: null,
-    parking: "2-car parking",
+    parking: "Car Parking",
     possession: null,
     furnishing: null,
     reraNumber: null,
     amenities: [
-      "Private pool",
+      "Swimming Pool",
       "Deck",
-      "Twin-villa configuration",
-      "2-car parking",
+      "Twin-Villa Configuration",
+      "Car Parking",
     ],
     description:
       "A contemporary twin-villa offering in Aldona, shaped around tropical planting, warm materiality and private outdoor living. Each residence brings together generous interiors, a private pool and deck, and the calm of a North Goa setting.",
@@ -289,7 +300,7 @@ export const properties: Property[] = [
     purpose: "For Sale",
     category: "villa",
     price: null,
-    priceDisplay: "Price on request",
+    priceDisplay: "Price on Request",
     rent: null,
     status: "available",
     statusLabel: "Available",
@@ -305,16 +316,16 @@ export const properties: Property[] = [
     areaRange: null,
     communitySize: "6 villas",
     roadAccess: null,
-    parking: "Covered car parking",
+    parking: "Covered Car Parking",
     possession: null,
     furnishing: "Semi / fully furnished options",
     reraNumber: null,
     amenities: [
-      "Gated community",
-      "Private swimming pool",
+      "Gated Community",
+      "Private Swimming Pool",
       "Lift",
-      "Covered car parking",
-      "Power backup",
+      "Covered Car Parking",
+      "Power Backup",
       "Semi / fully furnished options",
     ],
     description:
@@ -525,16 +536,16 @@ export const properties: Property[] = [
     areaRange: null,
     communitySize: null,
     roadAccess: null,
-    parking: "Private car parking",
+    parking: "Car Parking",
     possession: null,
     furnishing: "Fully furnished",
     reraNumber: null,
     amenities: [
-      "Private swimming pool",
+      "Private Swimming Pool",
       "Lift",
-      "Private car parking",
-      "Power backup",
-      "Modular kitchen",
+      "Car Parking",
+      "Power Backup",
+      "Modular Kitchen",
       "Fully furnished",
     ],
     description:
@@ -580,11 +591,11 @@ export const properties: Property[] = [
     areaRange: null,
     communitySize: null,
     roadAccess: null,
-    parking: "Car parking",
+    parking: "Car Parking",
     possession: "April 2026",
     furnishing: "Unfurnished",
     reraNumber: null,
-    amenities: ["Private pool", "Private garden", "Car parking", "Unfurnished"],
+    amenities: ["Swimming Pool", "Private Garden", "Car Parking", "Unfurnished"],
     description:
       "A limited collection of contemporary 3.5-bedroom villas in Reis Magos, planned around private gardens and pools, with possession expected in April 2026.",
     shortDescription:
@@ -655,7 +666,7 @@ export const properties: Property[] = [
     furnishing: null,
     reraNumber: null,
     amenities: [
-      "Loading and unloading bay",
+      "Loading and Unloading Bay",
       "Washrooms",
       "Fire hydrant",
       "PEB shed",
@@ -766,7 +777,7 @@ export const properties: Property[] = [
     media: [],
     featured: false,
     mediaStatus: "needs-site-photography",
-    mediaFallbackText: "Private land dossier available on request.",
+    mediaFallbackText: "Private land dossier available on request",
     nearbyHighlights: [],
     mapEmbedUrl: mapsEmbedUrl("Ucassaim, North Goa, India"),
     relatedIds: [ALDONA, PILERNE, REIS],
@@ -797,17 +808,17 @@ export const properties: Property[] = [
     areaRange: null,
     communitySize: null,
     roadAccess: null,
-    parking: "Car parking",
+    parking: "Car Parking",
     possession: "August 2027",
     furnishing: null,
     reraNumber: null,
     amenities: [
-      "Private pool",
+      "Swimming Pool",
       "Lift",
-      "Car parking",
-      "Power backup",
-      "Modular kitchen",
-      "Spacious lounge",
+      "Car Parking",
+      "Power Backup",
+      "Modular Kitchen",
+      "Spacious Lounge",
     ],
     description:
       "Four-bedroom villas in Dona Paula, with private pool, lift, car parking, power backup, modular kitchen and a spacious lounge. Possession is expected in August 2027.",
@@ -857,19 +868,19 @@ export const properties: Property[] = [
     areaRange: null,
     communitySize: null,
     roadAccess: null,
-    parking: "Car parking",
+    parking: "Car Parking",
     possession: "August 2027",
     furnishing: null,
     reraNumber: null,
     amenities: [
       "Private terrace",
-      "Rooftop private pool",
+      "Rooftop Swimming Pool",
       "Gazebo sit-out",
       "Lift",
       "24/7 security",
-      "Power backup",
-      "Modular kitchen",
-      "Car parking",
+      "Power Backup",
+      "Modular Kitchen",
+      "Car Parking",
     ],
     description:
       "A three-bedroom penthouse in Dona Paula with a private terrace, rooftop pool and gazebo sit-out, with possession expected in August 2027.",
@@ -915,18 +926,18 @@ export const properties: Property[] = [
     areaRange: null,
     communitySize: null,
     roadAccess: null,
-    parking: "Car parking",
+    parking: "Car Parking",
     possession: "August 2027",
     furnishing: "Semi-furnished",
     reraNumber: null,
     amenities: [
       "Semi-furnished",
-      "Swimming pool",
+      "Swimming Pool",
       "Lift",
       "24/7 security",
-      "Power backup",
-      "Modular kitchen",
-      "Car parking",
+      "Power Backup",
+      "Modular Kitchen",
+      "Car Parking",
     ],
     description:
       "A three-bedroom apartment in Dona Paula, with swimming pool, lift, 24/7 security, power backup, modular kitchen and car parking. Possession is expected in August 2027.",
@@ -978,7 +989,9 @@ export function findPropertyForEmi(opts: {
 }
 
 export function getFeaturedProperties() {
-  return properties.filter((property) => property.featured);
+  return properties.filter(
+    (property) => property.featured && property.category !== "commercial",
+  );
 }
 
 export function getRelatedProperties(property: Property) {

@@ -35,12 +35,15 @@ export default async function ContactPage({
   return (
     <>
       <section className="grid min-h-[100svh] lg:grid-cols-2">
-        <div className="flex flex-col justify-center bg-ink px-7 py-28 text-ivory sm:px-10 lg:px-16" style={{ colorScheme: "dark" }}>
+        <div
+          className="flex flex-col justify-center bg-ink px-7 pb-16 pt-32 text-ivory sm:px-10 lg:px-16"
+          style={{ colorScheme: "dark" }}
+        >
           <p className="text-[11px] uppercase tracking-[0.28em] text-brass-soft">
             Enquire
           </p>
           <h1 className="mt-4 font-serif text-[clamp(2.3rem,7vw,3.75rem)] tracking-tight">
-            Let’s find what fits.
+            Let us find what fits.
           </h1>
           <p className="mt-5 max-w-md text-base leading-relaxed text-ivory/70">
             Whether you are buying, selling, investing or simply exploring

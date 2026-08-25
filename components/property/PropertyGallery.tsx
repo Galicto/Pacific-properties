@@ -82,7 +82,7 @@ export function PropertyGallery({
           ) : null}
         </button>
         {images.length > 1 ? (
-          <div className="pointer-events-none absolute inset-x-0 bottom-3 flex justify-between px-3 sm:hidden">
+          <div className="pointer-events-none absolute inset-x-0 top-1/2 flex -translate-y-1/2 justify-between px-3">
             <span className="pointer-events-auto">
               <button
                 type="button"
@@ -110,7 +110,7 @@ export function PropertyGallery({
       <div className="mt-3 flex gap-2 overflow-x-auto no-scrollbar">
         {thumbs.map((image, index) => (
           <button
-            key={image.src}
+            key={`${image.src}-${index}`}
             type="button"
             onClick={() => setActive(index)}
             aria-label={`Show image ${index + 1}`}
@@ -135,7 +135,10 @@ export function PropertyGallery({
         <button
           type="button"
           onClick={() => {
-            setExpanded(true);
+            if (!expanded) {
+              setExpanded(true);
+              return;
+            }
             setOpen(true);
           }}
           className="mt-4 min-h-11 text-[11px] uppercase tracking-[0.16em] text-ink-muted hover:text-ink"

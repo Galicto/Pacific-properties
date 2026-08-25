@@ -29,14 +29,14 @@ export function PropertyEnquiry({
   return (
     <aside className="border border-ink/10 bg-ivory-deep/50 p-7 sm:p-8">
       <p className="text-[11px] uppercase tracking-[0.22em] text-brass">
-        Private enquiry
+        Private Enquiry
       </p>
       <h2 className="mt-3 font-serif text-[clamp(1.6rem,3vw,1.9rem)] tracking-tight">
         {title}
       </h2>
       <p className="mt-3 text-sm leading-relaxed text-ink-muted">
         Ask for the booklet, a viewing, or a confidential conversation about
-        this residence.
+        this property.
       </p>
       <ButtonLink
         href={propertyWhatsAppUrl(title, area, enquiryText)}

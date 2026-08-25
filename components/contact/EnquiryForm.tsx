@@ -12,7 +12,7 @@ import {
 } from "@/lib/form";
 import { defaultWhatsAppUrl } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { Children, cloneElement, isValidElement, useState, type ReactElement } from "react";
 
 const empty: EnquiryPayload = {
   firstName: "",
@@ -117,7 +117,7 @@ export function EnquiryForm({
       ) : null}
 
       <div className={cn("grid gap-4", compact ? "grid-cols-1" : "sm:grid-cols-2")}>
-        <Field label="First name" htmlFor="firstName" error={errors.firstName} labelClass={labelClass}>
+        <Field label="First name" htmlFor="firstName" error={errors.firstName} labelClass={labelClass} dark={dark}>
           <input
             id="firstName"
             className={field}
@@ -126,7 +126,7 @@ export function EnquiryForm({
             onChange={(event) => setData({ ...data, firstName: event.target.value })}
           />
         </Field>
-        <Field label="Last name" htmlFor="lastName" error={errors.lastName} labelClass={labelClass}>
+        <Field label="Last name" htmlFor="lastName" error={errors.lastName} labelClass={labelClass} dark={dark}>
           <input
             id="lastName"
             className={field}
@@ -135,7 +135,7 @@ export function EnquiryForm({
             onChange={(event) => setData({ ...data, lastName: event.target.value })}
           />
         </Field>
-        <Field label="Phone" htmlFor="phone" error={errors.phone} labelClass={labelClass}>
+        <Field label="Phone" htmlFor="phone" error={errors.phone} labelClass={labelClass} dark={dark}>
           <input
             id="phone"
             className={field}
@@ -146,7 +146,7 @@ export function EnquiryForm({
             onChange={(event) => setData({ ...data, phone: event.target.value })}
           />
         </Field>
-        <Field label="Email" htmlFor="email" error={errors.email} labelClass={labelClass}>
+        <Field label="Email" htmlFor="email" error={errors.email} labelClass={labelClass} dark={dark}>
           <input
             id="email"
             className={field}
@@ -160,7 +160,7 @@ export function EnquiryForm({
           label="I am interested in"
           htmlFor="interest"
           error={errors.interest}
-          labelClass={labelClass}
+          labelClass={labelClass} dark={dark}
         >
           <select
             id="interest"
@@ -178,7 +178,7 @@ export function EnquiryForm({
             ))}
           </select>
         </Field>
-        <Field label="Preferred location" htmlFor="location" labelClass={labelClass}>
+        <Field label="Preferred location" htmlFor="location" labelClass={labelClass} dark={dark}>
           <select
             id="location"
             className={field}
@@ -201,7 +201,7 @@ export function EnquiryForm({
       </div>
 
       <div className="mt-4">
-        <Field label="Budget range" htmlFor="budget" labelClass={labelClass}>
+        <Field label="Budget range" htmlFor="budget" labelClass={labelClass} dark={dark}>
           <select
             id="budget"
             className={field}
@@ -219,7 +219,7 @@ export function EnquiryForm({
       </div>
 
       <div className="mt-4">
-        <Field label="Message" htmlFor="message" labelClass={labelClass}>
+        <Field label="Message" htmlFor="message" labelClass={labelClass} dark={dark}>
           <textarea
             id="message"
             className={cn(field, "min-h-28")}
@@ -243,11 +243,16 @@ export function EnquiryForm({
         </span>
       </label>
       {errors.consent ? (
-        <p className="mt-2 text-xs text-red-400">{errors.consent}</p>
+        <p className={cn("mt-2 text-xs", dark ? "text-red-300" : "text-red-800")}>
+          {errors.consent}
+        </p>
       ) : null}
 
       {status === "error" && message ? (
-        <p className="mt-4 text-sm text-red-400" role="alert">
+        <p
+          className={cn("mt-4 text-sm", dark ? "text-red-300" : "text-red-800")}
+          role="alert"
+        >
           {message}
         </p>
       ) : null}
@@ -269,12 +274,14 @@ function Field({
   htmlFor,
   error,
   labelClass,
+  dark,
   children,
 }: {
   label: string;
   htmlFor: string;
   error?: string;
   labelClass: string;
+  dark?: boolean;
   children: React.ReactNode;
 }) {
   return (
@@ -282,8 +289,22 @@ function Field({
       <label htmlFor={htmlFor} className={labelClass}>
         {label}
       </label>
-      {children}
-      {error ? <p className="mt-1 text-xs text-red-400">{error}</p> : null}
+      {Children.map(children, (child) =>
+        isValidElement(child)
+          ? cloneElement(child as ReactElement<Record<string, unknown>>, {
+              "aria-invalid": error ? true : undefined,
+              "aria-describedby": error ? `${htmlFor}-error` : undefined,
+            })
+          : child,
+      )}
+      {error ? (
+        <p
+          id={`${htmlFor}-error`}
+          className={cn("mt-1 text-xs", dark ? "text-red-300" : "text-red-800")}
+        >
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }

@@ -99,12 +99,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${cormorant.variable} ${manrope.variable} h-full antialiased`}
     >
       <head>
-        <link
-          rel="preconnect"
-          href="https://images.unsplash.com"
-          crossOrigin="anonymous"
-        />
-        <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <script
           dangerouslySetInnerHTML={{
             __html:
