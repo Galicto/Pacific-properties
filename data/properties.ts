@@ -3,561 +3,958 @@ import { mapsEmbedUrl } from "@/lib/config";
 export type PropertyCategory =
   | "villa"
   | "apartment"
+  | "penthouse"
   | "land"
-  | "commercial"
-  | "investment";
+  | "commercial";
 
-export type PropertyStatus =
-  | "available"
-  | "under-offer"
-  | "coming-soon"
-  | "sold";
+export type PropertyType =
+  | "Villa"
+  | "Apartment"
+  | "Penthouse"
+  | "Land"
+  | "Commercial Warehouse";
+
+export type PropertyPurpose = "For Sale" | "For Rent";
+
+export type PropertyStatus = "available" | "under-construction";
+
+export type MediaStatus =
+  | "ready"
+  | "needs-approved-photography"
+  | "needs-site-photography";
 
 export type Region = "North Goa" | "Central Goa" | "South Goa";
+
+export type PropertyImageKind = "photo" | "construction" | "fallback";
 
 export type PropertyImage = {
   src: string;
   alt: string;
+  kind?: PropertyImageKind;
+  caption?: string;
+};
+
+export type PropertyVideo = {
+  src: string;
+  poster: string;
+  alt: string;
+  /** Muted autoplay is allowed only for a verified property hero film. */
+  isHeroFilm: boolean;
 };
 
 export type Property = {
   id: string;
   slug: string;
   title: string;
-  category: PropertyCategory;
   location: string;
+  propertyType: PropertyType;
+  purpose: PropertyPurpose;
+  category: PropertyCategory;
+  currency: "INR";
+  price: number | null;
+  priceDisplay: string;
+  rent: string | null;
+  status: PropertyStatus;
+  statusLabel: string;
+  bedrooms: number | null;
+  bedroomsDisplay: string | null;
+  bathrooms: number | null;
   area: string;
   areaSlug: string;
   region: Region;
-  bedrooms: number | null;
-  bathrooms: number | null;
   builtUpArea: string | null;
   landArea: string | null;
+  plotArea: string | null;
+  areaRange: string | null;
+  communitySize: string | null;
+  roadAccess: string | null;
   parking: string | null;
-  price: number | null;
-  priceDisplay: string;
-  status: PropertyStatus;
-  statusLabel: string;
+  possession: string | null;
+  furnishing: string | null;
+  reraNumber: string | null;
+  amenities: string[];
+  description: string;
   shortDescription: string;
   longDescription: string[];
   features: string[];
-  amenities: string[];
+  media: PropertyImage[];
   images: PropertyImage[];
-  video?: string;
+  heroImage: PropertyImage;
+  featured: boolean;
+  whatsAppEnquiryText: string;
+  mediaStatus: MediaStatus;
+  mediaFallbackText: string | null;
+  galleryTitle?: string;
+  video?: PropertyVideo;
   nearbyHighlights: string[];
   mapEmbedUrl: string;
   lat?: number;
   lng?: number;
   relatedIds: string[];
-  featured?: boolean;
-  possession?: string;
 };
-
-/**
- * Unsplash stills used as stand-ins for architectural photography.
- * REPLACE: download approved photography into /public/properties/{slug}/01.jpg etc.
- * and update each `src`. Keep alt text.
- */
-function photo(id: string, alt: string): PropertyImage {
-  return {
-    src: `https://images.unsplash.com/${id}?auto=format&fit=crop`,
-    alt,
-  };
-}
 
 export const categoryLabels: Record<PropertyCategory, string> = {
   villa: "Villa",
   apartment: "Apartment",
+  penthouse: "Penthouse",
   land: "Land",
   commercial: "Commercial",
-  investment: "Investment",
 };
 
+const FALLBACK = {
+  preview: {
+    src: "/properties/_fallbacks/preview.webp",
+    alt: "Private preview available on request.",
+    kind: "fallback" as const,
+  },
+  land: {
+    src: "/properties/_fallbacks/land.webp",
+    alt: "Private land dossier available on request.",
+    kind: "fallback" as const,
+  },
+  plans: {
+    src: "/properties/_fallbacks/plans.webp",
+    alt: "Private preview and detailed plans available on request.",
+    kind: "fallback" as const,
+  },
+};
+
+function enquiry(title: string, location: string) {
+  return `Hello Pacific Properties Goa, I would like more details about ${title} in ${location}.`;
+}
+
+function still(
+  slug: string,
+  file: string,
+  alt: string,
+  kind: PropertyImageKind = "photo",
+  caption?: string,
+): PropertyImage {
+  return {
+    src: `/properties/${slug}/${file}`,
+    alt,
+    kind,
+    caption,
+  };
+}
+
+function listing(
+  property: Omit<Property, "images" | "whatsAppEnquiryText" | "currency"> & {
+    images?: PropertyImage[];
+    whatsAppEnquiryText?: string;
+    currency?: "INR";
+  },
+): Property {
+  const images =
+    property.images ??
+    (property.media.length > 0 ? property.media : [property.heroImage]);
+  return {
+    currency: "INR",
+    whatsAppEnquiryText: enquiry(property.title, property.location),
+    ...property,
+    images,
+  };
+}
+
+const ALDONA = "aldona-twin-villas";
+const PILERNE = "pilerne-villa-collection";
+const VERNA = "verna-warehouse";
+const REIS = "reis-magos-villas";
+
 export const properties: Property[] = [
-  {
-    id: "villa-sereno",
-    slug: "villa-sereno",
-    title: "Villa Sereno",
+  listing({
+    id: ALDONA,
+    slug: ALDONA,
+    title: "Twin Villas in Aldona",
+    location: "Aldona, North Goa",
+    propertyType: "Villa",
+    purpose: "For Sale",
     category: "villa",
-    location: "Assagao, North Goa",
-    area: "Assagao",
-    areaSlug: "assagao",
-    region: "North Goa",
-    bedrooms: 4,
-    bathrooms: 5,
-    builtUpArea: "420 sq. m.",
-    landArea: "1,120 sq. m.",
-    parking: "4 cars",
-    price: 125_000_000,
-    priceDisplay: "₹12.5 Cr",
+    price: 120_000_000,
+    priceDisplay: "₹12 Cr",
+    rent: null,
     status: "available",
     statusLabel: "Available",
-    featured: true,
-    possession: "Ready to move",
-    shortDescription:
-      "A laterite-and-lime residence organised around a quiet courtyard, set back from Assagao’s village roads.",
-    longDescription: [
-      "Villa Sereno sits on a gently rising plot in Assagao, oriented to hold the cooler hours of the day. The architecture is tropical-modern without theatre: thick laterite walls, a lime-washed courtyard, and a pool that reads as a sheet of water rather than a statement.",
-      "Four bedroom suites are arranged for privacy, with the principal rooms opening to planted courts. Interiors are spare — teak, stone, linen — so the light and the garden can do the work.",
-      "The house is offered as a completed residence, with staff quarters, a covered pavilion, and room to live at a measured pace. It is a home for those who already know Assagao, or who intend to learn it properly.",
-    ],
-    features: [
-      "Courtyard plan with laterite masonry",
-      "Principal suite with private garden",
-      "Separate staff accommodation",
-      "Covered dining pavilion",
-      "Borewell and rainwater provision",
-      "High compound, discreet approach",
-    ],
-    amenities: [
-      "Swimming pool",
-      "Outdoor kitchen",
-      "Study",
-      "Backup power",
-      "Landscaped gardens",
-      "Climate-controlled suites",
-    ],
-    images: [
-      photo("photo-1600596542815-ffad4c1539a9", "Villa Sereno — evening view of the residence and pool."),
-      photo("photo-1613977257592-4871e5fcd7c4", "Villa Sereno — courtyard and covered gallery."),
-      photo("photo-1600210491892-03d54c0aaf87", "Villa Sereno — living room opening to the garden."),
-      photo("photo-1600585154526-990dced4db0d", "Villa Sereno — dining interior."),
-      photo("photo-1600566753086-00f18fb6b3ea", "Villa Sereno — interior gallery with planted court."),
-    ],
-    nearbyHighlights: [
-      "Village bakeries and long-table restaurants within a short drive",
-      "Quiet lanes towards Siolim and Moira",
-      "Anjuna and the northern beaches twenty minutes away",
-      "Mapusa market for weekly provisions",
-    ],
-    mapEmbedUrl: mapsEmbedUrl("Assagao, Goa, India"),
-    lat: 15.593,
-    lng: 73.763,
-    relatedIds: ["casa-da-mare", "elevated-residence", "verdant-plot"],
-  },
-  {
-    id: "casa-da-mare",
-    slug: "casa-da-mare",
-    title: "Casa da Maré",
-    category: "villa",
-    location: "Siolim, North Goa",
-    area: "Siolim",
-    areaSlug: "siolim",
-    region: "North Goa",
-    bedrooms: 3,
-    bathrooms: 4,
-    builtUpArea: "310 sq. m.",
-    landArea: "860 sq. m.",
-    parking: "3 cars",
-    price: null,
-    priceDisplay: "Price on Request",
-    status: "available",
-    statusLabel: "Private listing",
-    featured: true,
-    possession: "Ready to move",
-    shortDescription:
-      "A low, river-facing house in Siolim, designed for shade, cross-breezes and long, unhurried evenings.",
-    longDescription: [
-      "Casa da Maré is held a little above the Chapora’s tidal reach, in a part of Siolim that still feels like a village. The house is single-storey in spirit, with a second level used sparingly for a study and a guest suite.",
-      "Water is the organising idea — a linear pool, deep verandahs, and rooms that stay dim and cool. The architecture borrows from Indo-Portuguese domestic scale without costume.",
-      "Offered as a private listing, the residence will suit a buyer who prefers to be introduced rather than to browse. Viewings are arranged by appointment.",
-    ],
-    features: [
-      "River-oriented verandahs",
-      "Linear swimming pool",
-      "Guest suite with independent access",
-      "Mature fruit trees on the plot",
-      "Restored laterite boundary",
-      "Quiet residential lane",
-    ],
-    amenities: [
-      "Pool",
-      "Outdoor shower",
-      "Library/study",
-      "Staff room",
-      "Covered parking",
-      "Irrigation",
-    ],
-    images: [
-      photo("photo-1613490493576-7fde63acd811", "Casa da Maré — pool terrace at the heart of the house."),
-      photo("photo-1571896349842-33c89424de2d", "Casa da Maré — covered lounge beside the water."),
-      photo("photo-1600210492486-724fe5c67fb0", "Casa da Maré — bedroom with filtered tropical light."),
-      photo("photo-1600607687920-4e2a09cf159d", "Casa da Maré — bathing room in stone and timber."),
-      photo("photo-1540541338287-41700207dee6", "Casa da Maré — the pool as a still plane of water."),
-    ],
-    nearbyHighlights: [
-      "Siolim village church and riverside walks",
-      "Morjim and Ashwem within easy reach",
-      "Ferry and bridge links towards the north",
-      "Weekly village market",
-    ],
-    mapEmbedUrl: mapsEmbedUrl("Siolim, Goa, India"),
-    lat: 15.618,
-    lng: 73.769,
-    relatedIds: ["villa-sereno", "coastal-estate", "casa-altura"],
-  },
-  {
-    id: "coastal-estate",
-    slug: "coastal-estate",
-    title: "Coastal Estate",
-    category: "villa",
-    location: "Candolim, North Goa",
-    area: "Candolim",
-    areaSlug: "candolim",
-    region: "North Goa",
     bedrooms: 5,
-    bathrooms: 6,
-    builtUpArea: "680 sq. m.",
-    landArea: "1,850 sq. m.",
-    parking: "6 cars",
-    price: 180_000_000,
-    priceDisplay: "₹18 Cr",
+    bedroomsDisplay: "5 BHK",
+    bathrooms: null,
+    area: "Aldona",
+    areaSlug: "aldona",
+    region: "North Goa",
+    builtUpArea: "370–422 sq m",
+    landArea: null,
+    plotArea: null,
+    areaRange: null,
+    communitySize: null,
+    roadAccess: null,
+    parking: "2-car parking",
+    possession: null,
+    furnishing: null,
+    reraNumber: null,
+    amenities: [
+      "Private pool",
+      "Deck",
+      "Twin-villa configuration",
+      "2-car parking",
+    ],
+    description:
+      "A contemporary twin-villa offering in Aldona, shaped around tropical planting, warm materiality and private outdoor living. Each residence brings together generous interiors, a private pool and deck, and the calm of a North Goa setting.",
+    shortDescription:
+      "A contemporary twin-villa offering in Aldona, shaped around tropical planting, warm materiality and private outdoor living.",
+    longDescription: [
+      "A contemporary twin-villa offering in Aldona, shaped around tropical planting, warm materiality and private outdoor living. Each residence brings together generous interiors, a private pool and deck, and the calm of a North Goa setting.",
+    ],
+    features: [],
+    heroImage: still(
+      ALDONA,
+      "hero.webp",
+      "Twin villas in Aldona with terracotta roofs, white walls and tropical planting.",
+    ),
+    media: [
+      still(
+        ALDONA,
+        "hero.webp",
+        "Twin villas in Aldona with terracotta roofs, white walls and tropical planting.",
+      ),
+      still(
+        ALDONA,
+        "01.webp",
+        "Aldona twin villas — exterior elevation and planted approach.",
+      ),
+      still(
+        ALDONA,
+        "02.webp",
+        "Aldona twin villas — architectural detail of the paired residences.",
+      ),
+      still(
+        ALDONA,
+        "03.webp",
+        "Aerial view of the Aldona twin villas and surrounding planting.",
+      ),
+      still(
+        ALDONA,
+        "04.webp",
+        "Living room at the Aldona twin villas opening to the garden and pool.",
+      ),
+      still(
+        ALDONA,
+        "05.webp",
+        "Interior living space at the Aldona twin villas.",
+      ),
+      still(
+        ALDONA,
+        "06.webp",
+        "Dining and lounge interior at the Aldona twin villas.",
+      ),
+      still(
+        ALDONA,
+        "07.webp",
+        "Interior gallery at the Aldona twin villas.",
+      ),
+      still(
+        ALDONA,
+        "08.webp",
+        "Interior detail at the Aldona twin villas.",
+      ),
+      still(
+        ALDONA,
+        "09.webp",
+        "Private pool and wooden deck at the Aldona twin villas.",
+      ),
+      still(
+        ALDONA,
+        "10.webp",
+        "Garden and pool court at the Aldona twin villas.",
+      ),
+      still(
+        ALDONA,
+        "11.webp",
+        "Exterior garden and pool detail at the Aldona twin villas.",
+      ),
+    ],
+    featured: true,
+    mediaStatus: "ready",
+    mediaFallbackText: null,
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Aldona, North Goa, India"),
+    relatedIds: [PILERNE, "saipem-luxury-villa", REIS],
+  }),
+
+  listing({
+    id: PILERNE,
+    slug: PILERNE,
+    title: "Four-Bedroom Villas in Pilerne",
+    location: "Pilerne, North Goa",
+    propertyType: "Villa",
+    purpose: "For Sale",
+    category: "villa",
+    price: null,
+    priceDisplay: "Price on request",
+    rent: null,
     status: "available",
     statusLabel: "Available",
-    featured: true,
-    possession: "Ready to move",
-    shortDescription:
-      "A substantial coastal residence in Candolim, set in a walled garden with a long pool and rooms for gathering.",
-    longDescription: [
-      "Coastal Estate is a five-bedroom house for people who entertain, host family across continents, and still want a private wing. The plot is unusually generous for Candolim, buffered from the beach road by planting and a high laterite wall.",
-      "The principal rooms face a long pool and a lawn that takes the afternoon light. A pavilion at the far end of the garden is used for meals that run late. Staff circulation is considered, as it must be in a house of this scale.",
-      "The address is coastal without being exposed. The sea is a short, shaded walk; the house itself remains a retreat.",
-    ],
-    features: [
-      "Five bedroom suites including a private wing",
-      "Eighteen-metre swimming pool",
-      "Garden pavilion and outdoor kitchen",
-      "Staff quarters and service court",
-      "Home office",
-      "Room for a small gym or studio",
-    ],
+    bedrooms: 4,
+    bedroomsDisplay: "4 BHK",
+    bathrooms: null,
+    area: "Pilerne",
+    areaSlug: "pilerne",
+    region: "North Goa",
+    builtUpArea: null,
+    landArea: null,
+    plotArea: "400–535 sq yd",
+    areaRange: null,
+    communitySize: "6 villas",
+    roadAccess: null,
+    parking: "Covered car parking",
+    possession: null,
+    furnishing: "Semi / fully furnished options",
+    reraNumber: null,
     amenities: [
-      "Pool",
-      "Landscaped lawns",
-      "Backup power",
-      "Water storage",
-      "Climate control",
-      "Covered parking",
+      "Gated community",
+      "Private swimming pool",
+      "Lift",
+      "Covered car parking",
+      "Power backup",
+      "Semi / fully furnished options",
     ],
-    images: [
-      photo("photo-1582268611958-ebfd161ef9cf", "Coastal Estate — garden elevation with pool."),
-      photo("photo-1564013799919-ab600027ffc6", "Coastal Estate — pool and lawn in late light."),
-      photo("photo-1602343168117-bb8ffe3e2e9f", "Coastal Estate — aerial of the residence and water."),
-      photo("photo-1512917774080-9991f1c4c750", "Coastal Estate — evening terrace."),
-      photo("photo-1571003123894-1f0594d2b5d9", "Coastal Estate — poolside living."),
+    description:
+      "A limited gated collection of six thoughtfully finished four-bedroom villas in Pilerne. Designed with private outdoor spaces, contemporary Goan details and considered interiors for year-round living.",
+    shortDescription:
+      "A limited gated collection of six thoughtfully finished four-bedroom villas in Pilerne.",
+    longDescription: [
+      "A limited gated collection of six thoughtfully finished four-bedroom villas in Pilerne. Designed with private outdoor spaces, contemporary Goan details and considered interiors for year-round living.",
     ],
-    nearbyHighlights: [
-      "Candolim beach within a short walk",
-      "Fort Aguada and Sinquerim",
-      "Calangute and the northern strip when required",
-      "Well-served by established restaurants",
+    features: [],
+    heroImage: still(
+      PILERNE,
+      "hero.webp",
+      "Principal living interior of a four-bedroom villa in Pilerne.",
+    ),
+    media: [
+      still(
+        PILERNE,
+        "hero.webp",
+        "Principal living interior of a four-bedroom villa in Pilerne.",
+      ),
+      still(
+        PILERNE,
+        "14.webp",
+        "Living space in a Pilerne villa with indoor–outdoor connection.",
+      ),
+      still(
+        PILERNE,
+        "23.webp",
+        "Lifestyle living interior in the Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "17.webp",
+        "Terrace and architectural detail, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "18.webp",
+        "Staircase and double-height volume, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "19.webp",
+        "Architectural interior detail, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "20.webp",
+        "Terrace outlook from a Pilerne villa.",
+      ),
+      still(
+        PILERNE,
+        "21.webp",
+        "Exterior architectural detail, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "38.webp",
+        "Covered terrace at a Pilerne villa.",
+      ),
+      still(
+        PILERNE,
+        "39.webp",
+        "Upper terrace and planting, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "40.webp",
+        "Architectural stair detail, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "41.webp",
+        "Interior stair and gallery, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "42.webp",
+        "Architectural volume, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "43.webp",
+        "Terrace seating at a Pilerne villa.",
+      ),
+      still(
+        PILERNE,
+        "44.webp",
+        "Garden-facing terrace, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "24.webp",
+        "Private pool and garden at a Pilerne villa.",
+      ),
+      still(
+        PILERNE,
+        "25.webp",
+        "Pool court and tropical planting, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "27.webp",
+        "Bathroom with arched openings, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "28.webp",
+        "Walk-in shower, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "29.webp",
+        "Bathroom interior, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "30.webp",
+        "Bathroom detail, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "31.webp",
+        "Dressing and bath suite, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "32.webp",
+        "Bathroom finishes, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "47.webp",
+        "Ensuite bathroom, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "16.webp",
+        "Minimalist shower, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "33.webp",
+        "Bedroom opening to a private outdoor area, Pilerne.",
+      ),
+      still(
+        PILERNE,
+        "34.webp",
+        "Bedroom with garden light, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "45.webp",
+        "Bedroom interior, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "46.webp",
+        "Guest bedroom, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "22.webp",
+        "Dining and lounge, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "37.webp",
+        "Open-plan dining and stair hall, Pilerne villa collection.",
+      ),
+      still(
+        PILERNE,
+        "36.webp",
+        "Bath and dressing suite with a freestanding tub, Pilerne.",
+      ),
     ],
-    mapEmbedUrl: mapsEmbedUrl("Candolim, Goa, India"),
-    lat: 15.518,
-    lng: 73.763,
-    relatedIds: ["casa-da-mare", "vantage-residences", "palms-atelier"],
-  },
-  {
-    id: "elevated-residence",
-    slug: "elevated-residence",
-    title: "Elevated Residence",
+    featured: true,
+    mediaStatus: "ready",
+    mediaFallbackText: null,
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Pilerne, North Goa, India"),
+    relatedIds: [ALDONA, "saipem-luxury-villa", REIS],
+  }),
+
+  listing({
+    id: "saipem-luxury-villa",
+    slug: "saipem-luxury-villa",
+    title: "Luxury Villa in Saipem",
+    location: "Saipem, North Goa",
+    propertyType: "Villa",
+    purpose: "For Sale",
     category: "villa",
+    price: 90_000_000,
+    priceDisplay: "₹9 Cr onwards",
+    rent: null,
+    status: "available",
+    statusLabel: "Available",
+    bedrooms: 4,
+    bedroomsDisplay: "4 BHK",
+    bathrooms: null,
+    area: "Saipem",
+    areaSlug: "saipem",
+    region: "North Goa",
+    builtUpArea: "535 sq m",
+    landArea: null,
+    plotArea: null,
+    areaRange: null,
+    communitySize: null,
+    roadAccess: null,
+    parking: "Private car parking",
+    possession: null,
+    furnishing: "Fully furnished",
+    reraNumber: null,
+    amenities: [
+      "Private swimming pool",
+      "Lift",
+      "Private car parking",
+      "Power backup",
+      "Modular kitchen",
+      "Fully furnished",
+    ],
+    description:
+      "A private four-bedroom villa opportunity in Saipem, designed for buyers seeking a substantial North Goa residence with lift access, dedicated parking and a private pool.",
+    shortDescription:
+      "A private four-bedroom villa opportunity in Saipem, with lift access, dedicated parking and a private pool.",
+    longDescription: [
+      "A private four-bedroom villa opportunity in Saipem, designed for buyers seeking a substantial North Goa residence with lift access, dedicated parking and a private pool.",
+    ],
+    features: [],
+    heroImage: FALLBACK.preview,
+    media: [],
+    featured: true,
+    mediaStatus: "needs-approved-photography",
+    mediaFallbackText: "Private preview available on request",
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Saipem, North Goa, India"),
+    relatedIds: [ALDONA, PILERNE, REIS],
+  }),
+
+  listing({
+    id: REIS,
+    slug: REIS,
+    title: "Luxury Villas in Reis Magos",
     location: "Reis Magos, North Goa",
+    propertyType: "Villa",
+    purpose: "For Sale",
+    category: "villa",
+    price: 59_500_000,
+    priceDisplay: "₹5.95 Cr onwards",
+    rent: null,
+    status: "under-construction",
+    statusLabel: "Under Construction · Possession April 2026",
+    bedrooms: 3.5,
+    bedroomsDisplay: "3.5 BHK",
+    bathrooms: null,
     area: "Reis Magos",
     areaSlug: "reis-magos",
     region: "North Goa",
-    bedrooms: 3,
-    bathrooms: 3,
-    builtUpArea: "265 sq. m.",
-    landArea: "640 sq. m.",
-    parking: "2 cars",
-    price: 78_000_000,
-    priceDisplay: "₹7.8 Cr",
-    status: "available",
-    statusLabel: "Available",
-    featured: true,
-    possession: "Ready to move",
-    shortDescription:
-      "A three-bedroom house on a rise above Reis Magos, with a long view towards the Mandovi and the fort.",
-    longDescription: [
-      "Elevated Residence is a compact, carefully made house. The plot is not large, but it is well placed: high enough to catch the river, far enough from the road to remain quiet.",
-      "Three bedrooms, a generous living volume, and a terrace that does most of the living in the dry months. The architecture is contemporary, with a restrained material palette — concrete, timber, and a single laterite wall that holds the garden.",
-      "It will suit a couple, a small family, or someone who wants a serious Goa house without the burden of a large estate.",
-    ],
-    features: [
-      "River-oriented terrace",
-      "Open living volume",
-      "Three bedroom suites",
-      "Compact, efficient plan",
-      "Established planting",
-      "Quiet residential pocket",
-    ],
-    amenities: [
-      "Plunge pool",
-      "Terrace kitchen",
-      "Study nook",
-      "Backup power",
-      "Covered parking",
-      "Climate control",
-    ],
-    images: [
-      photo("photo-1613977257363-707ba9348227", "Elevated Residence — whitewashed volumes against tropical planting."),
-      photo("photo-1600607687939-ce8a6c25118c", "Elevated Residence — garden and pool court."),
-      photo("photo-1523217582562-09d0def993a6", "Elevated Residence — street-facing elevation."),
-      photo("photo-1600585152220-90363fe7e115", "Elevated Residence — kitchen and living volume."),
-      photo("photo-1448630360428-65456885c650", "Elevated Residence — modern house in planting."),
-    ],
-    nearbyHighlights: [
-      "Reis Magos Fort and the riverfront",
-      "Ferry to Panaji",
-      "Nerul and the Candolim stretch nearby",
-      "Quieter than the main beach villages",
-    ],
-    mapEmbedUrl: mapsEmbedUrl("Reis Magos, Goa, India"),
-    lat: 15.497,
-    lng: 73.809,
-    relatedIds: ["villa-sereno", "casa-altura", "verdant-plot"],
-  },
-  {
-    id: "verdant-plot",
-    slug: "verdant-plot",
-    title: "Verdant Plot",
-    category: "land",
-    location: "Moira, North Goa",
-    area: "Moira",
-    areaSlug: "moira",
-    region: "North Goa",
-    bedrooms: null,
-    bathrooms: null,
     builtUpArea: null,
-    landArea: "2,400 sq. m.",
-    parking: null,
-    price: null,
-    priceDisplay: "Price on Request",
-    status: "available",
-    statusLabel: "By introduction",
-    featured: true,
-    possession: "Immediate",
-    shortDescription:
-      "A walled, well-planted parcel in Moira, suited to a single residence with a generous garden.",
-    longDescription: [
-      "Verdant Plot is land with a character already established: mature trees, a laterite boundary, and a shape that allows a house to sit without dominating the village around it.",
-      "Moira remains one of North Goa’s more considered residential villages — low, green, and still organised around its church and fields. The parcel is offered to those intending to build a home, not a compound of many units.",
-      "Due diligence, conversion status and building parameters will be shared in a private note. Viewings are by appointment only.",
-    ],
-    features: [
-      "Approximately 2,400 sq. m.",
-      "Mature tree cover",
-      "Laterite boundary walls",
-      "Village-road access",
-      "Quiet residential context",
-      "Suitable for a single residence",
-    ],
-    amenities: [
-      "Existing well",
-      "Electricity at the boundary",
-      "Established access",
-    ],
-    images: [
-      photo("photo-1470770841072-f978cf4d019e", "Verdant Plot — a house-scale clearing in deep planting."),
-      photo("photo-1469474968028-56623f02e42e", "Verdant Plot — wooded edge of the parcel."),
-      photo("photo-1470071459604-3b5ec3a7fe05", "Verdant Plot — morning light over the land."),
-      photo("photo-1441974231531-c6227db76b6e", "Verdant Plot — canopy and filtered light."),
-      photo("photo-1552733407-5d5c46c3bb3b", "Verdant Plot — tropical path through the site."),
-    ],
-    nearbyHighlights: [
-      "Moira church and village square",
-      "Assagao and Siolim a few minutes away",
-      "Fields and quiet cycling lanes",
-      "Mapusa for daily needs",
-    ],
-    mapEmbedUrl: mapsEmbedUrl("Moira, Goa, India"),
-    lat: 15.594,
-    lng: 73.837,
-    relatedIds: ["villa-sereno", "elevated-residence", "casa-da-mare"],
-  },
-  {
-    id: "casa-altura",
-    slug: "casa-altura",
-    title: "Casa Altura",
-    category: "apartment",
-    location: "Anjuna, North Goa",
-    area: "Anjuna",
-    areaSlug: "anjuna",
-    region: "North Goa",
-    bedrooms: 2,
-    bathrooms: 2,
-    builtUpArea: "148 sq. m.",
     landArea: null,
-    parking: "2 cars",
-    price: 28_500_000,
-    priceDisplay: "₹2.85 Cr",
-    status: "available",
-    statusLabel: "Available",
-    featured: true,
-    possession: "Ready to move",
+    plotArea: "289–400 sq m",
+    areaRange: null,
+    communitySize: null,
+    roadAccess: null,
+    parking: "Car parking",
+    possession: "April 2026",
+    furnishing: "Unfurnished",
+    reraNumber: null,
+    amenities: ["Private pool", "Private garden", "Car parking", "Unfurnished"],
+    description:
+      "A limited collection of contemporary 3.5-bedroom villas in Reis Magos, planned around private gardens and pools, with possession expected in April 2026.",
     shortDescription:
-      "A two-bedroom apartment in a low, planted building above Anjuna, with a terrace that holds the evening breeze.",
+      "Contemporary 3.5-bedroom villas in Reis Magos, planned around private gardens and pools, with possession expected in April 2026.",
     longDescription: [
-      "Casa Altura is an apartment for people who want Anjuna without living on its busiest lanes. The building is low-rise, the neighbours few, and the terrace is large enough to dine on through the season.",
-      "Two bedrooms, an open living kitchen, and storage that has been thought through. Materials are quiet: pale stone, timber, linen. The sea is a short drive; the house itself is for returning to.",
-      "A practical second home, or a primary residence for someone who prefers not to maintain a villa.",
+      "A limited collection of contemporary 3.5-bedroom villas in Reis Magos, planned around private gardens and pools, with possession expected in April 2026.",
     ],
-    features: [
-      "Wraparound terrace",
-      "Two bedroom suites",
-      "Open kitchen and living",
-      "Allocated parking for two cars",
-      "Low-rise building of few residences",
-      "Planted common areas",
+    features: [],
+    heroImage: still(
+      REIS,
+      "53.webp",
+      "Construction progress at the Reis Magos villas, with private pools taking shape against a river view.",
+      "construction",
+      "Construction Progress",
+    ),
+    media: [
+      still(
+        REIS,
+        "53.webp",
+        "Construction progress at the Reis Magos villas, with private pools taking shape against a river view.",
+        "construction",
+        "Construction Progress",
+      ),
+      still(
+        REIS,
+        "54.webp",
+        "Construction progress — villa shells and garden courts at Reis Magos.",
+        "construction",
+        "Construction Progress",
+      ),
     ],
-    amenities: [
-      "Shared pool",
-      "Backup power",
-      "Lift",
-      "Security",
-      "Climate control",
-      "Storage locker",
-    ],
-    images: [
-      photo("photo-1502672260266-1c1ef2d93688", "Casa Altura — living space with a long terrace."),
-      photo("photo-1522708323590-d24dbb6b0267", "Casa Altura — sitting room in natural light."),
-      photo("photo-1560448204-e02f11c3d0e2", "Casa Altura — kitchen and dining."),
-      photo("photo-1600121848594-d8644e57abab", "Casa Altura — interior volume."),
-      photo("photo-1598928506311-c55ded91a20c", "Casa Altura — calm sitting room."),
-    ],
-    nearbyHighlights: [
-      "Anjuna beach and the northern coastline",
-      "Vagator a few minutes away",
-      "Cafés and galleries of the village",
-      "Mapusa and Assagao close at hand",
-    ],
-    mapEmbedUrl: mapsEmbedUrl("Anjuna, Goa, India"),
-    lat: 15.584,
-    lng: 73.743,
-    relatedIds: ["vantage-residences", "elevated-residence", "casa-da-mare"],
-  },
-  {
-    id: "palms-atelier",
-    slug: "palms-atelier",
-    title: "Palms Atelier",
+    featured: true,
+    mediaStatus: "ready",
+    mediaFallbackText: null,
+    galleryTitle: "Construction Progress",
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Reis Magos, North Goa, India"),
+    relatedIds: [ALDONA, PILERNE, "dona-paula-villas"],
+  }),
+
+  listing({
+    id: VERNA,
+    slug: VERNA,
+    title: "Warehouse Space in Verna",
+    location: "Verna, Goa",
+    propertyType: "Commercial Warehouse",
+    purpose: "For Rent",
     category: "commercial",
-    location: "Candolim, North Goa",
-    area: "Candolim",
-    areaSlug: "candolim",
-    region: "North Goa",
-    bedrooms: null,
-    bathrooms: 2,
-    builtUpArea: "220 sq. m.",
-    landArea: "380 sq. m.",
-    parking: "4 cars",
-    price: 65_000_000,
-    priceDisplay: "₹6.5 Cr",
+    price: null,
+    priceDisplay: "₹35 per sq ft",
+    rent: "₹35 per sq ft",
     status: "available",
     statusLabel: "Available",
-    featured: true,
-    possession: "Immediate",
-    shortDescription:
-      "A ground-plus-one commercial house on a considered Candolim lane, suited to a studio, atelier or quiet office.",
-    longDescription: [
-      "Palms Atelier is a small commercial building with the manners of a house. It sits on a side lane, with a planted setback, high ceilings and a first-floor terrace that can take a long table.",
-      "The ground floor is a single, well-proportioned hall; above, two rooms and a terrace. It will suit a design practice, a private office, a showroom that does not need a highway frontage, or a hospitality concept of the quieter kind.",
-      "Tenure, permitted use and fit-out condition are available on request. Introductions are made to principals only.",
-    ],
-    features: [
-      "Ground-plus-one independent building",
-      "High-ceilinged hall",
-      "First-floor terrace",
-      "Planted front setback",
-      "Private parking",
-      "Separate service access",
-    ],
-    amenities: [
-      "Backup power",
-      "Water storage",
-      "Climate-ready interiors",
-      "Fibre connectivity at the street",
-    ],
-    images: [
-      photo("photo-1497366216548-37526070297c", "Palms Atelier — bright commercial interior."),
-      photo("photo-1497366811353-6870744d04b2", "Palms Atelier — meeting room with garden light."),
-      photo("photo-1497215728101-856f4ea42174", "Palms Atelier — open studio floor."),
-      photo("photo-1524758631624-e2822e304c36", "Palms Atelier — composed workspace."),
-      photo("photo-1604328698692-f76ea9498e76", "Palms Atelier — gallery-like hall."),
-    ],
-    nearbyHighlights: [
-      "Candolim’s established hospitality belt",
-      "Easy access to the NH and the beaches",
-      "Calangute and Sinquerim nearby",
-      "Staff housing options in adjoining villages",
-    ],
-    mapEmbedUrl: mapsEmbedUrl("Candolim, Goa, India"),
-    lat: 15.515,
-    lng: 73.766,
-    relatedIds: ["coastal-estate", "vantage-residences", "casa-altura"],
-  },
-  {
-    id: "vantage-residences",
-    slug: "vantage-residences",
-    title: "Vantage Residences",
-    category: "investment",
-    location: "Anjuna, North Goa",
-    area: "Anjuna",
-    areaSlug: "anjuna",
-    region: "North Goa",
-    bedrooms: 3,
-    bathrooms: 3,
-    builtUpArea: "186 sq. m.",
+    bedrooms: null,
+    bedroomsDisplay: null,
+    bathrooms: null,
+    area: "Verna",
+    areaSlug: "verna",
+    region: "South Goa",
+    builtUpArea: null,
     landArea: null,
-    parking: "2 cars",
-    price: 42_000_000,
-    priceDisplay: "₹4.2 Cr",
-    status: "coming-soon",
-    statusLabel: "Coming soon",
-    featured: true,
-    possession: "From 2027",
-    shortDescription:
-      "A limited collection of residences in Anjuna, offered as a considered investment with a life that can be lived in.",
-    longDescription: [
-      "Vantage Residences is a small, well-sited collection — not a resort, and not a tower. The units are genuine homes: three bedrooms, a proper kitchen, and terraces sized for living rather than for a brochure.",
-      "The investment case is simple and unhurried. Anjuna remains one of North Goa’s more durable addresses, and inventory of this quality is finite. Yield assumptions, holding periods and furnishing options are discussed privately.",
-      "A limited number of residences are being released. We will share the booklet with buyers who intend to hold, to live, or both.",
-    ],
-    features: [
-      "Limited collection of residences",
-      "Three-bedroom layouts",
-      "Private terraces",
-      "Shared pool and garden",
-      "Managed common areas",
-      "Optional furnishing",
-    ],
+    plotArea: null,
+    areaRange: "5,000–113,000 sq ft",
+    communitySize: null,
+    roadAccess: null,
+    parking: null,
+    possession: null,
+    furnishing: null,
+    reraNumber: null,
     amenities: [
-      "Pool",
-      "Concierge desk",
-      "Backup power",
-      "Parking",
-      "Climate control",
-      "Landscaped court",
+      "Loading and unloading bay",
+      "Washrooms",
+      "Fire hydrant",
+      "PEB shed",
+      "RCC shed",
+      "Laser flooring",
     ],
-    images: [
-      photo("photo-1499793983690-e29da59ef1c2", "Vantage Residences — tropical modern house form."),
-      photo("photo-1544984243-ec57ea16fe25", "Vantage Residences — pool and planted court."),
-      photo("photo-1416331108676-a22ccb276e35", "Vantage Residences — resort-scaled garden."),
-      photo("photo-1520250497591-112f2f40a3f4", "Vantage Residences — covered living terrace."),
-      photo("photo-1566073771259-6a8506099945", "Vantage Residences — pool deck."),
+    description:
+      "Flexible warehouse space in Verna, suitable for logistics, storage, industrial operations and distribution. Configurations are available from 5,000 to 113,000 square feet with loading infrastructure and essential industrial facilities.",
+    shortDescription:
+      "Flexible warehouse space in Verna, from 5,000 to 113,000 square feet, with loading infrastructure.",
+    longDescription: [
+      "Flexible warehouse space in Verna, suitable for logistics, storage, industrial operations and distribution. Configurations are available from 5,000 to 113,000 square feet with loading infrastructure and essential industrial facilities.",
     ],
-    nearbyHighlights: [
-      "Anjuna and Vagator coastline",
-      "Established rental demand in season",
-      "Assagao’s dining within a short drive",
-      "Airport via the northern roads",
+    features: [],
+    heroImage: still(
+      VERNA,
+      "hero.webp",
+      "Warehouse interior in Verna with high bays and a laser-finished floor.",
+    ),
+    media: [
+      still(
+        VERNA,
+        "hero.webp",
+        "Warehouse interior in Verna with high bays and a laser-finished floor.",
+      ),
+      still(
+        VERNA,
+        "55.webp",
+        "Warehouse interior volume in Verna.",
+      ),
+      still(
+        VERNA,
+        "56.webp",
+        "Warehouse floor and structural bays in Verna.",
+      ),
+      still(
+        VERNA,
+        "59.webp",
+        "Covered loading and dock infrastructure, Verna warehouse.",
+      ),
+      still(
+        VERNA,
+        "60.webp",
+        "Loading bay and concrete access, Verna warehouse.",
+      ),
+      still(
+        VERNA,
+        "61.webp",
+        "Exterior access road to the Verna warehouse.",
+      ),
+      still(
+        VERNA,
+        "62.webp",
+        "Warehouse exterior and yard access in Verna.",
+      ),
     ],
-    mapEmbedUrl: mapsEmbedUrl("Anjuna, Goa, India"),
-    lat: 15.578,
-    lng: 73.741,
-    relatedIds: ["casa-altura", "coastal-estate", "palms-atelier"],
-  },
+    featured: false,
+    mediaStatus: "ready",
+    mediaFallbackText: null,
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Verna, Goa, India"),
+    relatedIds: [],
+  }),
+
+  listing({
+    id: "ucassaim-land",
+    slug: "ucassaim-land",
+    title: "Old Settlement Land in Ucassaim",
+    location: "Ucassaim, North Goa",
+    propertyType: "Land",
+    purpose: "For Sale",
+    category: "land",
+    price: null,
+    priceDisplay: "Available upon verified client details",
+    rent: null,
+    status: "available",
+    statusLabel: "Available",
+    bedrooms: null,
+    bedroomsDisplay: null,
+    bathrooms: null,
+    area: "Ucassaim",
+    areaSlug: "ucassaim",
+    region: "North Goa",
+    builtUpArea: null,
+    landArea: "4,625 sq m",
+    plotArea: null,
+    areaRange: null,
+    communitySize: null,
+    roadAccess: "6 m road",
+    parking: null,
+    possession: null,
+    furnishing: null,
+    reraNumber: null,
+    amenities: [
+      "Old settlement land",
+      "Near Mapusa",
+      "Suitable for high-end villa development",
+    ],
+    description:
+      "An old-settlement land opportunity in Ucassaim, North Goa, with 6-metre road access and potential for a high-end villa development.",
+    shortDescription:
+      "Old-settlement land in Ucassaim, North Goa, with 6-metre road access, close to Mapusa.",
+    longDescription: [
+      "An old-settlement land opportunity in Ucassaim, North Goa, with 6-metre road access and potential for a high-end villa development.",
+    ],
+    features: [],
+    heroImage: FALLBACK.land,
+    media: [],
+    featured: false,
+    mediaStatus: "needs-site-photography",
+    mediaFallbackText: "Private land dossier available on request.",
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Ucassaim, North Goa, India"),
+    relatedIds: [ALDONA, PILERNE, REIS],
+  }),
+
+  listing({
+    id: "dona-paula-villas",
+    slug: "dona-paula-villas",
+    title: "Luxury Villas in Dona Paula",
+    location: "Dona Paula, Goa",
+    propertyType: "Villa",
+    purpose: "For Sale",
+    category: "villa",
+    price: 70_000_000,
+    priceDisplay: "₹7 Cr",
+    rent: null,
+    status: "under-construction",
+    statusLabel: "Under Construction · Possession August 2027",
+    bedrooms: 4,
+    bedroomsDisplay: "4 BHK",
+    bathrooms: null,
+    area: "Dona Paula",
+    areaSlug: "dona-paula",
+    region: "Central Goa",
+    builtUpArea: "267–274 sq m",
+    landArea: null,
+    plotArea: null,
+    areaRange: null,
+    communitySize: null,
+    roadAccess: null,
+    parking: "Car parking",
+    possession: "August 2027",
+    furnishing: null,
+    reraNumber: null,
+    amenities: [
+      "Private pool",
+      "Lift",
+      "Car parking",
+      "Power backup",
+      "Modular kitchen",
+      "Spacious lounge",
+    ],
+    description:
+      "Four-bedroom villas in Dona Paula, with private pool, lift, car parking, power backup, modular kitchen and a spacious lounge. Possession is expected in August 2027.",
+    shortDescription:
+      "Four-bedroom villas in Dona Paula. Possession is expected in August 2027.",
+    longDescription: [
+      "Four-bedroom villas in Dona Paula, with private pool, lift, car parking, power backup, modular kitchen and a spacious lounge. Possession is expected in August 2027.",
+    ],
+    features: [],
+    heroImage: FALLBACK.plans,
+    media: [],
+    featured: false,
+    mediaStatus: "needs-approved-photography",
+    mediaFallbackText:
+      "Private preview and detailed plans available on request",
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Dona Paula, Goa, India"),
+    relatedIds: [
+      "dona-paula-penthouse",
+      "dona-paula-apartment",
+      REIS,
+    ],
+  }),
+
+  listing({
+    id: "dona-paula-penthouse",
+    slug: "dona-paula-penthouse",
+    title: "Three-Bedroom Penthouse with Private Terrace",
+    location: "Dona Paula, Goa",
+    propertyType: "Penthouse",
+    purpose: "For Sale",
+    category: "penthouse",
+    price: 52_500_000,
+    priceDisplay: "₹5.25 Cr",
+    rent: null,
+    status: "under-construction",
+    statusLabel: "Under Construction · Possession August 2027",
+    bedrooms: 3,
+    bedroomsDisplay: "3 BHK",
+    bathrooms: null,
+    area: "Dona Paula",
+    areaSlug: "dona-paula",
+    region: "Central Goa",
+    builtUpArea: "268.35 sq m",
+    landArea: null,
+    plotArea: null,
+    areaRange: null,
+    communitySize: null,
+    roadAccess: null,
+    parking: "Car parking",
+    possession: "August 2027",
+    furnishing: null,
+    reraNumber: null,
+    amenities: [
+      "Private terrace",
+      "Rooftop private pool",
+      "Gazebo sit-out",
+      "Lift",
+      "24/7 security",
+      "Power backup",
+      "Modular kitchen",
+      "Car parking",
+    ],
+    description:
+      "A three-bedroom penthouse in Dona Paula with a private terrace, rooftop pool and gazebo sit-out, with possession expected in August 2027.",
+    shortDescription:
+      "A three-bedroom penthouse in Dona Paula with a private terrace, rooftop pool and gazebo sit-out.",
+    longDescription: [
+      "A three-bedroom penthouse in Dona Paula with a private terrace, rooftop pool and gazebo sit-out, with possession expected in August 2027.",
+    ],
+    features: [],
+    heroImage: FALLBACK.plans,
+    media: [],
+    featured: false,
+    mediaStatus: "needs-approved-photography",
+    mediaFallbackText:
+      "Private preview and detailed plans available on request",
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Dona Paula, Goa, India"),
+    relatedIds: ["dona-paula-villas", "dona-paula-apartment", REIS],
+  }),
+
+  listing({
+    id: "dona-paula-apartment",
+    slug: "dona-paula-apartment",
+    title: "Three-Bedroom Apartment in Dona Paula",
+    location: "Dona Paula, Goa",
+    propertyType: "Apartment",
+    purpose: "For Sale",
+    category: "apartment",
+    price: 32_500_000,
+    priceDisplay: "₹3.25 Cr",
+    rent: null,
+    status: "under-construction",
+    statusLabel: "Under Construction · Possession August 2027",
+    bedrooms: 3,
+    bedroomsDisplay: "3 BHK",
+    bathrooms: null,
+    area: "Dona Paula",
+    areaSlug: "dona-paula",
+    region: "Central Goa",
+    builtUpArea: "164.90 sq m",
+    landArea: null,
+    plotArea: null,
+    areaRange: null,
+    communitySize: null,
+    roadAccess: null,
+    parking: "Car parking",
+    possession: "August 2027",
+    furnishing: "Semi-furnished",
+    reraNumber: null,
+    amenities: [
+      "Semi-furnished",
+      "Swimming pool",
+      "Lift",
+      "24/7 security",
+      "Power backup",
+      "Modular kitchen",
+      "Car parking",
+    ],
+    description:
+      "A three-bedroom apartment in Dona Paula, with swimming pool, lift, 24/7 security, power backup, modular kitchen and car parking. Possession is expected in August 2027.",
+    shortDescription:
+      "A three-bedroom apartment in Dona Paula. Possession is expected in August 2027.",
+    longDescription: [
+      "A three-bedroom apartment in Dona Paula, with swimming pool, lift, 24/7 security, power backup, modular kitchen and car parking. Possession is expected in August 2027.",
+    ],
+    features: [],
+    heroImage: FALLBACK.plans,
+    media: [],
+    featured: false,
+    mediaStatus: "needs-approved-photography",
+    mediaFallbackText:
+      "Private preview and detailed plans available on request",
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Dona Paula, Goa, India"),
+    relatedIds: ["dona-paula-villas", "dona-paula-penthouse", REIS],
+  }),
 ];
+
+export function hasPhotography(property: Property) {
+  return property.media.some((image) => image.kind !== "fallback");
+}
+
+export function offersEmi(property: Property) {
+  return property.purpose === "For Sale" && property.price !== null;
+}
 
 export function getPropertyBySlug(slug: string) {
   return properties.find((property) => property.slug === slug);

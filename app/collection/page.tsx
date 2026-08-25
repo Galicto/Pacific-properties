@@ -6,7 +6,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "The Collection",
   description:
-    "A considered collection of villas, residences, land and investment opportunities across Goa, represented by Pacific Properties Goa.",
+    "Villas, residences, land and commercial space across Goa, represented by Pacific Properties Goa.",
 };
 
 export default async function CollectionPage({
@@ -20,14 +20,14 @@ export default async function CollectionPage({
       <section className="border-b border-ink/8 bg-ivory-deep/40 pb-20 pt-32">
         <Container>
           <p className="text-[11px] uppercase tracking-[0.28em] text-brass">
-            Residences & land
+            Residences, land & commercial
           </p>
           <h1 className="mt-4 font-serif text-[clamp(2.4rem,8vw,4.4rem)] tracking-tight">
             The Collection
           </h1>
           <p className="mt-5 max-w-xl text-base text-ink-muted">
-            A considered set of villas, residences, land and investment
-            opportunities across Goa — introduced, not advertised.
+            Current inventory from Pacific Properties — villas, a penthouse,
+            an apartment, land and warehouse space across Goa.
           </p>
           <Link
             href="/emi-calculator"

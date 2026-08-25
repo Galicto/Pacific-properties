@@ -4,69 +4,65 @@ export type MarqueeImage = {
   width: "narrow" | "regular" | "wide";
 };
 
-/**
- * Dual-row marquee stills. REPLACE with local photography
- * (villas, laterite, interiors, pools, palms, coastline).
- */
 export const marqueeImages: MarqueeImage[] = [
   {
-    src: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop",
-    alt: "A villa courtyard organised around a swimming pool.",
+    src: "/properties/aldona-twin-villas/hero.webp",
+    alt: "Twin villas in Aldona with terracotta roofs and tropical planting.",
     width: "wide",
   },
   {
-    src: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop",
-    alt: "A bedroom in filtered tropical light.",
+    src: "/properties/pilerne-villa-collection/33.webp",
+    alt: "A bedroom opening to a private outdoor area in Pilerne.",
     width: "narrow",
   },
   {
-    src: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop",
-    alt: "A lawn and pool at a coastal residence.",
+    src: "/properties/aldona-twin-villas/09.webp",
+    alt: "Private pool and wooden deck at the Aldona twin villas.",
     width: "regular",
   },
   {
-    src: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop",
-    alt: "A Portuguese-influenced village street.",
+    src: "/properties/pilerne-villa-collection/14.webp",
+    alt: "Living space in a Pilerne villa.",
     width: "narrow",
   },
   {
-    src: "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop",
-    alt: "An infinity edge looking toward tropical planting.",
+    src: "/properties/pilerne-villa-collection/24.webp",
+    alt: "Private pool and garden at the Pilerne villa collection.",
     width: "wide",
   },
   {
-    src: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop",
-    alt: "A dining room opening toward the garden.",
+    src: "/properties/aldona-twin-villas/04.webp",
+    alt: "Living room at the Aldona twin villas.",
     width: "regular",
   },
   {
-    src: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop",
-    alt: "The Arabian Sea along a Goa shoreline.",
+    src: "/properties/pilerne-villa-collection/25.webp",
+    alt: "Pool court and tropical planting in Pilerne.",
     width: "wide",
   },
   {
-    src: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop",
-    alt: "An interior gallery beside a planted court.",
+    src: "/properties/pilerne-villa-collection/34.webp",
+    alt: "Bedroom with garden light in Pilerne.",
     width: "narrow",
   },
   {
-    src: "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop",
-    alt: "A modern tropical house with a long pool.",
+    src: "/properties/aldona-twin-villas/10.webp",
+    alt: "Garden and pool court at the Aldona twin villas.",
     width: "regular",
   },
   {
-    src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop",
-    alt: "Temple-scale tropical architecture and palms.",
+    src: "/properties/pilerne-villa-collection/37.webp",
+    alt: "Dining hall and stair in a Pilerne villa.",
     width: "regular",
   },
   {
-    src: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop",
-    alt: "A stone and timber bathing room.",
+    src: "/properties/pilerne-villa-collection/23.webp",
+    alt: "Lifestyle interior in the Pilerne villa collection.",
     width: "narrow",
   },
   {
-    src: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop",
-    alt: "A covered lounge beside still water.",
+    src: "/properties/aldona-twin-villas/03.webp",
+    alt: "Aerial view of the Aldona twin villas.",
     width: "wide",
   },
 ];

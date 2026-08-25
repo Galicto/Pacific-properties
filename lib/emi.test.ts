@@ -255,49 +255,49 @@ test("INR display uses Indian grouping", () => {
 
 test("EMI page links pass property title, location and price", () => {
   const href = emiCalculatorHref({
-    title: "Casa da Maré",
-    location: "Siolim",
-    price: 18_000_000,
-    slug: "casa-da-mare",
+    title: "Twin Villas in Aldona",
+    location: "Aldona",
+    price: 120_000_000,
+    slug: "aldona-twin-villas",
   });
   assert.equal(href.includes("/emi-calculator?"), true);
   const params = new URLSearchParams(href.split("?")[1]);
-  assert.equal(params.get("property"), "Casa da Maré");
-  assert.equal(params.get("location"), "Siolim");
-  assert.equal(params.get("price"), "18000000");
-  assert.equal(params.get("slug"), "casa-da-mare");
+  assert.equal(params.get("property"), "Twin Villas in Aldona");
+  assert.equal(params.get("location"), "Aldona");
+  assert.equal(params.get("price"), "120000000");
+  assert.equal(params.get("slug"), "aldona-twin-villas");
 
   const por = emiCalculatorHref({
-    title: "Casa da Maré",
-    location: "Siolim",
-    slug: "casa-da-mare",
+    title: "Four-Bedroom Villas in Pilerne",
+    location: "Pilerne",
+    slug: "pilerne-villa-collection",
   });
   assert.equal(new URLSearchParams(por.split("?")[1]).has("price"), false);
 });
 
 test("query parser seeds price mode from a listing URL", () => {
   const params = new URLSearchParams(
-    "property=Casa%20da%20Mar%C3%A9&price=18000000&location=Siolim&slug=casa-da-mare",
+    "property=Twin%20Villas%20in%20Aldona&price=120000000&location=Aldona&slug=aldona-twin-villas",
   );
   const state = emiStateFromQuery(params);
   assert.equal(state.mode, "price");
-  assert.equal(state.propertyPrice, 18_000_000);
-  assert.equal(state.downPayment, 3_600_000);
-  assert.equal(state.loanAmount, 14_400_000);
-  assert.equal(state.propertyTitle, "Casa da Maré");
-  assert.equal(state.propertyLocation, "Siolim");
+  assert.equal(state.propertyPrice, 120_000_000);
+  assert.equal(state.downPayment, 24_000_000);
+  assert.equal(state.loanAmount, 96_000_000);
+  assert.equal(state.propertyTitle, "Twin Villas in Aldona");
+  assert.equal(state.propertyLocation, "Aldona");
 });
 
 test("financing WhatsApp copy includes the estimate", () => {
   const text = financingWhatsAppText({
-    propertyTitle: "Villa Sereno",
-    area: "Assagao",
+    propertyTitle: "Twin Villas in Aldona",
+    area: "Aldona, North Goa",
     loanAmount: 100_000_000,
     emi: 86_782,
     rate: 8.5,
     tenureYears: 20,
   });
-  assert.match(text, /Villa Sereno/);
-  assert.match(text, /Assagao/);
+  assert.match(text, /Twin Villas in Aldona/);
+  assert.match(text, /Aldona/);
   assert.match(text, /8\.5%/);
 });

@@ -39,7 +39,9 @@ export const metadata: Metadata = {
   keywords: [
     "Pacific Properties Goa",
     "luxury villas Goa",
-    "Assagao homes",
+    "Aldona villas",
+    "Pilerne villas",
+    "Dona Paula property",
     "North Goa real estate",
     "Goa property advisory",
     "Goa Association of Realtors",

@@ -9,12 +9,14 @@ import {
   categoryLabels,
   properties,
   type PropertyCategory,
+  type PropertyPurpose,
   type PropertyStatus,
 } from "@/data/properties";
 import { cn } from "@/lib/utils";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 type Filters = {
+  purpose: "all" | PropertyPurpose;
   type: "all" | PropertyCategory;
   area: string;
   bedrooms: string;
@@ -25,6 +27,7 @@ type Filters = {
 const PAGE_SIZE = 6;
 
 const emptyFilters: Filters = {
+  purpose: "all",
   type: "all",
   area: "",
   bedrooms: "",
@@ -32,9 +35,73 @@ const emptyFilters: Filters = {
   status: "all",
 };
 
+const purposeOptions: { id: Filters["purpose"]; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "For Sale", label: "For Sale" },
+  { id: "For Rent", label: "For Rent" },
+];
+
+const typeOptions: { id: Filters["type"]; label: string }[] = [
+  { id: "all", label: "All types" },
+  { id: "villa", label: "Villa" },
+  { id: "apartment", label: "Apartment" },
+  { id: "penthouse", label: "Penthouse" },
+  { id: "land", label: "Land" },
+  { id: "commercial", label: "Commercial" },
+];
+
+const statusOptions: { id: Filters["status"]; label: string }[] = [
+  { id: "all", label: "Any status" },
+  { id: "available", label: "Ready" },
+  { id: "under-construction", label: "Under Construction" },
+];
+
 function first(value: string | string[] | undefined) {
   if (Array.isArray(value)) return value[0] ?? "";
   return value ?? "";
+}
+
+function parsePurpose(value: string): Filters["purpose"] {
+  if (value === "rent" || value === "For Rent") return "For Rent";
+  if (value === "sale" || value === "For Sale") return "For Sale";
+  return "all";
+}
+
+function parseType(value: string): Filters["type"] {
+  if (value && value in categoryLabels) return value as PropertyCategory;
+  return "all";
+}
+
+function parseStatus(value: string): Filters["status"] {
+  if (value === "ready" || value === "available") return "available";
+  if (value === "under-construction") return "under-construction";
+  return "all";
+}
+
+function Chip({
+  active,
+  children,
+  onClick,
+}: {
+  active: boolean;
+  children: ReactNode;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={cn(
+        "min-h-11 shrink-0 border px-3.5 text-[11px] uppercase tracking-[0.14em]",
+        active
+          ? "border-ink bg-ink text-ivory"
+          : "border-ink/15 text-ink-muted hover:border-ink/40 hover:text-ink",
+      )}
+    >
+      {children}
+    </button>
+  );
 }
 
 export function CollectionClient({
@@ -42,18 +109,13 @@ export function CollectionClient({
 }: {
   initial: Record<string, string | string[] | undefined>;
 }) {
-  const initialArea = first(initial.area);
-  const initialType = first(initial.type) as Filters["type"] | "";
-
   const [filters, setFilters] = useState<Filters>({
-    type:
-      initialType && initialType in categoryLabels
-        ? (initialType as PropertyCategory)
-        : "all",
-    area: initialArea,
+    purpose: parsePurpose(first(initial.purpose)),
+    type: parseType(first(initial.type)),
+    area: first(initial.area),
     bedrooms: first(initial.bedrooms),
     price: first(initial.price),
-    status: (first(initial.status) as Filters["status"]) || "all",
+    status: parseStatus(first(initial.status)),
   });
   const [sheet, setSheet] = useState(false);
   const [layout, setLayout] = useState<"grid" | "list">("grid");
@@ -76,19 +138,30 @@ export function CollectionClient({
 
   const results = useMemo(() => {
     return properties.filter((property) => {
+      if (filters.purpose !== "all" && property.purpose !== filters.purpose) {
+        return false;
+      }
       if (filters.type !== "all" && property.category !== filters.type) {
         return false;
       }
       if (filters.area && property.areaSlug !== filters.area) return false;
       if (filters.bedrooms === "4+") {
         if (!property.bedrooms || property.bedrooms < 4) return false;
+      } else if (filters.bedrooms === "3") {
+        if (!property.bedrooms || property.bedrooms < 3 || property.bedrooms >= 4) {
+          return false;
+        }
       } else if (filters.bedrooms) {
         if (property.bedrooms !== Number(filters.bedrooms)) return false;
       }
       if (filters.status !== "all" && property.status !== filters.status) {
         return false;
       }
-      if (filters.price === "por" && property.price !== null) return false;
+      if (filters.price === "por") {
+        if (property.purpose !== "For Sale" || property.price !== null) {
+          return false;
+        }
+      }
       if (filters.price === "under-8" && !(property.price && property.price < 80_000_000)) {
         return false;
       }
@@ -115,25 +188,46 @@ export function CollectionClient({
   const selectClass =
     "mt-2 min-h-11 w-full border border-ink/15 bg-ivory px-3 text-base text-ink outline-none focus:border-ink/40";
 
-  const filterFields = (
+  const chips = (
+    <div className="flex flex-col gap-3">
+      <div className="flex flex-wrap gap-2">
+        {purposeOptions.map((option) => (
+          <Chip
+            key={option.id}
+            active={filters.purpose === option.id}
+            onClick={() => update({ purpose: option.id })}
+          >
+            {option.label}
+          </Chip>
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {typeOptions.map((option) => (
+          <Chip
+            key={option.id}
+            active={filters.type === option.id}
+            onClick={() => update({ type: option.id })}
+          >
+            {option.label}
+          </Chip>
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {statusOptions.map((option) => (
+          <Chip
+            key={option.id}
+            active={filters.status === option.id}
+            onClick={() => update({ status: option.id })}
+          >
+            {option.label}
+          </Chip>
+        ))}
+      </div>
+    </div>
+  );
+
+  const extraFields = (
     <>
-      <label className="text-[10px] uppercase tracking-[0.16em] text-ink-muted">
-        Property type
-        <select
-          className={selectClass}
-          value={filters.type}
-          onChange={(event) =>
-            update({ type: event.target.value as Filters["type"] })
-          }
-        >
-          <option value="all">All types</option>
-          {Object.entries(categoryLabels).map(([value, label]) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
-      </label>
       <label className="text-[10px] uppercase tracking-[0.16em] text-ink-muted">
         Location
         <select
@@ -157,8 +251,7 @@ export function CollectionClient({
           onChange={(event) => update({ bedrooms: event.target.value })}
         >
           <option value="">Any</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
+          <option value="3">3 / 3.5</option>
           <option value="4">4</option>
           <option value="4+">4+</option>
         </select>
@@ -177,27 +270,12 @@ export function CollectionClient({
           <option value="por">Price on request</option>
         </select>
       </label>
-      <label className="text-[10px] uppercase tracking-[0.16em] text-ink-muted">
-        Status
-        <select
-          className={selectClass}
-          value={filters.status}
-          onChange={(event) =>
-            update({ status: event.target.value as Filters["status"] })
-          }
-        >
-          <option value="all">Any status</option>
-          <option value="available">Available</option>
-          <option value="under-offer">Under offer</option>
-          <option value="coming-soon">Coming soon</option>
-        </select>
-      </label>
     </>
   );
 
   return (
     <Container className="py-12 lg:py-10">
-      <div className="flex flex-col gap-6 border-b border-ink/10 pb-8 lg:flex-row lg:items-end lg:justify-between">
+      <div className="flex flex-col gap-6 border-b border-ink/10 pb-8">
         <button
           type="button"
           className="flex min-h-11 w-full items-center justify-between gap-3 border border-ink/15 px-4 text-[11px] uppercase tracking-[0.2em] text-ink lg:hidden"
@@ -208,11 +286,12 @@ export function CollectionClient({
           <IconChevronDown className="h-4 w-4" />
         </button>
 
-        <div className="hidden grid-cols-5 gap-4 lg:grid">{filterFields}</div>
+        <div className="hidden lg:block">{chips}</div>
+        <div className="hidden grid-cols-3 gap-4 lg:grid">{extraFields}</div>
 
-        <div className="flex items-center justify-between gap-4 lg:justify-end">
+        <div className="flex items-center justify-between gap-4">
           <p className="text-sm text-ink-muted">
-            {results.length} {results.length === 1 ? "residence" : "residences"}
+            {results.length} {results.length === 1 ? "listing" : "listings"}
           </p>
           <div className="flex border border-ink/15">
             <button
@@ -271,7 +350,8 @@ export function CollectionClient({
                 <IconClose className="h-4 w-4" />
               </button>
             </div>
-            <div className="grid gap-4">{filterFields}</div>
+            {chips}
+            <div className="mt-6 grid gap-4">{extraFields}</div>
             <div className="mt-8 flex gap-3">
               <Button
                 variant="ghostInk"

@@ -20,8 +20,7 @@ export function Hero() {
           {siteConfig.tagline}
         </h1>
         <p className="mt-6 max-w-md text-[0.98rem] leading-[1.7] text-ivory/75 sm:mt-6 sm:max-w-xl sm:text-lg">
-          Curated villas, residences and investment opportunities across Goa’s
-          most compelling addresses.
+          Curated villas, residences, land and commercial space across Goa.
         </p>
         <div className="mt-10 sm:mt-10">
           <ButtonLink

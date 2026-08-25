@@ -10,14 +10,16 @@ export function PropertyActions({
   title,
   area,
   slug,
+  enquiryText,
 }: {
   title: string;
   area: string;
   slug: string;
+  enquiryText?: string;
   price?: number | null;
 }) {
   const [copied, setCopied] = useState(false);
-  const whatsapp = propertyWhatsAppUrl(title, area);
+  const whatsapp = propertyWhatsAppUrl(title, area, enquiryText);
 
   const share = async () => {
     const url =

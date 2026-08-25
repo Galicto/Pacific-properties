@@ -68,22 +68,31 @@ export function propertyJsonLd(property: {
   title: string;
   slug: string;
   shortDescription: string;
-  images: { src: string }[];
+  media?: { src: string; kind?: string }[];
+  images: { src: string; kind?: string }[];
   price: number | null;
+  currency?: string;
 }) {
+  const photos = (property.media ?? property.images).filter(
+    (image) => image.kind !== "fallback",
+  );
+  const image = photos.map((item) =>
+    item.src.startsWith("http") ? item.src : `${siteConfig.url}${item.src}`,
+  );
+
   return {
     "@context": "https://schema.org",
     "@type": "RealEstateListing",
     name: property.title,
     description: property.shortDescription,
     url: `${siteConfig.url}/collection/${property.slug}`,
-    image: property.images.map((image) => image.src),
+    ...(image.length ? { image } : {}),
     broker: { "@id": `${siteConfig.url}#organization` },
     ...(property.price
       ? {
           offers: {
             "@type": "Offer",
-            priceCurrency: "INR",
+            priceCurrency: property.currency ?? "INR",
             price: property.price,
             availability: "https://schema.org/InStock",
           },

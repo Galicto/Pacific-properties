@@ -36,16 +36,16 @@ Current v1 sources are Pexels MP4s (luxury villa courtyard + coastal aerial). Re
 
 ### 2. How to add/edit properties
 
-All listings live in **`data/properties.ts`**.
+All listings live in **`data/properties.ts`**. Unverified videos sit in **`data/unassigned-media.ts`** and must not be published until matched.
 
-Add an object to the `properties` array with a unique `slug`. Required fields include category, location / area / region, price (`number` or `null` for price on request), `priceDisplay`, copy, `images[]`, amenities, nearby highlights, `mapEmbedUrl`, and `relatedIds`.
+Add an object to the `properties` array with a unique `slug`. Required fields include `propertyType`, `purpose`, `location`, price (`number` or `null`), `priceDisplay`, `currency`, `status`, bedrooms, area fields, amenities, description, `media`, `heroImage`, `featured`, and `whatsAppEnquiryText`.
 
-- Set `featured: true` to appear in “Selected Residences” on the home page.
+- Set `featured: true` only for Aldona, Pilerne, Saipem and Reis Magos.
 - Neighbourhood cards are edited in `data/areas.ts`.
 - Journal essays are edited in `data/journal.ts`.
 - The dual image marquee is edited in `data/marquee.ts`.
 
-Replace Unsplash URLs with local files under `public/properties/{slug}/` when photography is ready. Keep descriptive `alt` text.
+Delivery stills live in `public/properties/{slug}/` as WebP. Original JPEGs are kept in `media/originals/` (not publicly served). Never use marketing-poster graphics as gallery or hero images.
 
 ### 3. How to change WhatsApp / social links
 
@@ -59,7 +59,7 @@ Helpers in `lib/whatsapp.ts` build personalised `wa.me` links. The default enqui
 
 `https://wa.me/917057860921?text=Hello%20Pacific%20Properties%20Goa%2C%20I%20would%20like%20to%20know%20more%20about%20your%20properties.`
 
-Property pages use: *Hello Pacific Properties Goa, I am interested in {title} in {area}.*
+Property pages use: *Hello Pacific Properties Goa, I would like more details about {title} in {location}.*
 
 All external links open with `target="_blank"` and `rel="noopener noreferrer"`.
 

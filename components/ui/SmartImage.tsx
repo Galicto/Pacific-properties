@@ -36,12 +36,14 @@ export function SmartImage({
 }) {
   const useFill = fill && !width;
 
+  const isRemote = src.startsWith("http://") || src.startsWith("https://");
+
   return (
     <div className={cn("relative overflow-hidden bg-ivory-deep", className)}>
       <Image
         src={src}
         alt={alt}
-        loader={mediaLoader}
+        loader={isRemote ? mediaLoader : undefined}
         fill={useFill}
         width={width}
         height={height}

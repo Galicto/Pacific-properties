@@ -25,7 +25,7 @@ export function Footer() {
           <Wordmark inverted lockup />
           <p className="mt-8 max-w-sm text-sm leading-relaxed text-ivory/65">
             A boutique brokerage for considered property in Goa — villas,
-            residences, land and investment, represented with discretion.
+            residences, land and commercial space, represented with discretion.
           </p>
         </div>
 

@@ -19,10 +19,12 @@ export function PropertyEnquiry({
   title,
   area,
   slug,
+  enquiryText,
 }: {
   title: string;
   area: string;
   slug: string;
+  enquiryText?: string;
 }) {
   return (
     <aside className="border border-ink/10 bg-ivory-deep/50 p-7 sm:p-8">
@@ -37,7 +39,7 @@ export function PropertyEnquiry({
         this residence.
       </p>
       <ButtonLink
-        href={propertyWhatsAppUrl(title, area)}
+        href={propertyWhatsAppUrl(title, area, enquiryText)}
         variant="dark"
         external
         className="mt-6 w-full"

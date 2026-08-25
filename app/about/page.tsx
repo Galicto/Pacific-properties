@@ -37,7 +37,7 @@ const timeline = [
   },
   {
     year: "Today",
-    text: "A considered collection across Assagao, Siolim, Anjuna, Candolim, Moira and Reis Magos — and the quiet work of representing it well.",
+    text: "A considered collection across Aldona, Pilerne, Saipem, Reis Magos, Ucassaim, Dona Paula and Verna — and the quiet work of representing it well.",
   },
 ];
 
@@ -46,8 +46,8 @@ export default function AboutPage() {
     <>
       <section className="relative h-[58vh] min-h-[18rem] bg-ink text-ivory sm:h-[70vh] sm:min-h-[28rem]">
         <SmartImage
-          src="https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?auto=format&fit=crop"
-          alt="A courtyard house in tropical light — REPLACE with a Pacific Properties Goa photograph."
+          src="/properties/aldona-twin-villas/hero.webp"
+          alt="Twin villas in Aldona, North Goa."
           className="absolute inset-0 h-full w-full"
           sizes="100vw"
           priority

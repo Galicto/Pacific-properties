@@ -5,6 +5,8 @@ import { IMAGE_BLUR_IVORY, mediaLoader } from "@/lib/images";
 
 /** Lightweight LCP poster — server component, no video, no client JS. */
 export function HeroPoster({ src }: { src: string }) {
+  const isRemote = src.startsWith("http://") || src.startsWith("https://");
+
   return (
     <Image
       src={src}
@@ -12,7 +14,7 @@ export function HeroPoster({ src }: { src: string }) {
       fill
       priority
       fetchPriority="high"
-      loader={mediaLoader}
+      loader={isRemote ? mediaLoader : undefined}
       sizes="100vw"
       quality={65}
       placeholder="blur"

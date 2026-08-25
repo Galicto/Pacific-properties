@@ -28,8 +28,8 @@ export function Intro() {
         <div className="mt-16 grid gap-8 md:grid-cols-12 md:gap-6">
           <Reveal className="md:col-span-7">
             <SmartImage
-              src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop"
-              alt="A laterite-and-lime tropical residence at dusk — REPLACE with Pacific Properties photography."
+              src="/properties/aldona-twin-villas/hero.webp"
+              alt="Twin villas in Aldona, North Goa."
               className="aspect-[4/3] w-full"
               sizes="(min-width: 768px) 58vw, 100vw"
               quality={70}
@@ -37,8 +37,8 @@ export function Intro() {
           </Reveal>
           <Reveal className="md:col-span-5 md:mt-16" delay={0.15}>
             <SmartImage
-              src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?auto=format&fit=crop"
-              alt="A shaded tropical path — REPLACE with a Goa lifestyle portrait."
+              src="/properties/pilerne-villa-collection/24.webp"
+              alt="Private pool and garden at the Pilerne villa collection."
               className="aspect-[3/4] w-full"
               sizes="(min-width: 768px) 40vw, 100vw"
               quality={70}

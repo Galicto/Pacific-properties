@@ -16,9 +16,9 @@ export const metadata: Metadata = {
 };
 
 const serviceAreas = [
-  { name: "North Goa", note: "Assagao, Siolim, Anjuna, Candolim, Moira, Reis Magos." },
-  { name: "Central Goa", note: "Panaji and the villages around the Mandovi." },
-  { name: "South Goa", note: "Introduced by appointment, for the right brief." },
+  { name: "North Goa", note: "Aldona, Pilerne, Saipem, Reis Magos, Ucassaim." },
+  { name: "Central Goa", note: "Dona Paula." },
+  { name: "South Goa", note: "Verna — warehouse and commercial space." },
 ];
 
 export default async function ContactPage({

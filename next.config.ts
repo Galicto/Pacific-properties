@@ -33,6 +33,46 @@ const nextConfig: NextConfig = {
         destination: "/collection/:slug",
         permanent: true,
       },
+      {
+        source: "/collection/villa-sereno",
+        destination: "/collection",
+        permanent: true,
+      },
+      {
+        source: "/collection/casa-da-mare",
+        destination: "/collection",
+        permanent: true,
+      },
+      {
+        source: "/collection/coastal-estate",
+        destination: "/collection",
+        permanent: true,
+      },
+      {
+        source: "/collection/elevated-residence",
+        destination: "/collection",
+        permanent: true,
+      },
+      {
+        source: "/collection/verdant-plot",
+        destination: "/collection",
+        permanent: true,
+      },
+      {
+        source: "/collection/casa-altura",
+        destination: "/collection",
+        permanent: true,
+      },
+      {
+        source: "/collection/palms-atelier",
+        destination: "/collection",
+        permanent: true,
+      },
+      {
+        source: "/collection/vantage-residences",
+        destination: "/collection",
+        permanent: true,
+      },
     ];
   },
 };

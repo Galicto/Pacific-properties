@@ -2,7 +2,9 @@ import { PropertyFinanceTeaser } from "@/components/emi/PropertyFinanceTeaser";
 import { PropertyActions } from "@/components/property/PropertyActions";
 import { PropertyTrustStrip } from "@/components/brand/TrustLines";
 import { PropertyEnquiry } from "@/components/property/PropertyEnquiry";
+import { PropertyFilm } from "@/components/property/PropertyFilm";
 import { PropertyGallery } from "@/components/property/PropertyGallery";
+import { PropertyMediaFallback } from "@/components/property/PropertyMediaFallback";
 import { RelatedProperties } from "@/components/property/RelatedProperties";
 import { Container } from "@/components/ui/Container";
 import { IconArrowLeft, IconArrowRight, IconPin } from "@/components/ui/Icons";
@@ -13,9 +15,13 @@ import {
   getAdjacentProperties,
   getPropertyBySlug,
   getRelatedProperties,
+  hasPhotography,
+  offersEmi,
   properties,
+  type Property,
 } from "@/data/properties";
 import { propertyJsonLd } from "@/lib/schema";
+import { siteConfig } from "@/lib/config";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -32,15 +38,72 @@ export async function generateMetadata({
   const { slug } = await params;
   const property = getPropertyBySlug(slug);
   if (!property) return { title: "Residence" };
+  const og = hasPhotography(property)
+    ? property.heroImage.src
+    : siteConfig.ogImage;
   return {
     title: `${property.title}, ${property.area}`,
     description: property.shortDescription,
     openGraph: {
       title: `${property.title} | Pacific Properties Goa`,
       description: property.shortDescription,
-      images: [{ url: property.images[0].src, alt: property.images[0].alt }],
+      images: [{ url: og, alt: property.heroImage.alt }],
     },
   };
+}
+
+function factRows(property: Property) {
+  const rows: { label: string; value: string }[] = [
+    { label: "Type", value: property.propertyType },
+    { label: "Purpose", value: property.purpose },
+    {
+      label: "Status",
+      value: property.statusLabel,
+    },
+  ];
+  if (property.bedroomsDisplay) {
+    rows.push({ label: "Bedrooms", value: property.bedroomsDisplay });
+  }
+  if (property.category !== "land" && property.category !== "commercial") {
+    rows.push({
+      label: "Bathrooms",
+      value:
+        property.bathrooms != null
+          ? String(property.bathrooms)
+          : "Available on request",
+    });
+  }
+  if (property.builtUpArea) {
+    rows.push({ label: "Built-up", value: property.builtUpArea });
+  }
+  if (property.plotArea) {
+    rows.push({ label: "Plot", value: property.plotArea });
+  }
+  if (property.landArea) {
+    rows.push({ label: "Land", value: property.landArea });
+  }
+  if (property.areaRange) {
+    rows.push({ label: "Area", value: property.areaRange });
+  }
+  if (property.communitySize) {
+    rows.push({ label: "Community", value: property.communitySize });
+  }
+  if (property.roadAccess) {
+    rows.push({ label: "Road access", value: property.roadAccess });
+  }
+  if (property.parking) {
+    rows.push({ label: "Parking", value: property.parking });
+  }
+  if (property.possession) {
+    rows.push({ label: "Possession", value: property.possession });
+  }
+  if (property.rent) {
+    rows.push({ label: "Rent", value: property.rent });
+  }
+  if (property.furnishing) {
+    rows.push({ label: "Furnishing", value: property.furnishing });
+  }
+  return rows;
 }
 
 export default async function PropertyPage({
@@ -55,15 +118,9 @@ export default async function PropertyPage({
   const related = getRelatedProperties(property);
   const { prev, next } = getAdjacentProperties(property.slug);
   const jsonLd = propertyJsonLd(property);
-
-  const facts = [
-    { label: "Bedrooms", value: property.bedrooms?.toString() ?? "—" },
-    { label: "Bathrooms", value: property.bathrooms?.toString() ?? "—" },
-    { label: "Built-up", value: property.builtUpArea ?? "—" },
-    { label: "Land", value: property.landArea ?? "—" },
-    { label: "Parking", value: property.parking ?? "—" },
-    { label: "Status", value: property.statusLabel },
-  ];
+  const facts = factRows(property);
+  const photography = hasPhotography(property);
+  const emi = offersEmi(property);
 
   return (
     <>
@@ -73,16 +130,28 @@ export default async function PropertyPage({
       />
 
       <section className="relative h-[58vh] min-h-[18rem] bg-ink sm:h-[72vh] sm:min-h-[28rem]">
-        <SmartImage
-          src={property.images[0].src}
-          alt={property.images[0].alt}
-          className="absolute inset-0 h-full w-full"
-          sizes="100vw"
-          priority
-          quality={65}
-          objectPosition="center 40%"
-        />
+        {photography ? (
+          <SmartImage
+            src={property.heroImage.src}
+            alt={property.heroImage.alt}
+            className="absolute inset-0 h-full w-full"
+            sizes="100vw"
+            priority
+            quality={65}
+            objectPosition="center 40%"
+          />
+        ) : (
+          <PropertyMediaFallback
+            property={property}
+            className="absolute inset-0 h-full w-full"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/20 to-ink/30" />
+        {property.status === "under-construction" ? (
+          <p className="absolute left-7 top-[calc(5.5rem+env(safe-area-inset-top))] bg-ink/70 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-ivory sm:left-8 lg:left-12">
+            {property.statusLabel}
+          </p>
+        ) : null}
         <div className="absolute bottom-10 left-7 right-7 sm:left-8 lg:left-12">
           <nav
             aria-label="Breadcrumb"
@@ -104,7 +173,7 @@ export default async function PropertyPage({
 
       <Container className="pt-14">
         <p className="text-[11px] uppercase tracking-[0.18em] text-brass sm:tracking-[0.22em]">
-          {categoryLabels[property.category]} · {property.statusLabel}
+          {property.propertyType} · {property.purpose} · {property.statusLabel}
         </p>
         <div className="mt-4 flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <div>
@@ -117,32 +186,42 @@ export default async function PropertyPage({
             </p>
           </div>
           <div>
-            <p className="font-serif text-[1.85rem] leading-tight sm:text-4xl">{property.priceDisplay}</p>
-            <PropertyFinanceTeaser
-              compact
-              property={{
-                title: property.title,
-                area: property.area,
-                location: property.location,
-                slug: property.slug,
-                price: property.price,
-              }}
-            />
+            <p className="font-serif text-[1.85rem] leading-tight sm:text-4xl">
+              {property.priceDisplay}
+            </p>
+            {emi ? (
+              <PropertyFinanceTeaser
+                compact
+                property={{
+                  title: property.title,
+                  area: property.area,
+                  location: property.location,
+                  slug: property.slug,
+                  price: property.price,
+                }}
+              />
+            ) : null}
           </div>
         </div>
       </Container>
 
       <PropertyActions
         title={property.title}
-        area={property.area}
+        area={property.location}
         slug={property.slug}
+        enquiryText={property.whatsAppEnquiryText}
         price={property.price}
       />
 
       <Container>
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-8">
-            <PropertyGallery images={property.images} title={property.title} />
+            {property.video ? (
+              <div className="mb-8">
+                <PropertyFilm video={property.video} title={property.title} />
+              </div>
+            ) : null}
+            <PropertyGallery property={property} />
 
             <dl className="mt-12 grid grid-cols-2 gap-px border border-ink/10 bg-ink/10 sm:grid-cols-3">
               {facts.map((fact) => (
@@ -163,15 +242,17 @@ export default async function PropertyPage({
               ))}
             </div>
 
-            <PropertyFinanceTeaser
-              property={{
-                title: property.title,
-                area: property.area,
-                location: property.location,
-                slug: property.slug,
-                price: property.price,
-              }}
-            />
+            {emi ? (
+              <PropertyFinanceTeaser
+                property={{
+                  title: property.title,
+                  area: property.area,
+                  location: property.location,
+                  slug: property.slug,
+                  price: property.price,
+                }}
+              />
+            ) : null}
           </div>
         </div>
       </Container>
@@ -179,17 +260,7 @@ export default async function PropertyPage({
       <Container className="mt-16 lg:mt-20">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <div className="grid gap-10 sm:grid-cols-2">
-              <div>
-                <h2 className="font-serif text-2xl">Features</h2>
-                <ul className="mt-4 space-y-2 text-sm text-ink-muted">
-                  {property.features.map((item) => (
-                    <li key={item} className="border-t border-ink/8 py-2">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            {property.amenities.length > 0 ? (
               <div>
                 <h2 className="font-serif text-2xl">Amenities</h2>
                 <ul className="mt-4 space-y-2 text-sm text-ink-muted">
@@ -200,12 +271,12 @@ export default async function PropertyPage({
                   ))}
                 </ul>
               </div>
-            </div>
+            ) : null}
 
             <section className="mt-16">
               <h2 className="font-serif text-3xl">The Location</h2>
               <p className="mt-3 max-w-xl text-sm text-ink-muted">
-                {property.location}. Nearby: {property.nearbyHighlights[0]}.
+                {property.location}.
               </p>
               <div className="mt-6 overflow-hidden border border-ink/10 bg-ivory-deep">
                 {property.mapEmbedUrl ? (
@@ -216,15 +287,17 @@ export default async function PropertyPage({
                   />
                 ) : (
                   <div className="flex h-[320px] items-center justify-center px-6 text-center text-sm text-ink-muted">
-                    Map embed not yet configured — set mapEmbedUrl on this listing.
+                    Map available on request.
                   </div>
                 )}
               </div>
-              <ul className="mt-6 space-y-2 text-sm text-ink-muted">
-                {property.nearbyHighlights.map((item) => (
-                  <li key={item}>— {item}</li>
-                ))}
-              </ul>
+              {property.nearbyHighlights.length > 0 ? (
+                <ul className="mt-6 space-y-2 text-sm text-ink-muted">
+                  {property.nearbyHighlights.map((item) => (
+                    <li key={item}>— {item}</li>
+                  ))}
+                </ul>
+              ) : null}
             </section>
           </div>
 
@@ -232,8 +305,9 @@ export default async function PropertyPage({
             <div className="lg:sticky lg:top-28">
               <PropertyEnquiry
                 title={property.title}
-                area={property.area}
+                area={property.location}
                 slug={property.slug}
+                enquiryText={property.whatsAppEnquiryText}
               />
             </div>
           </div>

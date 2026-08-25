@@ -1,6 +1,7 @@
 /**
- * Neighbourhood copy and imagery for “Explore Goa by Address”.
- * REPLACE images with local photography when available.
+ * Neighbourhood entries for inventory currently on the collection.
+ * Imagery is taken from verified listing stills, or a fallback texture
+ * where approved photography is not yet available.
  */
 
 export type Area = {
@@ -15,70 +16,74 @@ export type Area = {
 
 export const areas: Area[] = [
   {
-    slug: "assagao",
-    name: "Assagao",
+    slug: "aldona",
+    name: "Aldona",
     region: "North Goa",
-    descriptor: "Village lanes, laterite walls, a quieter inland life.",
+    descriptor: "A North Goa village address for a contemporary twin-villa offering.",
     longer:
-      "Assagao sits just inland of the northern beaches — green, residential, and still organised around its church and village roads. It is where many of Goa’s more considered houses have been made in the last two decades.",
-    image:
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop",
-    imageAlt: "Tropical architecture and planting in the spirit of Assagao.",
+      "Aldona, North Goa. Current inventory includes a contemporary twin-villa residence with private outdoor living.",
+    image: "/properties/aldona-twin-villas/hero.webp",
+    imageAlt: "Twin villas in Aldona, North Goa.",
   },
   {
-    slug: "siolim",
-    name: "Siolim",
+    slug: "pilerne",
+    name: "Pilerne",
     region: "North Goa",
-    descriptor: "River light, old houses, a village that still feels like one.",
+    descriptor: "A limited gated collection of six four-bedroom villas.",
     longer:
-      "Siolim holds the Chapora’s tidal edge and a stock of Indo-Portuguese houses that have not all been turned into something else. It is a place for those who prefer the river to the beach road.",
-    image:
-      "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop",
-    imageAlt: "A narrow street of older, Portuguese-influenced houses.",
+      "Pilerne, North Goa. A gated collection of six four-bedroom villas with private outdoor space.",
+    image: "/properties/pilerne-villa-collection/24.webp",
+    imageAlt: "Private pool and garden at the Pilerne villa collection.",
   },
   {
-    slug: "anjuna",
-    name: "Anjuna",
+    slug: "saipem",
+    name: "Saipem",
     region: "North Goa",
-    descriptor: "Coast, cliff and village — still the north’s most vivid address.",
+    descriptor: "A private four-bedroom villa opportunity in North Goa.",
     longer:
-      "Anjuna is more than its season. Behind the beach, residential pockets remain, and the light off the water still explains why people stay. We look for houses set a little back, with a life that can be lived year-round.",
-    image:
-      "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?auto=format&fit=crop",
-    imageAlt: "The Arabian Sea along a northern Goa shoreline.",
-  },
-  {
-    slug: "candolim",
-    name: "Candolim",
-    region: "North Goa",
-    descriptor: "A coastal stretch with depth, if you know where to look.",
-    longer:
-      "Candolim is often read too quickly. Away from the main road there are walled gardens, older plots and houses that face the water without performing for it. Scale is possible here, with the beach still a walk away.",
-    image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop",
-    imageAlt: "Palm-lined tropical shoreline near Candolim.",
-  },
-  {
-    slug: "moira",
-    name: "Moira",
-    region: "North Goa",
-    descriptor: "Fields, a famous church, and land that still has room to breathe.",
-    longer:
-      "Moira remains one of the more intact villages of Bardez — low, green, and still structured by its fields. It is a place to build a house with a garden, not a skyline.",
-    image:
-      "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop",
-    imageAlt: "A verdant, house-scaled landscape in the spirit of Moira.",
+      "Saipem, North Goa. A four-bedroom villa listing; approved photography is available privately on request.",
+    image: "/properties/_fallbacks/preview.webp",
+    imageAlt: "Saipem, North Goa — private preview available on request.",
   },
   {
     slug: "reis-magos",
     name: "Reis Magos",
     region: "North Goa",
-    descriptor: "Above the Mandovi, with the fort as a neighbour.",
+    descriptor: "Villas under construction, with possession expected in April 2026.",
     longer:
-      "Reis Magos occupies a rise above the river, looking back towards Panaji. The fort gives the place a gravity; the residential lanes below it remain surprisingly quiet. Houses here are often about the view, and about being close to the capital without living in it.",
-    image:
-      "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop",
-    imageAlt: "River and coastal water seen from a height, recalling Reis Magos.",
+      "Reis Magos, North Goa. A limited collection of 3.5-bedroom villas, currently under construction, with possession expected in April 2026.",
+    image: "/properties/reis-magos-villas/53.webp",
+    imageAlt: "Construction progress at villas in Reis Magos, North Goa.",
+  },
+  {
+    slug: "verna",
+    name: "Verna",
+    region: "South Goa",
+    descriptor: "Warehouse space for logistics, storage and distribution.",
+    longer:
+      "Verna, Goa. Flexible commercial warehouse space from 5,000 to 113,000 square feet.",
+    image: "/properties/verna-warehouse/61.webp",
+    imageAlt: "Access to warehouse space in Verna, Goa.",
+  },
+  {
+    slug: "ucassaim",
+    name: "Ucassaim",
+    region: "North Goa",
+    descriptor: "Old-settlement land, close to Mapusa, with 6-metre road access.",
+    longer:
+      "Ucassaim, North Goa. An old-settlement land holding of 4,625 square metres, close to Mapusa.",
+    image: "/properties/_fallbacks/land.webp",
+    imageAlt: "Ucassaim, North Goa — private land dossier available on request.",
+  },
+  {
+    slug: "dona-paula",
+    name: "Dona Paula",
+    region: "Central Goa",
+    descriptor: "Villas, a penthouse and an apartment, possession August 2027.",
+    longer:
+      "Dona Paula, Goa. Current inventory includes four-bedroom villas, a three-bedroom penthouse with private terrace, and a three-bedroom apartment. Possession is expected in August 2027.",
+    image: "/properties/_fallbacks/plans.webp",
+    imageAlt: "Dona Paula, Goa — private preview and detailed plans available on request.",
   },
 ];
 

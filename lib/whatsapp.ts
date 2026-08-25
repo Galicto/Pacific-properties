@@ -8,12 +8,16 @@ export const defaultWhatsAppUrl = buildWhatsAppUrl(
   siteConfig.defaultWhatsAppText,
 );
 
-export function propertyWhatsAppText(title: string, area: string) {
-  return `Hello Pacific Properties Goa, I am interested in ${title} in ${area}.`;
+export function propertyWhatsAppText(title: string, location: string) {
+  return `Hello Pacific Properties Goa, I would like more details about ${title} in ${location}.`;
 }
 
-export function propertyWhatsAppUrl(title: string, area: string) {
-  return buildWhatsAppUrl(propertyWhatsAppText(title, area));
+export function propertyWhatsAppUrl(
+  title: string,
+  location: string,
+  message?: string,
+) {
+  return buildWhatsAppUrl(message ?? propertyWhatsAppText(title, location));
 }
 
 export function enquiryWhatsAppText(payload: {

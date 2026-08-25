@@ -108,16 +108,14 @@ export const siteConfig = {
     {
       id: "villa-courtyard",
       src: "https://videos.pexels.com/video-files/3571264/3571264-hd_1920_1080_30fps.mp4",
-      poster:
-        "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop",
-      alt: "A still, sunlit villa courtyard with a swimming pool — replacement poster for the home hero.",
+      poster: "/properties/aldona-twin-villas/09.webp",
+      alt: "Private pool and deck at the Aldona twin villas.",
     },
     {
       id: "coastal-aerial",
       src: "https://videos.pexels.com/video-files/2022395/2022395-hd_1920_1080_30fps.mp4",
-      poster:
-        "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop",
-      alt: "Aerial coastal water — secondary hero still.",
+      poster: "/properties/pilerne-villa-collection/24.webp",
+      alt: "Private pool and garden at the Pilerne villa collection.",
     },
   ],
 } as const;

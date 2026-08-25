@@ -1,8 +1,26 @@
 import { CalculateEmiLink } from "@/components/emi/PropertyFinanceTeaser";
+import { PropertyMediaFallback } from "@/components/property/PropertyMediaFallback";
 import { SmartImage } from "@/components/ui/SmartImage";
 import { IconArrowUpRight } from "@/components/ui/Icons";
-import { categoryLabels, type Property } from "@/data/properties";
+import {
+  categoryLabels,
+  hasPhotography,
+  offersEmi,
+  type Property,
+} from "@/data/properties";
 import Link from "next/link";
+
+function specLine(property: Property) {
+  return [
+    property.bedroomsDisplay,
+    property.builtUpArea,
+    property.plotArea,
+    property.landArea,
+    property.areaRange,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+}
 
 export function PropertyCard({
   property,
@@ -11,15 +29,9 @@ export function PropertyCard({
   property: Property;
   layout?: "grid" | "list";
 }) {
-  const spec = [
-    property.bedrooms ? `${property.bedrooms} Bed` : null,
-    property.builtUpArea,
-    property.landArea && !property.bedrooms ? property.landArea : null,
-  ]
-    .filter(Boolean)
-    .join(" · ");
-
-  const emi = (
+  const spec = specLine(property);
+  const photo = hasPhotography(property);
+  const emi = offersEmi(property) ? (
     <CalculateEmiLink
       property={{
         title: property.title,
@@ -30,7 +42,47 @@ export function PropertyCard({
       variant="link"
       className="mt-3 hidden min-h-11 px-0 text-[11px] uppercase tracking-[0.16em] text-ink-muted hover:text-ink sm:inline-flex"
     />
-  );
+  ) : null;
+
+  const media =
+    photo ? (
+      <SmartImage
+        src={property.heroImage.src}
+        alt={property.heroImage.alt}
+        className={
+          layout === "list" ? "aspect-[16/10] w-full" : "aspect-[4/5] w-full"
+        }
+        imageClassName="media-zoom"
+        sizes={
+          layout === "list"
+            ? "(min-width: 768px) 40vw, 100vw"
+            : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+        }
+        quality={60}
+      />
+    ) : (
+      <PropertyMediaFallback
+        property={property}
+        className={
+          layout === "list" ? "aspect-[16/10] w-full" : "aspect-[4/5] w-full"
+        }
+      />
+    );
+
+  const badge =
+    property.status === "under-construction" ? (
+      <span className="absolute left-3 top-3 z-10 bg-ink/75 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-ivory">
+        {property.statusLabel}
+      </span>
+    ) : property.purpose === "For Rent" ? (
+      <span className="absolute left-3 top-3 z-10 bg-ink/75 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-ivory">
+        For Rent · Commercial
+      </span>
+    ) : property.category === "land" ? (
+      <span className="absolute left-3 top-3 z-10 bg-ink/75 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-ivory">
+        Land
+      </span>
+    ) : null;
 
   if (layout === "list") {
     return (
@@ -39,14 +91,10 @@ export function PropertyCard({
           href={`/collection/${property.slug}`}
           className="group grid gap-5 md:grid-cols-12"
         >
-          <SmartImage
-            src={property.images[0].src}
-            alt={property.images[0].alt}
-            className="aspect-[16/10] md:col-span-5"
-            imageClassName="media-zoom"
-            sizes="(min-width: 768px) 40vw, 100vw"
-            quality={60}
-          />
+          <div className="relative md:col-span-5">
+            {badge}
+            {media}
+          </div>
           <div className="media-shift flex flex-col justify-center md:col-span-7">
             <p className="text-[11px] uppercase tracking-[0.2em] text-brass">
               {property.location}
@@ -66,14 +114,10 @@ export function PropertyCard({
   return (
     <article>
       <Link href={`/collection/${property.slug}`} className="group block">
-        <SmartImage
-          src={property.images[0].src}
-          alt={property.images[0].alt}
-          className="aspect-[4/5] w-full"
-          imageClassName="media-zoom"
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          quality={60}
-        />
+        <div className="relative">
+          {badge}
+          {media}
+        </div>
         <div className="media-shift flex items-start justify-between gap-3 pt-5">
           <div>
             <p className="text-[11px] uppercase tracking-[0.18em] text-ink-muted">

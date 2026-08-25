@@ -44,8 +44,8 @@ export function WhyPacific() {
             </p>
             <div className="mt-10">
               <SmartImage
-                src="https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?auto=format&fit=crop"
-                alt="The Arabian Sea along a northern Goa shore — REPLACE with a Goa contextual photograph."
+                src="/properties/aldona-twin-villas/09.webp"
+                alt="Private pool and deck at the Aldona twin villas."
                 className="aspect-[4/5] w-full max-w-md"
                 sizes="(min-width: 1024px) 35vw, 100vw"
                 quality={65}
