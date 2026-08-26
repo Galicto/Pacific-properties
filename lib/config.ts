@@ -38,26 +38,34 @@ export const siteConfig = {
   },
 
   /**
-   * Configurable Google Maps embed — no API key required.
-   * Replace the query or paste a full embed URL from Google Maps > Share > Embed.
+   * Maps. Embed needs no API key. The static preview is first paint on Contact;
+   * the iframe mounts only after IntersectionObserver / tap.
    */
-  mapQuery: "Assagao, Goa, India",
+  mapQuery: "Assagao, Bardez, North Goa, Goa 403507, India",
   mapEmbedUrl:
-    "https://maps.google.com/maps?q=Assagao%2C%20Goa%2C%20India&z=12&output=embed",
+    "https://maps.google.com/maps?q=Assagao%2C%20Bardez%2C%20North%20Goa%2C%20Goa%20403507%2C%20India&z=12&output=embed",
+  mapPlaceUrl:
+    "https://www.google.com/maps/search/?api=1&query=Assagao%2C%20Bardez%2C%20North%20Goa%2C%20Goa%20403507%2C%20India",
+  mapDirectionsUrl:
+    "https://www.google.com/maps/dir/?api=1&destination=Assagao%2C%20Bardez%2C%20North%20Goa%2C%20Goa%20403507%2C%20India",
+  mapPreview: "/maps/assagao.webp",
+  mapCoordinates: { latitude: 15.5989, longitude: 73.7947 },
 
   /**
-   * Official lock-up and P-mark. Replace files in `public/brand/` — do not
-   * redraw, stretch, or recolour the artwork. Intrinsic sizes must match
-   * the files so the header does not shift.
+   * Official lock-up and P-mark. One colourway only (white type + gold icon).
+   * SVG is the primary web file; PNG is the raster fallback. Do not stretch,
+   * invert, filter, recolour, or swap this artwork. Intrinsic sizes must
+   * match the files so the header does not shift.
    */
   brand: {
-    logoOnDark: "/brand/logo-on-dark.webp",
-    logoOnLight: "/brand/logo-on-light.webp",
-    mark: "/brand/mark.webp",
-    /** PNG lock-up for JSON-LD and crawlers that prefer a still raster. */
-    logoPng: "/brand/logo-on-dark.png",
-    lockup: { width: 720, height: 236 },
-    markSize: { width: 156, height: 157 },
+    logo: "/brand/pacific-properties-logo.png",
+    logoSvg: "/brand/pacific-properties-logo.svg",
+    mark: "/brand/pacific-properties-mark.png",
+    markSvg: "/brand/pacific-properties-mark.svg",
+    /** Raster lock-up on black for JSON-LD / crawlers that composite onto light pages. */
+    logoPng: "/brand/pacific-properties-logo-share.png",
+    lockup: { width: 967, height: 145 },
+    markSize: { width: 107, height: 107 },
   },
 
   /**
@@ -123,4 +131,12 @@ export type HeroVideo = (typeof siteConfig.heroVideos)[number];
 
 export function mapsEmbedUrl(query: string, zoom = 14) {
   return `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=${zoom}&output=embed`;
+}
+
+export function mapsPlaceUrl(query: string) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+export function mapsDirectionsUrl(query: string) {
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}`;
 }

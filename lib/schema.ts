@@ -19,6 +19,12 @@ export function localBusinessJsonLd() {
       : `${siteConfig.url}${siteConfig.ogImage}`,
     telephone: siteConfig.phoneDisplay,
     email: siteConfig.email,
+    hasMap: siteConfig.mapPlaceUrl,
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: siteConfig.mapCoordinates.latitude,
+      longitude: siteConfig.mapCoordinates.longitude,
+    },
     address: {
       "@type": "PostalAddress",
       streetAddress: siteConfig.address.line1,
@@ -72,6 +78,7 @@ export function propertyJsonLd(property: {
   images: { src: string; kind?: string }[];
   price: number | null;
   currency?: string;
+  reraNumber?: string | null;
 }) {
   const photos = (property.media ?? property.images).filter(
     (image) => image.kind !== "fallback",
@@ -79,6 +86,10 @@ export function propertyJsonLd(property: {
   const image = photos.map((item) =>
     item.src.startsWith("http") ? item.src : `${siteConfig.url}${item.src}`,
   );
+  const rera =
+    property.reraNumber && /^PR[A-Z0-9]+$/i.test(property.reraNumber)
+      ? property.reraNumber
+      : null;
 
   return {
     "@context": "https://schema.org",
@@ -95,6 +106,15 @@ export function propertyJsonLd(property: {
             priceCurrency: property.currency ?? "INR",
             price: property.price,
             availability: "https://schema.org/InStock",
+          },
+        }
+      : {}),
+    ...(rera
+      ? {
+          identifier: {
+            "@type": "PropertyValue",
+            name: "RERA Registration Number",
+            value: rera,
           },
         }
       : {}),

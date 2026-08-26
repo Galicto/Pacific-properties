@@ -45,7 +45,7 @@ export const budgetRanges = [
   "₹7–12 Cr",
   "₹12–20 Cr",
   "₹20 Cr and above",
-  "Price on Request",
+  "Available on Request",
 ] as const;
 
 export const interestOptions: Interest[] = [

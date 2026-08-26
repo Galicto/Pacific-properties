@@ -15,6 +15,7 @@ import {
   categoryLabels,
   getFeaturedProperties,
   hasPhotography,
+  isNewLaunch,
   type Property,
 } from "@/data/properties";
 import { useFavourites } from "@/lib/favourites";
@@ -87,6 +88,10 @@ export function FeaturedResidences() {
                 <p className="absolute left-4 top-4 bg-ink/75 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-ivory">
                   {property.statusLabel}
                 </p>
+              ) : isNewLaunch(property) ? (
+                <p className="absolute left-4 top-4 bg-ink/75 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-ivory">
+                  New Launch
+                </p>
               ) : null}
               {current?.caption ? (
                 <p className="absolute left-4 top-14 bg-ink/70 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-ivory">
@@ -156,7 +161,9 @@ export function FeaturedResidences() {
 
           <div className="flex flex-col justify-center lg:col-span-5">
             <p className="text-[11px] uppercase tracking-[0.22em] text-brass">
-              {categoryLabels[property.category]} · {property.statusLabel}
+              {isNewLaunch(property)
+                ? `New Launch · ${categoryLabels[property.category]}`
+                : `${categoryLabels[property.category]} · ${property.statusLabel}`}
             </p>
             <h3 className="mt-3 font-serif text-[clamp(1.85rem,4vw,3rem)] tracking-tight">
               {property.title}
@@ -176,11 +183,22 @@ export function FeaturedResidences() {
               />
               <Fact
                 label="Built-up Area"
-                value={property.builtUpArea ?? "—"}
+                value={property.builtUpArea ?? property.areaRange ?? "—"}
               />
               <Fact
-                label="Plot"
-                value={property.plotArea ?? property.landArea ?? "—"}
+                label={
+                  property.plotArea || property.landArea
+                    ? "Plot"
+                    : property.communitySize
+                      ? "Community"
+                      : "Plot"
+                }
+                value={
+                  property.plotArea ??
+                  property.landArea ??
+                  property.communitySize ??
+                  "—"
+                }
               />
               <Fact label="Price" value={property.priceDisplay} />
             </dl>

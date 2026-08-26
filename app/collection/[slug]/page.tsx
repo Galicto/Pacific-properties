@@ -4,6 +4,7 @@ import { PropertyTrustStrip } from "@/components/brand/TrustLines";
 import { PropertyEnquiry } from "@/components/property/PropertyEnquiry";
 import { PropertyFilm } from "@/components/property/PropertyFilm";
 import { PropertyGallery } from "@/components/property/PropertyGallery";
+import { PropertyUnits } from "@/components/property/PropertyUnits";
 import { PropertyMediaFallback } from "@/components/property/PropertyMediaFallback";
 import { RelatedProperties } from "@/components/property/RelatedProperties";
 import { Container } from "@/components/ui/Container";
@@ -28,6 +29,8 @@ import { notFound } from "next/navigation";
 export function generateStaticParams() {
   return properties.map((property) => ({ slug: property.slug }));
 }
+
+export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
@@ -103,6 +106,11 @@ function factRows(property: Property) {
   if (property.furnishing) {
     rows.push({ label: "Furnishing", value: property.furnishing });
   }
+  if (property.reraNumber) {
+    rows.push({ label: "RERA", value: property.reraNumber });
+  } else if (property.reraDisplay) {
+    rows.push({ label: "RERA", value: property.reraDisplay });
+  }
   return rows;
 }
 
@@ -150,6 +158,10 @@ export default async function PropertyPage({
         {property.status === "under-construction" ? (
           <p className="absolute left-7 top-[calc(5.5rem+env(safe-area-inset-top))] bg-ink/70 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-ivory sm:left-8 lg:left-12">
             {property.statusLabel}
+          </p>
+        ) : property.collectionGroup === "new-launches" ? (
+          <p className="absolute left-7 top-[calc(5.5rem+env(safe-area-inset-top))] bg-ink/70 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-ivory sm:left-8 lg:left-12">
+            New Launch
           </p>
         ) : null}
         <div className="absolute bottom-10 left-7 right-7 sm:left-8 lg:left-12">
@@ -239,6 +251,8 @@ export default async function PropertyPage({
               ))}
             </div>
 
+            <PropertyUnits property={property} />
+
             {emi ? (
               <PropertyFinanceTeaser
                 property={{
@@ -269,6 +283,11 @@ export default async function PropertyPage({
               <p className="mt-3 max-w-xl text-sm text-ink-muted">
                 {property.location}
               </p>
+              {property.locationNote ? (
+                <p className="mt-2 max-w-xl text-sm text-ink-muted">
+                  {property.locationNote}
+                </p>
+              ) : null}
               <div className="mt-6 overflow-hidden rounded-[4px] border border-ink/10 bg-ivory-deep">
                 {property.mapEmbedUrl ? (
                   <LazyMap

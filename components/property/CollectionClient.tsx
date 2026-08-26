@@ -7,6 +7,7 @@ import { IconChevronDown, IconClose, IconGrid, IconList } from "@/components/ui/
 import { areas } from "@/data/areas";
 import {
   categoryLabels,
+  groupPropertiesByCollection,
   properties,
   type PropertyCategory,
   type PropertyPurpose,
@@ -181,6 +182,11 @@ export function CollectionClient({
     });
   }, [filters]);
 
+  const groups = useMemo(
+    () => groupPropertiesByCollection(results),
+    [results],
+  );
+
   const shown = results.slice(0, visible);
   const filtersActive =
     filters.purpose !== "all" ||
@@ -275,7 +281,7 @@ export function CollectionClient({
           <option value="under-8">Under ₹8 Cr</option>
           <option value="8-15">₹8–15 Cr</option>
           <option value="15+">₹15 Cr and above</option>
-          <option value="por">Price on Request</option>
+          <option value="por">Available on Request</option>
         </select>
       </label>
     </>
@@ -420,6 +426,33 @@ export function CollectionClient({
             Clear filters
           </Button>
         </div>
+      ) : !filtersActive ? (
+        <div className="mt-4">
+          {groups.map((group) => (
+            <section key={group.id} className="mt-14 first:mt-10">
+              <h2 className="font-serif text-[clamp(1.55rem,3vw,2.05rem)] tracking-tight">
+                {group.label}
+              </h2>
+              {layout === "grid" ? (
+                <div className="mt-8 grid gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+                  {group.properties.map((property) => (
+                    <PropertyCard key={property.id} property={property} />
+                  ))}
+                </div>
+              ) : (
+                <div className="mt-4">
+                  {group.properties.map((property) => (
+                    <PropertyCard
+                      key={property.id}
+                      layout="list"
+                      property={property}
+                    />
+                  ))}
+                </div>
+              )}
+            </section>
+          ))}
+        </div>
       ) : layout === "grid" ? (
         <div className="mt-12 grid gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
           {shown.map((property) => (
@@ -438,7 +471,7 @@ export function CollectionClient({
         </div>
       )}
 
-      {visible < results.length ? (
+      {filtersActive && visible < results.length ? (
         <div className="mt-14 flex justify-center">
           <Button
             variant="ghostInk"

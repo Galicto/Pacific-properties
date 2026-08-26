@@ -23,7 +23,25 @@ export type MediaStatus =
   | "needs-approved-photography"
   | "needs-site-photography";
 
-export type Region = "North Goa" | "Central Goa" | "South Goa";
+export type Region = "North Goa" | "Central Goa" | "South Goa" | "Goa";
+
+export type CollectionGroup =
+  | "new-launches"
+  | "signature-villas"
+  | "apartments-penthouses"
+  | "commercial"
+  | "land";
+
+export type UnitAvailability = "available" | "sold";
+
+export type PropertyUnit = {
+  id: string;
+  label: string;
+  area: string;
+  price: number | null;
+  priceDisplay: string;
+  status: UnitAvailability;
+};
 
 export type PropertyImageKind = "photo" | "construction" | "fallback";
 
@@ -91,6 +109,29 @@ export type Property = {
   lat?: number;
   lng?: number;
   relatedIds: string[];
+  collectionGroup: CollectionGroup;
+  units?: PropertyUnit[];
+  reraDisplay?: string | null;
+  availabilityDisclaimer?: string;
+  availabilityUpdatedOn?: string | null;
+  locationPendingConfirmation?: boolean;
+  locationNote?: string;
+};
+
+export const collectionGroupOrder: CollectionGroup[] = [
+  "new-launches",
+  "signature-villas",
+  "apartments-penthouses",
+  "commercial",
+  "land",
+];
+
+export const collectionGroupLabels: Record<CollectionGroup, string> = {
+  "new-launches": "New Launches",
+  "signature-villas": "Signature Villas",
+  "apartments-penthouses": "Apartments & Penthouses",
+  "commercial": "Commercial",
+  "land": "Land",
 };
 
 export const categoryLabels: Record<PropertyCategory, string> = {
@@ -148,10 +189,14 @@ function uniqueImages(images: PropertyImage[]) {
 }
 
 function listing(
-  property: Omit<Property, "images" | "whatsAppEnquiryText" | "currency"> & {
+  property: Omit<
+    Property,
+    "images" | "whatsAppEnquiryText" | "currency" | "collectionGroup"
+  > & {
     images?: PropertyImage[];
     whatsAppEnquiryText?: string;
     currency?: "INR";
+    collectionGroup?: CollectionGroup;
   },
 ): Property {
   const media = uniqueImages(property.media);
@@ -162,17 +207,391 @@ function listing(
     currency: "INR",
     whatsAppEnquiryText: enquiry(property.title, property.location),
     ...property,
+    collectionGroup:
+      property.collectionGroup ?? defaultCollectionGroup(property.category),
     media,
     images,
   };
+}
+
+function defaultCollectionGroup(category: PropertyCategory): CollectionGroup {
+  if (category === "commercial") return "commercial";
+  if (category === "land") return "land";
+  if (category === "apartment" || category === "penthouse") {
+    return "apartments-penthouses";
+  }
+  return "signature-villas";
 }
 
 const ALDONA = "aldona-twin-villas";
 const PILERNE = "pilerne-villa-collection";
 const VERNA = "verna-warehouse";
 const REIS = "reis-magos-villas";
+const OCEAN = "ocean-cloud";
+const DEMURE = "la-demure";
 
 export const properties: Property[] = [
+  listing({
+    id: OCEAN,
+    slug: OCEAN,
+    title: "Ocean Cloud",
+    location: "Goa",
+    propertyType: "Apartment",
+    purpose: "For Sale",
+    category: "apartment",
+    collectionGroup: "new-launches",
+    price: 50_000_000,
+    priceDisplay: "From ₹5.00 Cr",
+    rent: null,
+    status: "available",
+    statusLabel: "Available",
+    bedrooms: 3,
+    bedroomsDisplay: "3 BHK",
+    bathrooms: null,
+    area: "Goa",
+    areaSlug: "",
+    region: "Goa",
+    builtUpArea: "2,751–2,906 sq ft super built-up",
+    landArea: null,
+    plotArea: null,
+    areaRange: null,
+    communitySize: "10 residences",
+    roadAccess: null,
+    parking: "Car Parking",
+    possession: null,
+    furnishing: null,
+    reraNumber: "PRGO08252501",
+    amenities: [
+      "Rooftop Infinity Pool",
+      "Sunset Deck",
+      "Private Jacuzzi",
+      "Dual Elevators",
+      "Gym / Spa",
+      "Premium Security",
+      "Car Parking",
+    ],
+    description:
+      "A limited collection of ten luxury 3 BHK sea-facing residences, with a rooftop infinity pool, sunset deck, private Jacuzzi, dual elevators, gym and spa, and premium security.",
+    shortDescription:
+      "Ten luxury 3 BHK sea-facing residences, with rooftop amenities, dual elevators and verified floor-wise pricing.",
+    longDescription: [
+      "Ocean Cloud is a limited collection of ten luxury 3 BHK sea-facing residences. Shared amenities include a rooftop infinity pool, sunset deck, private Jacuzzi, dual elevators, gym and spa, and premium security, with Car Parking at ground level.",
+      "The current price list identifies twelve unit numbers. Residences 501, 601 and 602 are sold and are not offered. Live inventory should be confirmed with us before a viewing is planned — the brochure describes ten residences, while the price list enumerates twelve unit numbers.",
+      "Prices and availability are subject to confirmation. The exact locality will be shared once it has been verified for publication.",
+    ],
+    features: [],
+    heroImage: still(
+      OCEAN,
+      "02.webp",
+      "Ocean Cloud — a sea-facing residence building with curved balconies, planted terraces and a rooftop deck.",
+    ),
+    media: [
+      still(
+        OCEAN,
+        "02.webp",
+        "Ocean Cloud — a sea-facing residence building with curved balconies, planted terraces and a rooftop deck.",
+      ),
+      still(
+        OCEAN,
+        "hero.webp",
+        "Open sea and sky from a sea-facing residence at Ocean Cloud.",
+      ),
+      still(
+        OCEAN,
+        "03.webp",
+        "Double-height lobby at Ocean Cloud, with dual elevators beyond the central hall.",
+      ),
+      still(
+        OCEAN,
+        "09b.webp",
+        "Rooftop infinity pool and sunset deck at Ocean Cloud.",
+      ),
+      still(
+        OCEAN,
+        "09-deck.webp",
+        "Infinity pool, pergola and deck at the Ocean Cloud rooftop.",
+      ),
+      still(
+        OCEAN,
+        "10-terrace.webp",
+        "Private Jacuzzi and evening terrace at an Ocean Cloud residence.",
+      ),
+      still(
+        OCEAN,
+        "10-living.webp",
+        "Principal living room at an Ocean Cloud residence.",
+      ),
+      still(
+        OCEAN,
+        "10-kitchen.webp",
+        "Entrance and lounge at an Ocean Cloud residence.",
+      ),
+      still(
+        OCEAN,
+        "10-bedroom.webp",
+        "Kitchen with olive cabinetry and marble surfaces at Ocean Cloud.",
+      ),
+      still(
+        OCEAN,
+        "10-bath.webp",
+        "Interior living space at an Ocean Cloud residence.",
+      ),
+      still(
+        OCEAN,
+        "10-dining.webp",
+        "Dining and living interior at an Ocean Cloud residence.",
+      ),
+      still(
+        OCEAN,
+        "10-suite.webp",
+        "Principal bedroom at an Ocean Cloud residence.",
+      ),
+      still(
+        OCEAN,
+        "10-jacuzzi.webp",
+        "Bedroom with built-in study at an Ocean Cloud residence.",
+      ),
+    ],
+    featured: true,
+    mediaStatus: "ready",
+    mediaFallbackText: null,
+    nearbyHighlights: [],
+    mapEmbedUrl: "",
+    locationPendingConfirmation: true,
+    locationNote:
+      "Exact locality available on request, pending client confirmation.",
+    availabilityDisclaimer: "Prices and availability subject to confirmation.",
+    availabilityUpdatedOn: null,
+    units: [
+      {
+        id: "101",
+        label: "101",
+        area: "2,751 sq ft",
+        price: 50_000_000,
+        priceDisplay: "₹5.00 Cr",
+        status: "available",
+      },
+      {
+        id: "102",
+        label: "102",
+        area: "2,751 sq ft",
+        price: 50_000_000,
+        priceDisplay: "₹5.00 Cr",
+        status: "available",
+      },
+      {
+        id: "201",
+        label: "201",
+        area: "2,906 sq ft",
+        price: 52_500_000,
+        priceDisplay: "₹5.25 Cr",
+        status: "available",
+      },
+      {
+        id: "202",
+        label: "202",
+        area: "2,906 sq ft",
+        price: 52_500_000,
+        priceDisplay: "₹5.25 Cr",
+        status: "available",
+      },
+      {
+        id: "301",
+        label: "301",
+        area: "2,751 sq ft",
+        price: 55_000_000,
+        priceDisplay: "₹5.50 Cr",
+        status: "available",
+      },
+      {
+        id: "302",
+        label: "302",
+        area: "2,751 sq ft",
+        price: 55_000_000,
+        priceDisplay: "₹5.50 Cr",
+        status: "available",
+      },
+      {
+        id: "401",
+        label: "401",
+        area: "2,906 sq ft",
+        price: 57_500_000,
+        priceDisplay: "₹5.75 Cr",
+        status: "available",
+      },
+      {
+        id: "402",
+        label: "402",
+        area: "2,906 sq ft",
+        price: 57_500_000,
+        priceDisplay: "₹5.75 Cr",
+        status: "available",
+      },
+      {
+        id: "502",
+        label: "502",
+        area: "2,751 sq ft",
+        price: 60_000_000,
+        priceDisplay: "₹6.00 Cr",
+        status: "available",
+      },
+      {
+        id: "501",
+        label: "501",
+        area: "2,751 sq ft",
+        price: null,
+        priceDisplay: "Sold",
+        status: "sold",
+      },
+      {
+        id: "601",
+        label: "601",
+        area: "2,906 sq ft",
+        price: null,
+        priceDisplay: "Sold",
+        status: "sold",
+      },
+      {
+        id: "602",
+        label: "602",
+        area: "2,906 sq ft",
+        price: null,
+        priceDisplay: "Sold",
+        status: "sold",
+      },
+    ],
+    relatedIds: [DEMURE, ALDONA, PILERNE],
+  }),
+
+  listing({
+    id: DEMURE,
+    slug: DEMURE,
+    title: "La Demure",
+    location: "North Goa",
+    propertyType: "Villa",
+    purpose: "For Sale",
+    category: "villa",
+    collectionGroup: "new-launches",
+    price: null,
+    priceDisplay: "Available on Request",
+    rent: null,
+    status: "available",
+    statusLabel: "Available on Request",
+    bedrooms: 4,
+    bedroomsDisplay: "4 BHK",
+    bathrooms: null,
+    area: "North Goa",
+    areaSlug: "",
+    region: "North Goa",
+    builtUpArea: "179.53 sqm",
+    landArea: null,
+    plotArea: "975 sqm",
+    areaRange: "299.09–330.02 sqm usable",
+    communitySize: "4 villas",
+    roadAccess: null,
+    parking: "Car Parking",
+    possession: "Available on Request",
+    furnishing: "Fully furnished",
+    reraNumber: null,
+    reraDisplay: "Available on Request",
+    amenities: [
+      "Private Pool",
+      "Deck",
+      "Garden",
+      "Gated Community",
+      "Fully furnished",
+      "Car Parking",
+    ],
+    description:
+      "A boutique collection of four fully furnished 4-bedroom villas in North Goa, each with a private pool, deck and garden, in a gated community of Mediterranean-tropical architecture.",
+    shortDescription:
+      "Four fully furnished 4-bedroom pool villas in North Goa, with private gardens, decks and pools.",
+    longDescription: [
+      "La Demure is a boutique collection of four fully furnished 4-bedroom villas. Each residence is planned with a private pool, deck and garden, within a gated community of Mediterranean-tropical architecture.",
+      "Villa usable areas are listed from the current area schedule. Price, RERA registration, possession and live availability are available on request until they have been verified for publication.",
+      "The collection sits in North Goa. The exact village address will be confirmed with you directly.",
+    ],
+    features: [],
+    heroImage: still(
+      DEMURE,
+      "02c.webp",
+      "La Demure — laterite and terracotta villas with planted drives and Car Parking.",
+    ),
+    media: [
+      still(
+        DEMURE,
+        "02c.webp",
+        "La Demure — laterite and terracotta villas with planted drives and Car Parking.",
+      ),
+      still(
+        DEMURE,
+        "02a.webp",
+        "Paired villas at La Demure, with laterite facades, tiled roofs and balcony gardens.",
+      ),
+      still(
+        DEMURE,
+        "02b.webp",
+        "Street elevation of the La Demure villas, with arched openings and tropical planting.",
+      ),
+      still(
+        DEMURE,
+        "04.webp",
+        "Private pool, wooden deck and garden court at a La Demure villa.",
+      ),
+      still(
+        DEMURE,
+        "03.webp",
+        "Principal bedroom at La Demure, opening to a private balcony.",
+      ),
+    ],
+    featured: true,
+    mediaStatus: "ready",
+    mediaFallbackText: null,
+    nearbyHighlights: [],
+    mapEmbedUrl: "",
+    locationPendingConfirmation: true,
+    locationNote:
+      "Exact village address available on request, pending client confirmation.",
+    availabilityDisclaimer:
+      "Price, RERA, possession and availability are available on request.",
+    availabilityUpdatedOn: null,
+    units: [
+      {
+        id: "villa-1",
+        label: "Villa 1",
+        area: "330.02 sqm usable",
+        price: null,
+        priceDisplay: "Available on Request",
+        status: "available",
+      },
+      {
+        id: "villa-2",
+        label: "Villa 2",
+        area: "303.70 sqm usable",
+        price: null,
+        priceDisplay: "Available on Request",
+        status: "available",
+      },
+      {
+        id: "villa-3",
+        label: "Villa 3",
+        area: "299.09 sqm usable",
+        price: null,
+        priceDisplay: "Available on Request",
+        status: "available",
+      },
+      {
+        id: "villa-4",
+        label: "Villa 4",
+        area: "325.41 sqm usable",
+        price: null,
+        priceDisplay: "Available on Request",
+        status: "available",
+      },
+    ],
+    relatedIds: [OCEAN, PILERNE, ALDONA],
+  }),
+
   listing({
     id: ALDONA,
     slug: ALDONA,
@@ -300,7 +719,7 @@ export const properties: Property[] = [
     purpose: "For Sale",
     category: "villa",
     price: null,
-    priceDisplay: "Price on Request",
+    priceDisplay: "Available on Request",
     rent: null,
     status: "available",
     statusLabel: "Available",
@@ -992,6 +1411,20 @@ export function getFeaturedProperties() {
   return properties.filter(
     (property) => property.featured && property.category !== "commercial",
   );
+}
+
+export function isNewLaunch(property: Property) {
+  return property.collectionGroup === "new-launches";
+}
+
+export function groupPropertiesByCollection(list: Property[]) {
+  return collectionGroupOrder
+    .map((id) => ({
+      id,
+      label: collectionGroupLabels[id],
+      properties: list.filter((item) => item.collectionGroup === id),
+    }))
+    .filter((group) => group.properties.length > 0);
 }
 
 export function getRelatedProperties(property: Property) {

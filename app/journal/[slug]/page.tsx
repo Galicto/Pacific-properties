@@ -10,6 +10,8 @@ export function generateStaticParams() {
   return journalArticles.map((article) => ({ slug: article.slug }));
 }
 
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: {

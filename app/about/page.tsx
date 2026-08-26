@@ -3,7 +3,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SmartImage } from "@/components/ui/SmartImage";
-import { Wordmark } from "@/components/ui/Wordmark";
+import { Logo } from "@/components/brand/Logo";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -38,7 +38,7 @@ const timeline = [
   },
   {
     year: "Today",
-    text: "A considered collection across Aldona, Pilerne, Saipem, Reis Magos, Ucassaim, Dona Paula and Verna — and the quiet work of representing it well.",
+    text: "A considered collection across Aldona, Pilerne, Saipem, Reis Magos, Ucassaim, Dona Paula and Verna, with new launches represented as they are ready — and the quiet work of representing it well.",
   },
 ];
 
@@ -126,8 +126,8 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-24 grid items-stretch gap-10 border-t border-ink/10 pt-16 lg:grid-cols-12">
-          <div className="flex flex-col justify-between bg-tide px-8 py-12 text-ivory sm:px-10 lg:col-span-5">
-            <Wordmark inverted lockup asLink={false} />
+          <div className="relative z-[21] flex flex-col justify-between bg-tide px-8 py-12 text-ivory sm:px-10 lg:col-span-5">
+            <Logo size="lg" asLink={false} />
             <div className="mt-12">
               <p className="text-[11px] uppercase tracking-[0.22em] text-brass-soft">
                 Pacific Properties Goa

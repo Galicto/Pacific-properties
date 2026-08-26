@@ -7,6 +7,7 @@ import { IconArrowUpRight } from "@/components/ui/Icons";
 import {
   categoryLabels,
   hasPhotography,
+  isNewLaunch,
   offersEmi,
   type Property,
 } from "@/data/properties";
@@ -15,21 +16,21 @@ import Link from "next/link";
 function specLine(property: Property) {
   return [
     property.bedroomsDisplay,
-    property.builtUpArea,
-    property.plotArea,
+    property.areaRange ?? property.builtUpArea,
+    property.areaRange ? null : property.plotArea,
     property.landArea,
-    property.areaRange,
   ]
     .filter(Boolean)
     .join(" · ");
 }
 
 function statusBadge(property: Property) {
+  if (isNewLaunch(property)) return "New Launch";
   if (property.status === "under-construction") return property.statusLabel;
   if (property.purpose === "For Rent") return "For Rent";
   if (property.category === "land") return "Land";
   if (property.purpose === "For Sale" && property.price === null) {
-    return "Price on Request";
+    return "Available on Request";
   }
   return null;
 }

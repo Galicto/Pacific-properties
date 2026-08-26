@@ -4,6 +4,10 @@ import type { ImageLoaderProps } from "next/image";
 export const IMAGE_BLUR_IVORY =
   "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='10'%3E%3Crect width='16' height='10' fill='%23EFE8DC'/%3E%3C/svg%3E";
 
+/** Map-preview LQIP — matches the desaturated Carto land colour. */
+export const IMAGE_BLUR_MAP =
+  "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='10'%3E%3Crect width='16' height='10' fill='%23E8E6E0'/%3E%3C/svg%3E";
+
 /**
  * Request exact widths from Unsplash/Pexels so phones never download
  * a 1800–3000px source. Bypasses the Next image optimiser hop.

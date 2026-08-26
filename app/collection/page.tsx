@@ -20,12 +20,12 @@ export default async function CollectionPage({
       <PageIntro
         eyebrow="Residences, land & commercial"
         title="The Collection"
-        image="/properties/pilerne-villa-collection/24.webp"
-        imageAlt="Private swimming pool and garden at the Pilerne villa collection."
+        image="/properties/ocean-cloud/02.webp"
+        imageAlt="Ocean Cloud — sea-facing residences with curved balconies and a rooftop deck."
       >
         <p>
-          Current inventory from Pacific Properties Goa — villas, a penthouse,
-          an apartment, land and warehouse space across Goa.
+          Current inventory from Pacific Properties Goa — new launches, villas,
+          a penthouse, an apartment, land and warehouse space across Goa.
         </p>
         <ButtonLink
           href="/emi-calculator"

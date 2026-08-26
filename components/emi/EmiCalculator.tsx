@@ -241,7 +241,7 @@ export function EmiCalculator({
 
       {priceOnRequest ? (
         <p className="mb-8 text-sm text-ink-muted">
-          Price on Request — enter a figure that matches your brief. The result
+          Available on Request — enter a figure that matches your brief. The result
           is an indicative estimate, not a quote.
         </p>
       ) : null}

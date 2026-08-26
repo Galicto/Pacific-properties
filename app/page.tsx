@@ -5,7 +5,7 @@ import { FeaturedLocations } from "@/components/home/FeaturedLocations";
 import { Hero } from "@/components/home/Hero";
 import { Intro } from "@/components/home/Intro";
 import { WhyPacific } from "@/components/home/WhyPacific";
-import { Wordmark } from "@/components/ui/Wordmark";
+import { Logo } from "@/components/brand/Logo";
 
 const FeaturedResidences = dynamic(
   () =>
@@ -29,7 +29,7 @@ function SectionPlaceholder() {
       className="mx-auto flex min-h-[22rem] max-w-[1400px] flex-col justify-center px-7 py-16 sm:px-8 lg:px-12"
       aria-hidden="true"
     >
-      <Wordmark mark asLink={false} />
+      <Logo compact size="md" asLink={false} />
       <div className="mt-8 h-6 w-40 bg-mist/80" />
       <div className="mt-6 aspect-[16/9] w-full bg-ivory-deep" />
     </div>

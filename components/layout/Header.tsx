@@ -3,7 +3,7 @@
 import { areas } from "@/data/areas";
 import { ButtonLink } from "@/components/ui/Button";
 import { IconChevronDown, IconClose } from "@/components/ui/Icons";
-import { Wordmark } from "@/components/ui/Wordmark";
+import { Logo } from "@/components/brand/Logo";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,7 +17,7 @@ const nav = [
   { href: "/contact", label: "Contact" },
 ];
 
-function isDarkHero(pathname: string) {
+function isMediaHero(pathname: string) {
   if (
     pathname === "/" ||
     pathname === "/about" ||
@@ -43,8 +43,7 @@ export function Header() {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const dark = isDarkHero(pathname) && !scrolled && !open;
-  const solid = scrolled || open || !isDarkHero(pathname);
+  const overMedia = isMediaHero(pathname) && !scrolled && !open;
   useFocusTrap(open, menuRef, false);
 
   useEffect(() => {
@@ -90,22 +89,21 @@ export function Header() {
 
   const linkClass = (active: boolean) =>
     cn(
-      "inline-flex min-h-11 items-center text-[11px] font-medium uppercase tracking-[0.2em] transition-colors duration-300",
-      dark ? "text-ivory/80 hover:text-ivory" : "text-ink/70 hover:text-ink",
-      active && (dark ? "text-ivory" : "text-ink"),
+      "inline-flex min-h-11 items-center text-[11px] font-medium uppercase tracking-[0.2em] text-ivory/80 transition-colors duration-300 hover:text-ivory",
+      active && "text-ivory",
     );
 
   return (
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 border-b pt-[env(safe-area-inset-top)] transition-colors duration-300",
-        solid
-          ? "border-ink/8 bg-ivory/95"
-          : "border-transparent bg-transparent",
+        overMedia
+          ? "border-transparent bg-transparent"
+          : "border-ivory/10 bg-ink/95",
       )}
     >
-      <div className="mx-auto flex h-16 min-w-0 max-w-[1400px] items-center justify-between px-7 sm:h-20 sm:px-8 lg:px-12">
-        <Wordmark inverted={dark} priority />
+      <div className="mx-auto flex h-16 min-w-0 max-w-[1400px] items-center justify-between gap-3 px-4 sm:h-20 sm:px-8 lg:px-12">
+        <Logo priority />
 
         <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary">
           <Link
@@ -143,15 +141,15 @@ export function Header() {
                   : "invisible translate-y-1 opacity-0",
               )}
             >
-              <ul className="border border-ink/8 bg-ivory p-3 shadow-xl shadow-ink/5">
+              <ul className="border border-ivory/12 bg-ink p-3 shadow-xl shadow-ink/40">
                 {areas.map((area) => (
                   <li key={area.slug}>
                     <Link
                       href={`/collection?area=${area.slug}`}
-                      className="block min-h-11 px-3 py-2.5 text-[13px] text-ink/80 transition-colors hover:bg-ivory-deep hover:text-ink"
+                      className="block min-h-11 px-3 py-2.5 text-[13px] text-ivory/80 transition-colors hover:bg-ink-soft hover:text-ivory"
                     >
                       <span className="block font-medium">{area.name}</span>
-                      <span className="block text-[11px] text-ink-muted">
+                      <span className="block text-[11px] text-ivory/50">
                         {area.region}
                       </span>
                     </Link>
@@ -181,7 +179,7 @@ export function Header() {
 
         <div className="flex items-center gap-3">
           <span className="hidden md:inline-flex">
-            <ButtonLink href="/contact" variant={dark ? "primary" : "dark"}>
+            <ButtonLink href="/contact" variant="primary">
               Enquire
             </ButtonLink>
           </span>
@@ -189,12 +187,7 @@ export function Header() {
           <button
             ref={menuButtonRef}
             type="button"
-            className={cn(
-              "flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-300 lg:hidden",
-              dark
-                ? "border-ivory/30 text-ivory hover:bg-ivory/10"
-                : "border-ink/15 text-ink hover:bg-ink/5",
-            )}
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/30 text-ivory transition-colors duration-300 hover:bg-ivory/10 lg:hidden"
             aria-expanded={open}
             aria-controls={menuId}
             aria-label={open ? "Close menu" : "Open menu"}
@@ -217,16 +210,17 @@ export function Header() {
         aria-hidden={!open}
         {...(!open ? { inert: true } : {})}
         className={cn(
-          "fixed inset-0 z-[60] overflow-y-auto bg-ivory px-7 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-[calc(1.25rem+env(safe-area-inset-top))] transition-transform duration-300 ease-[var(--ease-cinematic)] lg:hidden",
+          "fixed inset-0 z-[60] overflow-y-auto bg-ink px-4 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-[calc(1.25rem+env(safe-area-inset-top))] text-ivory transition-transform duration-300 ease-[var(--ease-cinematic)] sm:px-8 lg:hidden",
           open ? "translate-x-0" : "pointer-events-none translate-x-full",
         )}
+        style={{ colorScheme: "dark" }}
       >
         <div className="flex items-center justify-between">
-          <Wordmark lockup />
+          <Logo />
           <button
             ref={closeRef}
             type="button"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-ink/15"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/30 text-ivory"
             aria-label="Close menu"
             onClick={() => {
               setOpen(false);
@@ -239,12 +233,12 @@ export function Header() {
         <nav className="mt-12 flex flex-col">
           <Link
             href="/collection"
-            className="min-h-11 font-serif text-[clamp(2rem,8vw,2.75rem)] text-ink"
+            className="min-h-11 font-serif text-[clamp(2rem,8vw,2.75rem)] text-ivory"
             onClick={() => setOpen(false)}
           >
             Collection
           </Link>
-          <p className="mt-8 text-[11px] uppercase tracking-[0.22em] text-ink-muted">
+          <p className="mt-8 text-[11px] uppercase tracking-[0.22em] text-ivory/50">
             Areas
           </p>
           <div className="mt-3 grid grid-cols-2 gap-x-6">
@@ -252,7 +246,7 @@ export function Header() {
               <Link
                 key={area.slug}
                 href={`/collection?area=${area.slug}`}
-                className="flex min-h-11 items-center text-sm text-ink/80"
+                className="flex min-h-11 items-center text-sm text-ivory/80"
                 onClick={() => setOpen(false)}
               >
                 {area.name}
@@ -263,18 +257,18 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="mt-5 flex min-h-11 items-center font-serif text-[clamp(2rem,8vw,2.75rem)] text-ink"
+              className="mt-5 flex min-h-11 items-center font-serif text-[clamp(2rem,8vw,2.75rem)] text-ivory"
               onClick={() => setOpen(false)}
             >
               {item.label}
             </Link>
           ))}
-          <ButtonLink href="/contact" className="mt-12 w-fit" variant="dark">
+          <ButtonLink href="/contact" className="mt-12 w-fit" variant="primary">
             Speak to an Advisor
           </ButtonLink>
           <Link
             href="/emi-calculator"
-            className="mt-6 flex min-h-11 items-center text-[11px] uppercase tracking-[0.2em] text-ink-muted"
+            className="mt-6 flex min-h-11 items-center text-[11px] uppercase tracking-[0.2em] text-ivory/50"
             onClick={() => setOpen(false)}
           >
             EMI Calculator

@@ -84,11 +84,11 @@ The same adapter can point at Resend (via a Route Handler), HubSpot, or your own
 
 ### 5. How to replace the map embed
 
-Default embed: `siteConfig.mapEmbedUrl` in `lib/config.ts` (Google Maps embed **without an API key**).
+Default embed, place link, directions link, and static preview: `siteConfig` in `lib/config.ts` (`mapEmbedUrl`, `mapPlaceUrl`, `mapDirectionsUrl`, `mapPreview`). The Contact map paints the local WebP first and mounts the Google iframe only after IntersectionObserver (or a tap). Helpers: `mapsEmbedUrl()`, `mapsPlaceUrl()`, `mapsDirectionsUrl()`.
 
-Per-listing maps: `mapEmbedUrl` on each property in `data/properties.ts`. Helper: `mapsEmbedUrl("Assagao, Goa, India")`.
+Per-listing maps: `mapEmbedUrl` on each property in `data/properties.ts`.
 
-To use a precise pin, open Google Maps → Share → Embed a map, and paste the `iframe` `src`.
+To use a precise pin, open Google Maps → Share → Embed a map, and paste the `iframe` `src`. Replace `public/maps/assagao.webp` if the office pin moves.
 
 ### 6. EMI calculator defaults
 
@@ -98,23 +98,25 @@ Property pages link to the calculator with `property`, `price`, `location` and `
 
 ### 7. How to replace the official logo
 
-The live lock-up and P-mark live in **`public/brand/`**. Paths and intrinsic sizes are in **`lib/config.ts` → `siteConfig.brand`**.
+The live lock-up and P-mark live in **`public/brand/`**. Paths and intrinsic sizes are in **`lib/config.ts` → `siteConfig.brand`**. The shared renderer is **`components/brand/Logo.tsx`**.
+
+There is **one** colourway. The artwork is never swapped, inverted, or recoloured.
 
 | File | Use |
 | --- | --- |
-| `logo-on-dark.webp` / `.png` | Transparent lock-up with white type — header over the hero, footer, JSON-LD `logo` |
-| `logo-on-light.webp` / `.png` | Same lock-up with ink type — sticky ivory header and the mobile menu |
-| `mark.webp` / `.png` | Square “P” mark — mobile header, loading state, compact chrome |
-| `app/icon.png`, `app/apple-icon.png` | Favicon / home-screen icon, generated from the P-mark on the native teal field |
-| `public/og.jpg` | 1200×630 social preview on teal |
+| `pacific-properties-logo.svg` / `.png` | White wordmark + gold icon — the only lock-up (transparent field) |
+| `pacific-properties-logo-share.png` | Same lock-up on black — JSON-LD `logo` |
+| `pacific-properties-mark.svg` / `.png` | Square “P” mark — 404, compact chrome |
+| `app/icon.png`, `app/apple-icon.png` | Favicon / home-screen icon, P-mark on black |
+| `public/og.jpg` | 1200×630 social preview, lock-up on black |
 
-Do **not** stretch, recolour, crop tightly, redraw the wordmark in type, or sit the artwork in a white box. Keep the transparent padding around the lock-up.
+The wordmark is white, so the lock-up only sits on dark surfaces (ink header, tide footer, photography, video). Do **not** stretch, invert, filter, or put a coloured tile behind the PNG.
 
 To replace the artwork:
 
-1. Place a high-resolution official lock-up (PNG, dark-teal or transparent) at `scripts/logo-source.jpg` or export web-ready files directly into `public/brand/` using the filenames above.
-2. If starting from the supplied source, run `python3 scripts/process-logo.py` (requires Pillow). Update `siteConfig.brand.lockup` and `markSize` if the pixel dimensions change.
-3. Match header/footer surfaces to the asset: dark-teal footer (`bg-tide`), ivory header, transparent hero overlay — not a white tile behind the logo.
+1. Place the official lock-up (black field or transparent PNG) at `scripts/logo-source.png`, or export web-ready files directly into `public/brand/` using the filenames above.
+2. If starting from a black-field source, run `python3 scripts/process-logo.py` (requires Pillow and NumPy). Update `siteConfig.brand.lockup` and `markSize` if the pixel dimensions change.
+3. Keep header / menu / loading on ink, footer on tide — never an ivory bar behind the lock-up.
 
 ### 8. How to add the verified RERA registration number
 

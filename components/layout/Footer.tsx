@@ -1,7 +1,7 @@
 import { areas } from "@/data/areas";
 import { FooterCtaSpace } from "@/components/layout/MobileCtaBar";
 import { FooterCredentials } from "@/components/brand/TrustLines";
-import { Wordmark } from "@/components/ui/Wordmark";
+import { Logo } from "@/components/brand/Logo";
 import { InstagramIcon, LinkedInIcon } from "@/components/ui/SocialIcons";
 import { siteConfig } from "@/lib/config";
 import { defaultWhatsAppUrl } from "@/lib/whatsapp";
@@ -19,10 +19,10 @@ const footerNav = [
 
 export function Footer() {
   return (
-    <footer className="bg-tide text-ivory">
+    <footer className="relative z-[21] bg-tide text-ivory">
       <div className="mx-auto grid max-w-[1400px] gap-14 px-7 py-16 sm:px-8 lg:grid-cols-12 lg:px-12 lg:py-20">
         <div className="lg:col-span-5">
-          <Wordmark inverted lockup />
+          <Logo size="lg" />
           <p className="mt-8 max-w-sm text-sm leading-relaxed text-ivory/65">
             A boutique brokerage for considered property in Goa — villas,
             residences, land and commercial space, represented with discretion.
