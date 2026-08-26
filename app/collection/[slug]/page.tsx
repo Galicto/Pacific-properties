@@ -4,6 +4,7 @@ import { PropertyTrustStrip } from "@/components/brand/TrustLines";
 import { PropertyEnquiry } from "@/components/property/PropertyEnquiry";
 import { PropertyFilm } from "@/components/property/PropertyFilm";
 import { PropertyGallery } from "@/components/property/PropertyGallery";
+import { PropertyPlans } from "@/components/property/PropertyPlans";
 import { PropertyUnits } from "@/components/property/PropertyUnits";
 import { PropertyMediaFallback } from "@/components/property/PropertyMediaFallback";
 import { RelatedProperties } from "@/components/property/RelatedProperties";
@@ -43,8 +44,11 @@ export async function generateMetadata({
   const og = hasPhotography(property)
     ? property.heroImage.src
     : siteConfig.ogImage;
+  const title = property.title.toLowerCase().includes(property.area.toLowerCase())
+    ? property.title
+    : `${property.title}, ${property.area}`;
   return {
-    title: `${property.title}, ${property.area}`,
+    title,
     description: property.shortDescription,
     openGraph: {
       title: `${property.title} | Pacific Properties Goa`,
@@ -196,6 +200,11 @@ export default async function PropertyPage({
             <p className="font-serif text-[1.85rem] leading-tight sm:text-4xl">
               {property.priceDisplay}
             </p>
+            {property.pricePositioning ? (
+              <p className="mt-1 text-sm text-ink-muted">
+                {property.pricePositioning}
+              </p>
+            ) : null}
             {emi ? (
               <PropertyFinanceTeaser
                 compact
@@ -217,6 +226,7 @@ export default async function PropertyPage({
         area={property.location}
         slug={property.slug}
         enquiryText={property.whatsAppEnquiryText}
+        ctaLabel={property.ctaLabel}
         price={property.price}
       />
 
@@ -229,6 +239,7 @@ export default async function PropertyPage({
               </div>
             ) : null}
             <PropertyGallery property={property} />
+            <PropertyPlans property={property} />
 
             <dl className="mt-12 grid grid-cols-2 gap-px border border-ink/10 bg-ink/10 sm:grid-cols-3">
               {facts.map((fact) => (
@@ -250,6 +261,12 @@ export default async function PropertyPage({
                 <p key={paragraph.slice(0, 24)}>{paragraph}</p>
               ))}
             </div>
+
+            {property.availabilityDisclaimer && !property.units?.length ? (
+              <p className="mt-6 max-w-3xl text-sm leading-relaxed text-ink-muted">
+                {property.availabilityDisclaimer}
+              </p>
+            ) : null}
 
             <PropertyUnits property={property} />
 
@@ -318,6 +335,7 @@ export default async function PropertyPage({
                 area={property.location}
                 slug={property.slug}
                 enquiryText={property.whatsAppEnquiryText}
+                enquiryPrompt={property.enquiryPrompt}
               />
             </div>
           </div>

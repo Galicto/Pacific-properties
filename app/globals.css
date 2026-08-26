@@ -83,9 +83,23 @@ summary {
   }
 }
 
-.hairline {
-  height: 1px;
-  background: color-mix(in srgb, var(--color-ink) 12%, transparent);
+@keyframes hero-progress {
+  from {
+    transform: translateY(-50%) scaleX(0.04);
+  }
+  to {
+    transform: translateY(-50%) scaleX(1);
+  }
+}
+
+.hero-progress-bar {
+  animation: hero-progress 12s linear forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-progress-bar {
+    animation: none;
+  }
 }
 
 /* Visible without JS. Animate only after the js class is applied. */

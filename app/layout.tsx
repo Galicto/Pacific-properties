@@ -39,6 +39,7 @@ export const metadata: Metadata = {
   keywords: [
     "Pacific Properties Goa",
     "luxury villas Goa",
+    "Salvador Goa property",
     "Aldona villas",
     "Pilerne villas",
     "Dona Paula property",

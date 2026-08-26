@@ -16,6 +16,17 @@ export type Area = {
 
 export const areas: Area[] = [
   {
+    slug: "salvador",
+    name: "Salvador",
+    region: "North Goa",
+    descriptor: "3 BHK apartments and private pool villas in Salvador, Goa.",
+    longer:
+      "Salvador, Goa. Current inventory includes eight 3 BHK apartments with floor-wise starting prices, and two private pool villas.",
+    image: "/properties/3-bhk-apartments-salvador/hero.webp",
+    imageAlt:
+      "Architectural render of a five-storey apartment building in Salvador, Goa.",
+  },
+  {
     slug: "aldona",
     name: "Aldona",
     region: "North Goa",
@@ -29,9 +40,9 @@ export const areas: Area[] = [
     slug: "pilerne",
     name: "Pilerne",
     region: "North Goa",
-    descriptor: "A limited gated collection of six four-bedroom villas.",
+    descriptor: "Waterfront villas and a gated four-bedroom collection.",
     longer:
-      "Pilerne, North Goa. A gated collection of six four-bedroom villas with private outdoor space.",
+      "Pilerne, North Goa. Current inventory includes waterfront villas ready to move, and a gated collection of four-bedroom villas with private outdoor space.",
     image: "/properties/pilerne-villa-collection/24.webp",
     imageAlt: "Private pool and garden at the Pilerne villa collection.",
   },
@@ -79,11 +90,32 @@ export const areas: Area[] = [
     slug: "dona-paula",
     name: "Dona Paula",
     region: "Central Goa",
-    descriptor: "Villas, a penthouse and an apartment, possession August 2027.",
+    descriptor:
+      "Residences, a penthouse and villas, with possession in 2027 and 2029.",
     longer:
-      "Dona Paula, Goa. Current inventory includes four-bedroom villas, a three-bedroom penthouse with private terrace, and a three-bedroom apartment. Possession is expected in August 2027.",
+      "Dona Paula, Goa. Current inventory includes 3 BHK and 4 BHK residences and a 4 BHK penthouse with possession expected in December 2029, together with four-bedroom villas, a three-bedroom penthouse and a three-bedroom apartment with possession expected in August 2027.",
     image: "/properties/_fallbacks/plans.webp",
     imageAlt: "Dona Paula, Goa — private preview and detailed plans available on request.",
+  },
+  {
+    slug: "guirim",
+    name: "Guirim",
+    region: "North Goa",
+    descriptor: "A restored Goan-Portuguese heritage villa.",
+    longer:
+      "Guirim, North Goa. Current inventory includes a fully furnished four-bedroom heritage villa on a private plot.",
+    image: "/properties/_fallbacks/preview.webp",
+    imageAlt: "Guirim, Goa — private preview available on request.",
+  },
+  {
+    slug: "assagao",
+    name: "Assagao",
+    region: "North Goa",
+    descriptor: "Prime land with main-road access in North Goa.",
+    longer:
+      "Assagao, North Goa. Current inventory includes 3,850 sqm of land with main-road access and an open-field outlook.",
+    image: "/properties/_fallbacks/land.webp",
+    imageAlt: "Assagao, North Goa — private land dossier available on request.",
   },
 ];
 

@@ -13,6 +13,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SmartImage } from "@/components/ui/SmartImage";
 import {
   categoryLabels,
+  listingGallery,
   getFeaturedProperties,
   hasPhotography,
   isNewLaunch,
@@ -31,7 +32,7 @@ export function FeaturedResidences() {
   const { has, toggle } = useFavourites();
 
   const property: Property | undefined = featured[selected] ?? featured[0];
-  const photos = property && hasPhotography(property) ? property.media : [];
+  const photos = property && hasPhotography(property) ? listingGallery(property) : [];
   const nextImage = () =>
     setImageIndex((value) => (value + 1) % Math.max(photos.length, 1));
   const prevImage = () =>
@@ -178,8 +179,19 @@ export function FeaturedResidences() {
 
             <dl className="mt-10 grid grid-cols-2 gap-px border border-ink/10 bg-ink/10">
               <Fact
-                label="Bedrooms"
-                value={property.bedroomsDisplay ?? "—"}
+                label={
+                  property.bedroomsDisplay
+                    ? "Bedrooms"
+                    : property.amenities.includes("Private Pool")
+                      ? "Pool"
+                      : "Bedrooms"
+                }
+                value={
+                  property.bedroomsDisplay ??
+                  (property.amenities.includes("Private Pool")
+                    ? "Private Pool"
+                    : "—")
+                }
               />
               <Fact
                 label="Built-up Area"
@@ -202,6 +214,11 @@ export function FeaturedResidences() {
               />
               <Fact label="Price" value={property.priceDisplay} />
             </dl>
+            {property.pricePositioning ? (
+              <p className="mt-3 text-sm text-ink-muted">
+                {property.pricePositioning}
+              </p>
+            ) : null}
 
             <div className="mt-10 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
               <ButtonLink href={`/collection/${property.slug}`} variant="dark">

@@ -26,12 +26,12 @@ const ShowcaseMarquee = dynamic(
 function SectionPlaceholder() {
   return (
     <div
-      className="mx-auto flex min-h-[22rem] max-w-[1400px] flex-col justify-center px-7 py-16 sm:px-8 lg:px-12"
+      className="mx-auto min-h-[36rem] max-w-[1400px] px-7 py-24 sm:px-8 lg:min-h-[42rem] lg:px-12 lg:py-32"
       aria-hidden="true"
     >
       <Logo compact size="md" asLink={false} />
       <div className="mt-8 h-6 w-40 bg-mist/80" />
-      <div className="mt-6 aspect-[16/9] w-full bg-ivory-deep" />
+      <div className="mt-12 aspect-[4/3] w-full bg-ivory-deep lg:aspect-[5/4] lg:w-7/12" />
     </div>
   );
 }

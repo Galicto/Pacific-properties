@@ -24,8 +24,8 @@ export default async function CollectionPage({
         imageAlt="Ocean Cloud — sea-facing residences with curved balconies and a rooftop deck."
       >
         <p>
-          Current inventory from Pacific Properties Goa — new launches, villas,
-          a penthouse, an apartment, land and warehouse space across Goa.
+          Current inventory from Pacific Properties Goa — apartments,
+          penthouses, villas, land and warehouse space across Goa.
         </p>
         <ButtonLink
           href="/emi-calculator"

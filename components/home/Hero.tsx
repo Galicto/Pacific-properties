@@ -2,20 +2,25 @@ import { HeroFilm } from "@/components/home/HeroFilm";
 import { HeroPoster } from "@/components/home/HeroPoster";
 import { ButtonLink } from "@/components/ui/Button";
 import { siteConfig } from "@/lib/config";
+import { heroMedia } from "@/lib/hero-media";
 
 export function Hero() {
-  const poster = siteConfig.heroVideos[0];
+  const first = heroMedia[0]!;
 
   return (
     <section className="relative h-[100svh] min-h-[32rem] overflow-hidden bg-ink text-ivory">
-      <HeroPoster src={poster.poster} />
+      <HeroPoster
+        src={first.poster}
+        alt={first.alt}
+        objectPosition={first.objectPosition}
+      />
 
-      <HeroFilm videos={siteConfig.heroVideos} />
+      <HeroFilm videos={heroMedia} />
 
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/25 to-ink/30" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/45 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-tide/55 via-tide/10 to-ink/20" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-ink/25 via-transparent to-transparent" />
 
-      <div className="relative flex h-full flex-col justify-end px-7 pb-[calc(10.5rem+env(safe-area-inset-bottom))] pt-28 sm:px-8 sm:pb-28 lg:px-12 lg:pb-32">
+      <div className="relative z-[2] flex h-full flex-col justify-end px-7 pb-[calc(10.5rem+env(safe-area-inset-bottom))] pt-28 sm:px-8 sm:pb-28 lg:px-12 lg:pb-32">
         <h1 className="max-w-3xl font-serif text-[clamp(2rem,8vw,4.5rem)] leading-[1.08] tracking-tight">
           {siteConfig.tagline}
         </h1>

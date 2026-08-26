@@ -3,6 +3,7 @@ import {
   IconCrest,
   IconMemberMark,
   IconRegistered,
+  IconTrademark,
 } from "@/components/ui/Icons";
 import { siteConfig } from "@/lib/config";
 import {
@@ -16,14 +17,19 @@ import { cn } from "@/lib/utils";
 export function CredentialsCompact() {
   const items = [
     {
-      icon: IconCrest,
-      title: siteConfig.credentials.founderMember.title,
-      body: siteConfig.credentials.founderMember.body,
+      icon: IconTrademark,
+      title: siteConfig.credentials.trademark.title,
+      body: siteConfig.credentials.trademark.body,
     },
     {
       icon: IconMemberMark,
       title: siteConfig.credentials.narIndia.title,
       body: siteConfig.credentials.narIndia.body,
+    },
+    {
+      icon: IconCrest,
+      title: siteConfig.credentials.primaryMember.title,
+      body: siteConfig.credentials.primaryMember.body,
     },
     {
       icon: IconRegistered,
@@ -33,14 +39,9 @@ export function CredentialsCompact() {
   ];
 
   return (
-    <ul className="mt-16 grid grid-cols-1 gap-8 border-t border-brass/30 pt-10 sm:grid-cols-2 lg:grid-cols-3">
-      {items.map((item, index) => (
-        <li
-          key={item.title}
-          className={cn(
-            index === 2 && "sm:col-span-2 lg:col-span-1",
-          )}
-        >
+    <ul className="mt-16 grid grid-cols-1 gap-8 border-t border-brass/30 pt-10 sm:grid-cols-2 lg:grid-cols-4">
+      {items.map((item) => (
+        <li key={item.title}>
           <item.icon className="h-5 w-5 text-brass" />
           <p className="mt-3 font-serif text-xl text-ink">{item.title}</p>
           <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
@@ -79,7 +80,7 @@ export function FooterCredentials() {
 
 const propertyLines = [
   { icon: IconCrest, label: "Represented by Pacific Properties" },
-  { icon: IconCheckLine, label: "Founder Member, GAR" },
+  { icon: IconCheckLine, label: "Primary Member, GAR" },
   { icon: IconCheckLine, label: "Member, NAR-India" },
   { icon: IconCheckLine, label: reraShortLabel() },
 ] as const;
@@ -110,7 +111,7 @@ export function PropertyEnquiryTrust() {
         Represented by Pacific Properties
       </p>
       <p className="mt-2 pl-6 text-[12px] leading-relaxed text-ink-muted">
-        Founder Member, GAR · Member, NAR-India · {reraShortLabel()}
+        Primary Member, GAR · Member, NAR-India · {reraShortLabel()}
       </p>
     </div>
   );

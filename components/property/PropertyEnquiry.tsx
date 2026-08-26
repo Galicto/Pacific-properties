@@ -20,11 +20,13 @@ export function PropertyEnquiry({
   area,
   slug,
   enquiryText,
+  enquiryPrompt,
 }: {
   title: string;
   area: string;
   slug: string;
   enquiryText?: string;
+  enquiryPrompt?: string;
 }) {
   return (
     <aside className="border border-ink/10 bg-ivory-deep/50 p-7 sm:p-8">
@@ -48,7 +50,13 @@ export function PropertyEnquiry({
       </ButtonLink>
       <PropertyEnquiryTrust />
       <div className="mt-8 border-t border-ink/10 pt-8">
-        <EnquiryForm compact propertyTitle={title} propertySlug={slug} />
+        <EnquiryForm
+          compact
+          propertyTitle={title}
+          propertySlug={slug}
+          enquiryPrompt={enquiryPrompt}
+          whatsappHref={propertyWhatsAppUrl(title, area, enquiryText)}
+        />
       </div>
     </aside>
   );

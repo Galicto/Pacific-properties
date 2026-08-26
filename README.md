@@ -133,7 +133,7 @@ credentials: {
 
 - Leave `""` until the client supplies a number **in writing**.
 - When a real value is present, the site shows `RERA Registration No. [NUMBER]` on the home credentials band and in compact trust lines, and adds it to Organisation / RealEstateAgent JSON-LD plus a `rera:registrationNumber` meta tag.
-- While empty, copy stays **“RERA Registered”** with no fabricated number.
+- While empty, copy stays **“RERA-Registered Real Estate Agent”** with no fabricated number.
 
 Do not add official GAR, NAR-India, or RERA logos unless the client provides licensed assets. The site uses neutral line marks only.
 ---

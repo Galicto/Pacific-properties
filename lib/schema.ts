@@ -38,10 +38,10 @@ export function localBusinessJsonLd() {
     hasCredential: [
       {
         "@type": "EducationalOccupationalCredential",
-        credentialCategory: siteConfig.credentials.founderMember.title,
+        credentialCategory: siteConfig.credentials.trademark.title,
         recognizedBy: {
           "@type": "Organization",
-          name: "Goa Association of Realtors",
+          name: "Trade Marks Registry, India",
         },
       },
       {
@@ -50,6 +50,14 @@ export function localBusinessJsonLd() {
         recognizedBy: {
           "@type": "Organization",
           name: "National Association of Realtors – India",
+        },
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: siteConfig.credentials.primaryMember.title,
+        recognizedBy: {
+          "@type": "Organization",
+          name: "Goa Association of Realtors",
         },
       },
       {
@@ -81,7 +89,7 @@ export function propertyJsonLd(property: {
   reraNumber?: string | null;
 }) {
   const photos = (property.media ?? property.images).filter(
-    (image) => image.kind !== "fallback",
+    (image) => image.kind !== "fallback" && image.kind !== "plan",
   );
   const image = photos.map((item) =>
     item.src.startsWith("http") ? item.src : `${siteConfig.url}${item.src}`,

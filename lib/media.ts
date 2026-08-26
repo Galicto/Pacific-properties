@@ -17,10 +17,12 @@ export function getConnectionQuality(): "slow" | "fast" | "unknown" {
   return "fast";
 }
 
-/** Autoplay the muted hero film unless the visitor asked for reduced motion. */
+/** Autoplay muted hero film only after paint, never on SSR, slow links, or reduced motion. */
 export function shouldAutoplayHeroVideo() {
-  if (typeof window === "undefined") return true;
-  return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (typeof window === "undefined") return false;
+  if (prefersReducedMotion()) return false;
+  if (getConnectionQuality() === "slow") return false;
+  return true;
 }
 
 export function prefersReducedMotion() {

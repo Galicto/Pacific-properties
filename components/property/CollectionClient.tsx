@@ -14,6 +14,7 @@ import {
   type PropertyStatus,
 } from "@/data/properties";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useFocusTrap } from "@/lib/hooks";
 
@@ -431,7 +432,13 @@ export function CollectionClient({
           {groups.map((group) => (
             <section key={group.id} className="mt-14 first:mt-10">
               <h2 className="font-serif text-[clamp(1.55rem,3vw,2.05rem)] tracking-tight">
-                {group.label}
+                {group.id === "salvador" ? (
+                  <Link href="/collection/salvador" className="hover:text-brass">
+                    {group.label}
+                  </Link>
+                ) : (
+                  group.label
+                )}
               </h2>
               {layout === "grid" ? (
                 <div className="mt-8 grid gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">

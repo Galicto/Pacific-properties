@@ -7,7 +7,7 @@ import { InstagramIcon, LinkedInIcon } from "@/components/ui/SocialIcons";
 import { LazyMap } from "@/components/media/LazyMap";
 import { getPropertyBySlug } from "@/data/properties";
 import { siteConfig } from "@/lib/config";
-import { defaultWhatsAppUrl } from "@/lib/whatsapp";
+import { defaultWhatsAppUrl, propertyWhatsAppUrl } from "@/lib/whatsapp";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 const serviceAreas = [
-  { name: "North Goa", note: "Aldona, Pilerne, Saipem, Reis Magos, Ucassaim." },
+  { name: "North Goa", note: "Salvador, Aldona, Pilerne, Saipem, Reis Magos, Ucassaim, Guirim, Assagao." },
   { name: "Central Goa", note: "Dona Paula." },
   { name: "South Goa", note: "Verna — warehouse and commercial space." },
 ];
@@ -32,6 +32,13 @@ export default async function ContactPage({
     ? params.property[0]
     : params.property;
   const property = slug ? getPropertyBySlug(slug) : undefined;
+  const whatsapp = property
+    ? propertyWhatsAppUrl(
+        property.title,
+        property.location,
+        property.whatsAppEnquiryText,
+      )
+    : defaultWhatsAppUrl;
 
   return (
     <>
@@ -53,7 +60,7 @@ export default async function ContactPage({
           </p>
 
           <div className="mt-12 flex flex-col gap-5">
-            <ButtonLink href={defaultWhatsAppUrl} variant="primary" external className="w-full sm:w-auto">
+            <ButtonLink href={whatsapp} variant="primary" external className="w-full sm:w-auto">
               WhatsApp
             </ButtonLink>
             <div className="flex gap-3">
@@ -83,6 +90,8 @@ export default async function ContactPage({
               dark
               propertyTitle={property?.title}
               propertySlug={property?.slug}
+              enquiryPrompt={property?.enquiryPrompt}
+              whatsappHref={whatsapp}
             />
             <CredentialsContactLine />
           </div>

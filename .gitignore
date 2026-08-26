@@ -44,6 +44,14 @@ next-env.d.ts
 # leftover create-next-app nest (do not ship)
 /pacific-properties-goa
 
+# oversized hero source files (encoded copies live in /public/videos)
+/media/originals/hero/*-1080.mp4
+/media/originals/hero/*-720.mp4
+/media/originals/hero/.candidates/
+
 # local QA screenshots
 /.qa
 /.tmp-qa
+
+# private source review stills (never publish)
+/media/review

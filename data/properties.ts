@@ -26,6 +26,7 @@ export type MediaStatus =
 export type Region = "North Goa" | "Central Goa" | "South Goa" | "Goa";
 
 export type CollectionGroup =
+  | "salvador"
   | "new-launches"
   | "signature-villas"
   | "apartments-penthouses"
@@ -43,7 +44,12 @@ export type PropertyUnit = {
   status: UnitAvailability;
 };
 
-export type PropertyImageKind = "photo" | "construction" | "fallback";
+export type PropertyImageKind =
+  | "photo"
+  | "construction"
+  | "fallback"
+  | "plan"
+  | "lifestyle";
 
 export type PropertyImage = {
   src: string;
@@ -111,14 +117,21 @@ export type Property = {
   relatedIds: string[];
   collectionGroup: CollectionGroup;
   units?: PropertyUnit[];
+  unitsHeading?: string;
+  unitLabelColumn?: string;
+  hideUnitArea?: boolean;
   reraDisplay?: string | null;
   availabilityDisclaimer?: string;
   availabilityUpdatedOn?: string | null;
   locationPendingConfirmation?: boolean;
   locationNote?: string;
+  pricePositioning?: "Negotiable";
+  enquiryPrompt?: string;
+  ctaLabel?: string;
 };
 
 export const collectionGroupOrder: CollectionGroup[] = [
+  "salvador",
   "new-launches",
   "signature-villas",
   "apartments-penthouses",
@@ -127,6 +140,7 @@ export const collectionGroupOrder: CollectionGroup[] = [
 ];
 
 export const collectionGroupLabels: Record<CollectionGroup, string> = {
+  salvador: "Salvador",
   "new-launches": "New Launches",
   "signature-villas": "Signature Villas",
   "apartments-penthouses": "Apartments & Penthouses",
@@ -229,8 +243,347 @@ const VERNA = "verna-warehouse";
 const REIS = "reis-magos-villas";
 const OCEAN = "ocean-cloud";
 const DEMURE = "la-demure";
+const SALVADOR_APT = "3-bhk-apartments-salvador";
+const SALVADOR_VILLA_2803 = "private-pool-villa-salvador-2803-sq-ft";
+const SALVADOR_VILLA_3317 = "private-pool-villa-salvador-3317-sq-ft";
+
+const CONFIRM =
+  "Prices and availability are subject to confirmation.";
+
+function salvadorEnquiry(detail: string) {
+  return `Hello Pacific Properties Goa, I'm interested in ${detail}.`;
+}
+
+function interestCopy(prompt: string) {
+  return {
+    enquiryPrompt: prompt,
+    whatsAppEnquiryText: `Hello Pacific Properties Goa, ${prompt}`,
+  };
+}
 
 export const properties: Property[] = [
+  listing({
+    id: SALVADOR_APT,
+    slug: SALVADOR_APT,
+    title: "3 BHK Apartments in Salvador",
+    location: "Salvador, Goa",
+    propertyType: "Apartment",
+    purpose: "For Sale",
+    category: "apartment",
+    collectionGroup: "salvador",
+    price: 32_000_000,
+    priceDisplay: "Starting from ₹3.20 Cr",
+    pricePositioning: "Negotiable",
+    rent: null,
+    status: "available",
+    statusLabel: "Available",
+    bedrooms: 3,
+    bedroomsDisplay: "3 BHK",
+    bathrooms: null,
+    area: "Salvador",
+    areaSlug: "salvador",
+    region: "North Goa",
+    builtUpArea: null,
+    landArea: null,
+    plotArea: null,
+    areaRange: null,
+    communitySize: "8 apartments",
+    roadAccess: null,
+    parking: null,
+    possession: null,
+    furnishing: null,
+    reraNumber: null,
+    amenities: [],
+    description:
+      "Eight 3 BHK apartments in Salvador, Goa, with floor-wise starting prices. Prices are negotiable.",
+    shortDescription:
+      "Eight 3 BHK apartments in Salvador, Goa, with floor-wise starting prices.",
+    longDescription: [
+      "A collection of eight 3 BHK apartments in Salvador, Goa, offered with floor-wise starting prices.",
+      "Upper Ground Floor from ₹3.20 Cr, First Floor from ₹3.40 Cr, Second Floor from ₹3.60 Cr, and Third Floor from ₹3.75 Cr. Prices are negotiable.",
+      CONFIRM,
+    ],
+    features: [],
+    heroImage: still(
+      SALVADOR_APT,
+      "hero.webp",
+      "Architectural render of a five-storey apartment building in Salvador, Goa, with arched balconies, stone cladding and planted terraces.",
+    ),
+    media: [
+      still(
+        SALVADOR_APT,
+        "hero.webp",
+        "Architectural render of a five-storey apartment building in Salvador, Goa, with arched balconies, stone cladding and planted terraces.",
+      ),
+      still(
+        SALVADOR_APT,
+        "landscape.webp",
+        "Backwaters and tropical planting near Salvador, Goa.",
+        "lifestyle",
+      ),
+      still(
+        SALVADOR_APT,
+        "site-plan.webp",
+        "Site plan for the residential layout in Salvador, Goa, showing apartments, villas, a central pool and internal roads.",
+        "plan",
+        "Site plan",
+      ),
+      still(
+        SALVADOR_APT,
+        "master-plan.webp",
+        "Master-plan sheet for the Salvador, Goa apartments, with site data and typical 3 BHK layouts.",
+        "plan",
+        "Master plan",
+      ),
+      still(
+        SALVADOR_APT,
+        "floor-plan.webp",
+        "Typical 3 BHK apartment floor plan in Salvador, Goa, with living, dining, kitchen and three bedrooms.",
+        "plan",
+        "Typical floor plan",
+      ),
+    ],
+    featured: true,
+    mediaStatus: "ready",
+    mediaFallbackText: null,
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Salvador do Mundo, Goa, India"),
+    enquiryPrompt: "I'm interested in the 3 BHK Apartments in Salvador.",
+    whatsAppEnquiryText: salvadorEnquiry(
+      "the 3 BHK Apartments in Salvador",
+    ),
+    availabilityDisclaimer: CONFIRM,
+    availabilityUpdatedOn: null,
+    unitsHeading: "Floor availability",
+    unitLabelColumn: "Floor",
+    hideUnitArea: true,
+    units: [
+      {
+        id: "upper-ground",
+        label: "Upper Ground Floor",
+        area: "",
+        price: 32_000_000,
+        priceDisplay: "Starting from ₹3.20 Cr",
+        status: "available",
+      },
+      {
+        id: "first",
+        label: "First Floor",
+        area: "",
+        price: 34_000_000,
+        priceDisplay: "Starting from ₹3.40 Cr",
+        status: "available",
+      },
+      {
+        id: "second",
+        label: "Second Floor",
+        area: "",
+        price: 36_000_000,
+        priceDisplay: "Starting from ₹3.60 Cr",
+        status: "available",
+      },
+      {
+        id: "third",
+        label: "Third Floor",
+        area: "",
+        price: 37_500_000,
+        priceDisplay: "Starting from ₹3.75 Cr",
+        status: "available",
+      },
+    ],
+    relatedIds: [SALVADOR_VILLA_3317, SALVADOR_VILLA_2803, OCEAN],
+  }),
+
+  listing({
+    id: SALVADOR_VILLA_2803,
+    slug: SALVADOR_VILLA_2803,
+    title: "Private Pool Villa in Salvador",
+    location: "Salvador, Goa",
+    propertyType: "Villa",
+    purpose: "For Sale",
+    category: "villa",
+    collectionGroup: "salvador",
+    price: 50_000_000,
+    priceDisplay: "₹5.00 Cr",
+    pricePositioning: "Negotiable",
+    rent: null,
+    status: "available",
+    statusLabel: "Available",
+    bedrooms: null,
+    bedroomsDisplay: null,
+    bathrooms: null,
+    area: "Salvador",
+    areaSlug: "salvador",
+    region: "North Goa",
+    builtUpArea: "262.2 sqm / 2,803 sq ft",
+    landArea: null,
+    plotArea: null,
+    areaRange: null,
+    communitySize: null,
+    roadAccess: null,
+    parking: null,
+    possession: null,
+    furnishing: null,
+    reraNumber: null,
+    amenities: ["Private Pool"],
+    description:
+      "A private pool villa in Salvador, Goa, with 262.2 sqm / 2,803 sq ft built-up area. The price is ₹5.00 Cr, negotiable.",
+    shortDescription:
+      "A private pool villa in Salvador, Goa, with 262.2 sqm / 2,803 sq ft built-up area.",
+    longDescription: [
+      "A villa in Salvador, Goa, with a private pool and a built-up area of 262.2 sqm / 2,803 sq ft.",
+      "The asking price is ₹5.00 Cr. Prices are negotiable.",
+      CONFIRM,
+    ],
+    features: ["Private Pool"],
+    heroImage: still(
+      SALVADOR_VILLA_2803,
+      "living.webp",
+      "Living room of a private pool villa in Salvador, Goa, with a stone arch, timber ceiling and garden light beyond.",
+    ),
+    media: [
+      still(
+        SALVADOR_VILLA_2803,
+        "living.webp",
+        "Living room of a private pool villa in Salvador, Goa, with a stone arch, timber ceiling and garden light beyond.",
+      ),
+      still(
+        SALVADOR_VILLA_2803,
+        "dining.webp",
+        "Dining room of a private pool villa in Salvador, Goa, with a timber table, woven chairs and plaster niches.",
+      ),
+      still(
+        SALVADOR_VILLA_2803,
+        "kitchen.webp",
+        "Kitchen of a private pool villa in Salvador, Goa, with timber cabinetry, stone counters and warm shelf lighting.",
+      ),
+      still(
+        SALVADOR_VILLA_2803,
+        "landscape.webp",
+        "Backwaters and tropical planting near Salvador, Goa.",
+        "lifestyle",
+      ),
+      still(
+        SALVADOR_VILLA_2803,
+        "site-plan.webp",
+        "Site plan for the residential layout in Salvador, Goa, showing villas, apartments, a central pool and internal roads.",
+        "plan",
+        "Site plan",
+      ),
+    ],
+    featured: true,
+    mediaStatus: "ready",
+    mediaFallbackText: null,
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Salvador do Mundo, Goa, India"),
+    enquiryPrompt:
+      "I'm interested in the Private Pool Villa in Salvador — 2,803 sq ft.",
+    whatsAppEnquiryText: salvadorEnquiry(
+      "the Private Pool Villa in Salvador — 2,803 sq ft",
+    ),
+    availabilityDisclaimer: CONFIRM,
+    availabilityUpdatedOn: null,
+    relatedIds: [SALVADOR_VILLA_3317, SALVADOR_APT, DEMURE],
+  }),
+
+  listing({
+    id: SALVADOR_VILLA_3317,
+    slug: SALVADOR_VILLA_3317,
+    title: "Private Pool Villa in Salvador",
+    location: "Salvador, Goa",
+    propertyType: "Villa",
+    purpose: "For Sale",
+    category: "villa",
+    collectionGroup: "salvador",
+    price: 65_000_000,
+    priceDisplay: "₹6.50 Cr",
+    pricePositioning: "Negotiable",
+    rent: null,
+    status: "available",
+    statusLabel: "Available",
+    bedrooms: null,
+    bedroomsDisplay: null,
+    bathrooms: null,
+    area: "Salvador",
+    areaSlug: "salvador",
+    region: "North Goa",
+    builtUpArea: "310.4 sqm / 3,317 sq ft",
+    landArea: null,
+    plotArea: null,
+    areaRange: null,
+    communitySize: null,
+    roadAccess: null,
+    parking: null,
+    possession: null,
+    furnishing: null,
+    reraNumber: null,
+    amenities: ["Private Pool"],
+    description:
+      "A private pool villa in Salvador, Goa, with 310.4 sqm / 3,317 sq ft built-up area. The price is ₹6.50 Cr, negotiable.",
+    shortDescription:
+      "A private pool villa in Salvador, Goa, with 310.4 sqm / 3,317 sq ft built-up area.",
+    longDescription: [
+      "A villa in Salvador, Goa, with a private pool and a built-up area of 310.4 sqm / 3,317 sq ft.",
+      "The asking price is ₹6.50 Cr. Prices are negotiable.",
+      CONFIRM,
+    ],
+    features: ["Private Pool"],
+    heroImage: still(
+      SALVADOR_VILLA_3317,
+      "dining.webp",
+      "Dining room of a private pool villa in Salvador, Goa, with a timber table, woven chairs and plaster niches.",
+    ),
+    media: [
+      still(
+        SALVADOR_VILLA_3317,
+        "dining.webp",
+        "Dining room of a private pool villa in Salvador, Goa, with a timber table, woven chairs and plaster niches.",
+      ),
+      still(
+        SALVADOR_VILLA_3317,
+        "living.webp",
+        "Living room of a private pool villa in Salvador, Goa, with a stone arch, timber ceiling and garden light beyond.",
+      ),
+      still(
+        SALVADOR_VILLA_3317,
+        "kitchen.webp",
+        "Kitchen of a private pool villa in Salvador, Goa, with timber cabinetry, stone counters and warm shelf lighting.",
+      ),
+      still(
+        SALVADOR_VILLA_3317,
+        "palms.webp",
+        "Palm canopy against a clear sky in Salvador, Goa.",
+        "lifestyle",
+      ),
+      still(
+        SALVADOR_VILLA_3317,
+        "landscape.webp",
+        "Backwaters and tropical planting near Salvador, Goa.",
+        "lifestyle",
+      ),
+      still(
+        SALVADOR_VILLA_3317,
+        "site-plan.webp",
+        "Site plan for the residential layout in Salvador, Goa, showing villas, apartments, a central pool and internal roads.",
+        "plan",
+        "Site plan",
+      ),
+    ],
+    featured: true,
+    mediaStatus: "ready",
+    mediaFallbackText: null,
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Salvador do Mundo, Goa, India"),
+    enquiryPrompt:
+      "I'm interested in the Private Pool Villa in Salvador — 3,317 sq ft.",
+    whatsAppEnquiryText: salvadorEnquiry(
+      "the Private Pool Villa in Salvador — 3,317 sq ft",
+    ),
+    availabilityDisclaimer: CONFIRM,
+    availabilityUpdatedOn: null,
+    relatedIds: [SALVADOR_VILLA_2803, SALVADOR_APT, PILERNE],
+  }),
+
   listing({
     id: OCEAN,
     slug: OCEAN,
@@ -1376,10 +1729,365 @@ export const properties: Property[] = [
     mapEmbedUrl: mapsEmbedUrl("Dona Paula, Goa, India"),
     relatedIds: ["dona-paula-villas", "dona-paula-penthouse", REIS],
   }),
+
+  listing({
+    id: "3-bhk-residences-dona-paula",
+    slug: "3-bhk-residences-dona-paula",
+    title: "3 BHK Residences in Dona Paula",
+    location: "Dona Paula, Goa",
+    propertyType: "Apartment",
+    purpose: "For Sale",
+    category: "apartment",
+    price: 55_000_000,
+    priceDisplay: "Starting from ₹5.50 Cr",
+    rent: null,
+    status: "under-construction",
+    statusLabel: "Under Construction · Possession December 2029",
+    bedrooms: 3,
+    bedroomsDisplay: "3 BHK",
+    bathrooms: null,
+    area: "Dona Paula",
+    areaSlug: "dona-paula",
+    region: "Central Goa",
+    builtUpArea: "221 sqm and 231 sqm super built-up",
+    landArea: null,
+    plotArea: null,
+    areaRange: null,
+    communitySize: null,
+    roadAccess: null,
+    parking: null,
+    possession: "December 2029",
+    furnishing: null,
+    reraNumber: null,
+    amenities: [],
+    description:
+      "3 BHK residences in Dona Paula, Goa, with super built-up options of 221 sqm and 231 sqm. Possession is expected in December 2029.",
+    shortDescription:
+      "3 BHK residences in Dona Paula, with 221 sqm and 231 sqm super built-up options. Possession December 2029.",
+    longDescription: [
+      "3 BHK residences in Dona Paula, Goa, offered in two super built-up sizes: 221 sqm and 231 sqm.",
+      "Possession is expected in December 2029. Availability is confirmed on enquiry.",
+    ],
+    features: [],
+    heroImage: FALLBACK.plans,
+    media: [],
+    featured: false,
+    mediaStatus: "needs-approved-photography",
+    mediaFallbackText:
+      "Private preview and detailed plans available on request",
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Dona Paula, Goa, India"),
+    relatedIds: [
+      "4-bhk-residences-dona-paula",
+      "4-bhk-penthouse-dona-paula",
+      "dona-paula-apartment",
+    ],
+    ctaLabel: "Enquire for Availability",
+    ...interestCopy(
+      "I'm interested in the 3 BHK Residences in Dona Paula — 221 sqm and 231 sqm.",
+    ),
+  }),
+
+  listing({
+    id: "4-bhk-residences-dona-paula",
+    slug: "4-bhk-residences-dona-paula",
+    title: "4 BHK Residences in Dona Paula",
+    location: "Dona Paula, Goa",
+    propertyType: "Apartment",
+    purpose: "For Sale",
+    category: "apartment",
+    price: 75_000_000,
+    priceDisplay: "Starting from ₹7.50 Cr",
+    rent: null,
+    status: "under-construction",
+    statusLabel: "Under Construction · Possession December 2029",
+    bedrooms: 4,
+    bedroomsDisplay: "4 BHK",
+    bathrooms: null,
+    area: "Dona Paula",
+    areaSlug: "dona-paula",
+    region: "Central Goa",
+    builtUpArea: "314 sqm and 316 sqm super built-up",
+    landArea: null,
+    plotArea: null,
+    areaRange: null,
+    communitySize: null,
+    roadAccess: null,
+    parking: null,
+    possession: "December 2029",
+    furnishing: null,
+    reraNumber: null,
+    amenities: [],
+    description:
+      "4 BHK residences in Dona Paula, Goa, with super built-up options of 314 sqm and 316 sqm. Possession is expected in December 2029.",
+    shortDescription:
+      "4 BHK residences in Dona Paula, with 314 sqm and 316 sqm super built-up options. Possession December 2029.",
+    longDescription: [
+      "4 BHK residences in Dona Paula, Goa, offered in two super built-up sizes: 314 sqm and 316 sqm.",
+      "Possession is expected in December 2029. Availability is confirmed on enquiry.",
+    ],
+    features: [],
+    heroImage: FALLBACK.plans,
+    media: [],
+    featured: false,
+    mediaStatus: "needs-approved-photography",
+    mediaFallbackText:
+      "Private preview and detailed plans available on request",
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Dona Paula, Goa, India"),
+    relatedIds: [
+      "3-bhk-residences-dona-paula",
+      "4-bhk-penthouse-dona-paula",
+      "dona-paula-villas",
+    ],
+    ctaLabel: "Enquire for Availability",
+    ...interestCopy(
+      "I'm interested in the 4 BHK Residences in Dona Paula — 314 sqm and 316 sqm.",
+    ),
+  }),
+
+  listing({
+    id: "4-bhk-penthouse-dona-paula",
+    slug: "4-bhk-penthouse-dona-paula",
+    title: "4 BHK Penthouse in Dona Paula",
+    location: "Dona Paula, Goa",
+    propertyType: "Penthouse",
+    purpose: "For Sale",
+    category: "penthouse",
+    price: 165_000_000,
+    priceDisplay: "₹16.50 Cr, all-inclusive",
+    rent: null,
+    status: "under-construction",
+    statusLabel: "Under Construction · Possession December 2029",
+    bedrooms: 4,
+    bedroomsDisplay: "4 BHK Penthouse",
+    bathrooms: null,
+    area: "Dona Paula",
+    areaSlug: "dona-paula",
+    region: "Central Goa",
+    builtUpArea: "528 sqm super built-up",
+    landArea: null,
+    plotArea: null,
+    areaRange: null,
+    communitySize: null,
+    roadAccess: null,
+    parking: null,
+    possession: "December 2029",
+    furnishing: null,
+    reraNumber: null,
+    amenities: [],
+    description:
+      "A 4 BHK penthouse in Dona Paula, Goa, with 528 sqm super built-up area. The published price is all-inclusive. Possession is expected in December 2029.",
+    shortDescription:
+      "A 4 BHK penthouse in Dona Paula, 528 sqm super built-up, priced all-inclusive. Possession December 2029.",
+    longDescription: [
+      "A 4 BHK penthouse in Dona Paula, Goa, with a super built-up area of 528 sqm.",
+      "The published price is all-inclusive. Possession is expected in December 2029. Availability is confirmed on enquiry.",
+    ],
+    features: [],
+    heroImage: FALLBACK.plans,
+    media: [],
+    featured: false,
+    mediaStatus: "needs-approved-photography",
+    mediaFallbackText:
+      "Private preview and detailed plans available on request",
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Dona Paula, Goa, India"),
+    relatedIds: [
+      "3-bhk-residences-dona-paula",
+      "4-bhk-residences-dona-paula",
+      "dona-paula-penthouse",
+    ],
+    ctaLabel: "Enquire for Availability",
+    ...interestCopy(
+      "I'm interested in the 4 BHK Penthouse in Dona Paula — 528 sqm.",
+    ),
+  }),
+
+  listing({
+    id: "waterfront-villas-pilerne",
+    slug: "waterfront-villas-pilerne",
+    title: "Waterfront Villas in Pilerne",
+    location: "Pilerne, Goa",
+    propertyType: "Villa",
+    purpose: "For Sale",
+    category: "villa",
+    price: null,
+    priceDisplay: "Available on Request",
+    rent: null,
+    status: "available",
+    statusLabel: "Ready to Move",
+    bedrooms: 4,
+    bedroomsDisplay: "4 and 5 BHK",
+    bathrooms: null,
+    area: "Pilerne",
+    areaSlug: "pilerne",
+    region: "North Goa",
+    builtUpArea: null,
+    landArea: null,
+    plotArea: null,
+    areaRange: null,
+    communitySize: null,
+    roadAccess: null,
+    parking: null,
+    possession: null,
+    furnishing: null,
+    reraNumber: null,
+    amenities: [],
+    description:
+      "A boutique waterfront villa collection in Pilerne, Goa, in 4 and 5 BHK configurations. The residences are ready to move. Details are shared privately on request.",
+    shortDescription:
+      "A boutique waterfront villa collection in Pilerne, Goa. 4 and 5 BHK. Ready to move.",
+    longDescription: [
+      "A boutique waterfront villa collection in Pilerne, Goa, offered in 4 and 5 BHK configurations.",
+      "The residences are ready to move. Layouts, pricing and availability are shared privately on request.",
+    ],
+    features: [],
+    heroImage: FALLBACK.preview,
+    media: [],
+    featured: false,
+    mediaStatus: "needs-approved-photography",
+    mediaFallbackText: "Private preview available on request",
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Pilerne, Goa, India"),
+    relatedIds: [PILERNE, "heritage-villa-guirim", REIS],
+    ctaLabel: "Request Private Details",
+    ...interestCopy("I'm interested in the Waterfront Villas in Pilerne."),
+  }),
+
+  listing({
+    id: "heritage-villa-guirim",
+    slug: "heritage-villa-guirim",
+    title: "Fully Furnished Heritage Villa in Guirim",
+    location: "Guirim, Goa",
+    propertyType: "Villa",
+    purpose: "For Sale",
+    category: "villa",
+    price: 130_000_000,
+    priceDisplay: "₹13 Cr",
+    rent: null,
+    status: "available",
+    statusLabel: "Available",
+    bedrooms: 4,
+    bedroomsDisplay: "4 BHK",
+    bathrooms: null,
+    area: "Guirim",
+    areaSlug: "guirim",
+    region: "North Goa",
+    builtUpArea: "464.5 sqm",
+    landArea: "975.5 sqm",
+    plotArea: null,
+    areaRange: null,
+    communitySize: null,
+    roadAccess: null,
+    parking: null,
+    possession: null,
+    furnishing: "Fully furnished",
+    reraNumber: null,
+    amenities: [],
+    description:
+      "A restored Goan-Portuguese heritage residence in Guirim, Goa. Fully furnished 4 BHK, on 975.5 sqm of land, with 464.5 sqm built-up area.",
+    shortDescription:
+      "A fully furnished 4 BHK restored Goan-Portuguese heritage villa in Guirim, Goa.",
+    longDescription: [
+      "A restored Goan-Portuguese heritage residence in Guirim, Goa.",
+      "The villa is a fully furnished 4 BHK, standing on 975.5 sqm of land, with a built-up area of 464.5 sqm.",
+    ],
+    features: [],
+    heroImage: FALLBACK.preview,
+    media: [],
+    featured: false,
+    mediaStatus: "needs-approved-photography",
+    mediaFallbackText: "Private preview available on request",
+    nearbyHighlights: [],
+    mapEmbedUrl: mapsEmbedUrl("Guirim, Goa, India"),
+    relatedIds: [ALDONA, "waterfront-villas-pilerne", PILERNE],
+    ctaLabel: "Request Private Viewing",
+    ...interestCopy(
+      "I'm interested in the Fully Furnished Heritage Villa in Guirim.",
+    ),
+  }),
+
+  listing({
+    id: "prime-land-assagao",
+    slug: "prime-land-assagao",
+    title: "Prime Land in Assagao",
+    location: "Assagao, North Goa",
+    propertyType: "Land",
+    purpose: "For Sale",
+    category: "land",
+    price: null,
+    priceDisplay: "₹90,000 per sqm",
+    pricePositioning: "Negotiable",
+    rent: null,
+    status: "available",
+    statusLabel: "Available",
+    bedrooms: null,
+    bedroomsDisplay: null,
+    bathrooms: null,
+    area: "Assagao",
+    areaSlug: "assagao",
+    region: "North Goa",
+    builtUpArea: null,
+    landArea: "3,850 sqm",
+    plotArea: null,
+    areaRange: null,
+    communitySize: null,
+    roadAccess: "Main-road access",
+    parking: null,
+    possession: null,
+    furnishing: null,
+    reraNumber: null,
+    amenities: [],
+    description:
+      "Prime land in Assagao, North Goa: 3,850 sqm, with main-road access, an open-field outlook and lush tropical surroundings.",
+    shortDescription:
+      "3,850 sqm of prime land in Assagao, North Goa, with main-road access and an open-field outlook.",
+    longDescription: [
+      "Prime land in Assagao, North Goa, measuring 3,850 sqm.",
+      "The holding has main-road access, an open-field outlook and lush tropical surroundings.",
+    ],
+    features: [],
+    heroImage: FALLBACK.land,
+    media: [],
+    featured: false,
+    mediaStatus: "needs-site-photography",
+    mediaFallbackText: "Private land dossier available on request",
+    nearbyHighlights: [
+      "Main-road access",
+      "Open-field outlook",
+      "Lush tropical surroundings",
+    ],
+    mapEmbedUrl: mapsEmbedUrl("Assagao, North Goa, India"),
+    relatedIds: ["ucassaim-land", ALDONA, PILERNE],
+    ctaLabel: "Request Land Details",
+    availabilityDisclaimer: "Price and availability subject to confirmation.",
+    ...interestCopy(
+      "I'm interested in the Prime Land in Assagao — 3,850 sqm.",
+    ),
+  }),
 ];
 
+export function listingGallery(property: Property) {
+  return property.media.filter(
+    (image) => image.kind !== "fallback" && image.kind !== "plan",
+  );
+}
+
+export function listingPlans(property: Property) {
+  return property.media.filter((image) => image.kind === "plan");
+}
+
 export function hasPhotography(property: Property) {
-  return property.media.some((image) => image.kind !== "fallback");
+  return listingGallery(property).length > 0;
+}
+
+export function isSalvadorListing(property: Property) {
+  return property.collectionGroup === "salvador";
+}
+
+export function getSalvadorProperties() {
+  return properties.filter(isSalvadorListing);
 }
 
 export function offersEmi(property: Property) {

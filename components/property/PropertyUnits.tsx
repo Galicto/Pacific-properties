@@ -8,10 +8,14 @@ export function PropertyUnits({ property }: { property: Property }) {
   const available = units.filter((unit) => unit.status === "available");
   const sold = units.filter((unit) => unit.status === "sold");
   const ordered = [...available, ...sold];
+  const hideArea = Boolean(property.hideUnitArea);
+  const label = property.unitLabelColumn ?? "Unit";
 
   return (
     <section className="mt-16">
-      <h2 className="font-serif text-2xl">Residences</h2>
+      <h2 className="font-serif text-2xl">
+        {property.unitsHeading ?? "Residences"}
+      </h2>
       <div className="mt-6 overflow-x-auto border border-ink/10">
         <table className="min-w-full text-left text-sm">
           <caption className="sr-only">
@@ -20,11 +24,13 @@ export function PropertyUnits({ property }: { property: Property }) {
           <thead className="border-b border-ink/10 bg-ivory-deep/60 text-[10px] uppercase tracking-[0.16em] text-ink-muted">
             <tr>
               <th scope="col" className="px-4 py-3 font-medium sm:px-5">
-                Unit
+                {label}
               </th>
-              <th scope="col" className="px-4 py-3 font-medium sm:px-5">
-                Area
-              </th>
+              {hideArea ? null : (
+                <th scope="col" className="px-4 py-3 font-medium sm:px-5">
+                  Area
+                </th>
+              )}
               <th scope="col" className="px-4 py-3 font-medium sm:px-5">
                 Price
               </th>
@@ -35,7 +41,7 @@ export function PropertyUnits({ property }: { property: Property }) {
           </thead>
           <tbody>
             {ordered.map((unit) => (
-              <UnitRow key={unit.id} unit={unit} />
+              <UnitRow key={unit.id} unit={unit} hideArea={hideArea} />
             ))}
           </tbody>
         </table>
@@ -52,19 +58,34 @@ export function PropertyUnits({ property }: { property: Property }) {
   );
 }
 
-function UnitRow({ unit }: { unit: PropertyUnit }) {
+function UnitRow({
+  unit,
+  hideArea,
+}: {
+  unit: PropertyUnit;
+  hideArea: boolean;
+}) {
   const sold = unit.status === "sold";
   return (
     <tr className={cn("border-t border-ink/8", sold && "text-ink-muted")}>
-      <th scope="row" className="px-4 py-3.5 font-serif text-base font-medium sm:px-5">
+      <th
+        scope="row"
+        className="px-4 py-3.5 font-serif text-base font-medium sm:px-5"
+      >
         {unit.label}
       </th>
-      <td className="px-4 py-3.5 sm:px-5">{unit.area}</td>
+      {hideArea ? null : (
+        <td className="px-4 py-3.5 sm:px-5">{unit.area}</td>
+      )}
       <td className="px-4 py-3.5 sm:px-5">
         {sold ? "—" : unit.priceDisplay}
       </td>
       <td className="px-4 py-3.5 sm:px-5">
-        {sold ? "Sold" : unit.price === null ? "Available on Request" : "Available"}
+        {sold
+          ? "Sold"
+          : unit.price === null
+            ? "Available on Request"
+            : "Available"}
       </td>
     </tr>
   );

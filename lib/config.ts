@@ -84,20 +84,24 @@ export const siteConfig = {
    */
   credentials: {
     reraRegistrationNumber: "",
-    heading: "Trusted by profession. Rooted in Goa.",
+    heading: "Trusted in Goa Real Estate",
     supporting:
-      "Pacific Properties combines local market intelligence with recognised professional standards.",
-    founderMember: {
-      title: "Founder Member",
-      body: "Goa Association of Realtors (GAR)",
+      "Established credentials, recognised industry affiliations and a commitment to professional representation.",
+    trademark: {
+      title: "Registered Trademark",
+      body: "Pacific Properties is a registered trade mark for real-estate services in Goa.",
     },
     narIndia: {
-      title: "Member",
-      body: "National Association of Realtors – India (NAR-India)",
+      title: "Member, NAR-India",
+      body: "National Association of Realtors – India.",
+    },
+    primaryMember: {
+      title: "Primary Member, Goa Association of Realtors",
+      body: "Membership valid until 31 March 2027.",
     },
     rera: {
-      title: "RERA Registered",
-      body: "Registered real-estate professional in Goa",
+      title: "RERA-Registered Real Estate Agent",
+      body: "Registration valid from 7 June 2023 through 6 June 2028.",
     },
   },
 
@@ -105,29 +109,13 @@ export const siteConfig = {
    * EMI calculator defaults. Single source of truth: `emiDefaults` in `lib/emi.ts`.
    */
   emi: emiDefaults,
-
-  /**
-   * Hero videos. Add further entries to enable the cinematic carousel.
-   * REPLACE `src` with a locally hosted file (e.g. /video/hero-01.mp4) for production.
-   * Current sources are free Pexels stock — verified to return HTTP 200.
-   */
-  heroVideos: [
-    {
-      id: "villa-courtyard",
-      src: "https://videos.pexels.com/video-files/3571264/3571264-hd_1920_1080_30fps.mp4",
-      poster: "/properties/aldona-twin-villas/09.webp",
-      alt: "Private pool and deck at the Aldona twin villas.",
-    },
-    {
-      id: "coastal-aerial",
-      src: "https://videos.pexels.com/video-files/2022395/2022395-hd_1920_1080_30fps.mp4",
-      poster: "/properties/pilerne-villa-collection/24.webp",
-      alt: "Private pool and garden at the Pilerne villa collection.",
-    },
-  ],
 } as const;
 
-export type HeroVideo = (typeof siteConfig.heroVideos)[number];
+export {
+  heroMedia as heroVideos,
+  heroFilmHasFile,
+  type HeroMedia as HeroVideo,
+} from "./hero-media";
 
 export function mapsEmbedUrl(query: string, zoom = 14) {
   return `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=${zoom}&output=embed`;

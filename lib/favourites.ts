@@ -18,12 +18,16 @@ export function useFavourites() {
   const [ids, setIds] = useState<string[]>([]);
 
   useEffect(() => {
-    setIds(read());
+    const sync = () => setIds(read());
+    const id = window.setTimeout(sync, 0);
     const onStorage = (event: StorageEvent) => {
       if (event.key === KEY) setIds(read());
     };
     window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
+    return () => {
+      window.clearTimeout(id);
+      window.removeEventListener("storage", onStorage);
+    };
   }, []);
 
   const toggle = useCallback((id: string) => {

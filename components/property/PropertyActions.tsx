@@ -11,11 +11,13 @@ export function PropertyActions({
   area,
   slug,
   enquiryText,
+  ctaLabel,
 }: {
   title: string;
   area: string;
   slug: string;
   enquiryText?: string;
+  ctaLabel?: string;
   price?: number | null;
 }) {
   const [copied, setCopied] = useState(false);
@@ -56,7 +58,7 @@ export function PropertyActions({
             variant="dark"
             className="min-h-11 min-w-0 flex-1 sm:flex-none"
           >
-            Enquire
+            {ctaLabel ?? "Enquire"}
           </ButtonLink>
           <ButtonLink
             href={whatsapp}

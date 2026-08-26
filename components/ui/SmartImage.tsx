@@ -51,6 +51,7 @@ export function SmartImage({
         priority={priority}
         fetchPriority={priority ? "high" : "auto"}
         quality={quality}
+        loading={priority ? "eager" : "lazy"}
         placeholder="blur"
         blurDataURL={IMAGE_BLUR_IVORY}
         className={cn("object-cover", imageClassName)}

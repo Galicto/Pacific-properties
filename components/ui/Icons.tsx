@@ -325,6 +325,23 @@ export function IconRegistered({ className }: IconProps) {
   );
 }
 
+/** Registered-mark square — not an official trade-mark office logo. */
+export function IconTrademark({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.25"
+      aria-hidden="true"
+    >
+      <rect x="4.5" y="4.5" width="15" height="15" rx="1.2" />
+      <path d="M8.4 15.2V8.8h7.2M12 8.8v6.4" />
+    </svg>
+  );
+}
+
 export function IconCheckLine({ className }: IconProps) {
   return (
     <svg

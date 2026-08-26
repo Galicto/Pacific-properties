@@ -31,20 +31,25 @@ export function EnquiryForm({
   dark,
   propertyTitle,
   propertySlug,
+  enquiryPrompt,
+  whatsappHref,
 }: {
   compact?: boolean;
   dark?: boolean;
   propertyTitle?: string;
   propertySlug?: string;
+  enquiryPrompt?: string;
+  whatsappHref?: string;
 }) {
   const [data, setData] = useState<EnquiryPayload>({
     ...empty,
     preferredLocation: "",
     propertyTitle,
     propertySlug,
-    message: propertyTitle
-      ? `I would like to know more about ${propertyTitle}.`
-      : "",
+    message: enquiryPrompt
+      ?? (propertyTitle
+        ? `I would like to know more about ${propertyTitle}.`
+        : ""),
   });
   const [errors, setErrors] = useState<Partial<Record<keyof EnquiryPayload, string>>>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -94,7 +99,7 @@ export function EnquiryForm({
         <p className="font-serif text-3xl">Thank you.</p>
         <p className="mt-4 text-sm leading-relaxed opacity-80">{message}</p>
         <a
-          href={defaultWhatsAppUrl}
+          href={whatsappHref ?? defaultWhatsAppUrl}
           target="_blank"
           rel="noopener noreferrer"
           className={cn(

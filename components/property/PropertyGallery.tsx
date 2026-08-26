@@ -4,7 +4,7 @@ import { IconChevronLeft, IconChevronRight } from "@/components/ui/Icons";
 import { PropertyMediaFallback } from "@/components/property/PropertyMediaFallback";
 import { SmartImage } from "@/components/ui/SmartImage";
 import type { Property } from "@/data/properties";
-import { hasPhotography } from "@/data/properties";
+import { hasPhotography, listingGallery } from "@/data/properties";
 import { useSwipe } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
@@ -25,7 +25,7 @@ export function PropertyGallery({
 }: {
   property: Property;
 }) {
-  const images = property.media;
+  const images = listingGallery(property);
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
