@@ -4,8 +4,3 @@ goa-waves
   Mixkit 1573 — “Aerial view of a tropical beach with green palms”
   https://mixkit.co/free-stock-video/aerial-view-of-a-tropical-beach-with-green-palms-1573/
   Mixkit Stock Video Free License (commercial use, no attribution required)
-
-goa-lanes
-  Slow Ken Burns film from original Pacific Properties listing photography
-  (La Demure villa elevation, public/properties/la-demure/02c.webp).
-  Not a street or travel clip.

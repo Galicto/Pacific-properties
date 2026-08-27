@@ -26,13 +26,11 @@ npm start
 
 ### 1. How to replace the hero video
 
-Edit `lib/config.ts` → `siteConfig.heroVideos`.
+Edit `lib/hero-media.ts` (re-exported from `lib/config.ts` as `heroVideos`).
 
-Each entry needs `id`, `src`, `poster`, and `alt`. The home hero is built as a carousel: add further videos to the array and they will play in sequence with progress indicators.
+The home hero uses a **single** ocean-wave film (`goa-waves`). Update `src`, `webmSrc`, `mobileSrc`, posters, `objectPosition`, and `alt` on that entry. Do not add a second film or carousel.
 
-For production, host files in `public/video/` (for example `/video/hero-01.mp4`) rather than hot-linking stock. Keep posters in `siteConfig.heroVideos[].poster`. The player uses `preload="metadata"` and **does not mount the video until** the page is idle on a desktop-class, fast connection. On phones and slow/Save-Data networks the poster remains, with an optional Play Film control — so the video cannot delay First Contentful Paint or Largest Contentful Paint.
-
-Current v1 sources are Pexels MP4s (luxury villa courtyard + coastal aerial). Replace them locally before launch.
+For production, host files in `public/videos/` (for example `/videos/goa-waves.mp4`) rather than hot-linking stock. The player uses `preload="metadata"` and **does not mount the video until** the page is idle on a fast connection (and not under reduced motion). On slow/Save-Data networks or when autoplay fails, the LCP poster remains, with an optional Play Film control — so the video cannot delay First Contentful Paint or Largest Contentful Paint.
 
 ### 2. How to add/edit properties
 
@@ -53,11 +51,13 @@ Edit `lib/config.ts`:
 
 - `whatsappNumber` / `whatsappBaseUrl` / `defaultWhatsAppText`
 - `linkedinUrl`, `instagramUrl`
-- `email`, `phoneDisplay`, `address`
+- `email`, `phones` (Call 1–3), `address`
 
 Helpers in `lib/whatsapp.ts` build personalised `wa.me` links. The default enquiry link is:
 
-`https://wa.me/917517723777?text=Hello%20Pacific%20Properties%2C%20I%20would%20like%20to%20enquire%20about%20your%20properties%20in%20Goa.`
+`https://wa.me/917517723720?text=Hello%20Pacific%20Properties%2C%20I%20would%20like%20to%20enquire%20about%20your%20properties%20in%20Goa.`
+
+Official lines: `+91 7517723720` (WhatsApp + Call 1), `+91 7517723753` (Call 2), `+91 7517723754` (Call 3).
 
 Property pages use: *Hello Pacific Properties, I would like to enquire about {title}.*
 

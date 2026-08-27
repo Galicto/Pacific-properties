@@ -17,7 +17,7 @@ export function localBusinessJsonLd() {
     image: siteConfig.ogImage.startsWith("http")
       ? siteConfig.ogImage
       : `${siteConfig.url}${siteConfig.ogImage}`,
-    telephone: siteConfig.phoneDisplay,
+    telephone: siteConfig.phones.map((phone) => phone.display),
     email: siteConfig.email,
     hasMap: siteConfig.mapPlaceUrl,
     geo: {
@@ -37,17 +37,17 @@ export function localBusinessJsonLd() {
       "@type": "Person",
       name: siteConfig.principal.name,
       jobTitle: siteConfig.principal.role,
-      telephone: siteConfig.phoneDisplay,
+      telephone: siteConfig.phones.map((phone) => phone.display),
       email: siteConfig.email,
     },
-    contactPoint: {
+    contactPoint: siteConfig.phones.map((phone) => ({
       "@type": "ContactPoint",
       contactType: "sales",
-      telephone: siteConfig.phoneDisplay,
+      telephone: phone.display,
       email: siteConfig.email,
       areaServed: "IN",
       availableLanguage: ["English", "Hindi"],
-    },
+    })),
     areaServed: ["North Goa", "South Goa", "Goa"],
     sameAs: [siteConfig.linkedinUrl, siteConfig.instagramUrl],
     hasCredential: [

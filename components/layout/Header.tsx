@@ -1,22 +1,29 @@
 "use client";
 
 import { operationAreas, areasOfOperationCopy } from "@/data/operations";
+import { ContactReachUs } from "@/components/contact/ContactReachUs";
 import { ButtonLink } from "@/components/ui/Button";
 import { IconChevronDown, IconClose } from "@/components/ui/Icons";
 import { Logo } from "@/components/brand/Logo";
-import { siteConfig } from "@/lib/config";
-import { whatsAppUrlForPath } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
-import { useFocusTrap } from "@/lib/hooks";
+import { useFocusTrap, usePrefersReducedMotion } from "@/lib/hooks";
 
-const nav = [
+const desktopNav = [
   { href: "/collection", label: "Collection" },
   { href: "/about", label: "About" },
   { href: "/journal", label: "Journal" },
   { href: "/contact", label: "Contact" },
+];
+
+const mobileNav = [
+  { href: "/collection", label: "Collection" },
+  { href: "/about", label: "About" },
+  { href: "/journal", label: "Journal" },
+  { href: "/contact", label: "Contact" },
+  { href: "/emi-calculator", label: "EMI Calculator" },
 ];
 
 function isMediaHero(pathname: string) {
@@ -37,13 +44,16 @@ function isMediaHero(pathname: string) {
 
 export function Header() {
   const pathname = usePathname();
+  const reduceMotion = usePrefersReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [areasOpen, setAreasOpen] = useState(false);
+  const [mobileAreasOpen, setMobileAreasOpen] = useState(false);
   const menuId = useId();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const scrollLockY = useRef(0);
   const overMedia = isMediaHero(pathname) && !scrolled && !open;
   useFocusTrap(open, menuRef, false);
 
@@ -65,14 +75,44 @@ export function Header() {
     queueMicrotask(() => {
       setOpen(false);
       setAreasOpen(false);
+      setMobileAreasOpen(false);
     });
   }, [pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    if (open) closeRef.current?.focus();
+    const html = document.documentElement;
+    const body = document.body;
+
+    if (open) {
+      scrollLockY.current = window.scrollY;
+      html.style.overflow = "hidden";
+      body.style.overflow = "hidden";
+      body.style.position = "fixed";
+      body.style.top = `-${scrollLockY.current}px`;
+      body.style.left = "0";
+      body.style.right = "0";
+      body.style.width = "100%";
+      queueMicrotask(() => closeRef.current?.focus());
+    } else {
+      const y = scrollLockY.current;
+      html.style.overflow = "";
+      body.style.overflow = "";
+      body.style.position = "";
+      body.style.top = "";
+      body.style.left = "";
+      body.style.right = "";
+      body.style.width = "";
+      if (y) window.scrollTo(0, y);
+    }
+
     return () => {
-      document.body.style.overflow = "";
+      html.style.overflow = "";
+      body.style.overflow = "";
+      body.style.position = "";
+      body.style.top = "";
+      body.style.left = "";
+      body.style.right = "";
+      body.style.width = "";
     };
   }, [open]);
 
@@ -81,6 +121,7 @@ export function Header() {
       if (event.key === "Escape") {
         setOpen(false);
         setAreasOpen(false);
+        setMobileAreasOpen(false);
         menuButtonRef.current?.focus();
       }
     };
@@ -88,11 +129,21 @@ export function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  const closeMenu = () => {
+    setOpen(false);
+    setMobileAreasOpen(false);
+    menuButtonRef.current?.focus();
+  };
+
   const linkClass = (active: boolean) =>
     cn(
       "inline-flex min-h-11 items-center text-[11px] font-medium uppercase tracking-[0.2em] text-ivory/80 transition-colors duration-300 hover:text-ivory",
       active && "text-ivory",
     );
+
+  const motionClass = reduceMotion
+    ? "transition-none"
+    : "transition-[opacity,transform] duration-300 ease-[var(--ease-cinematic)]";
 
   return (
     <header
@@ -136,7 +187,8 @@ export function Header() {
             </button>
             <div
               className={cn(
-                "absolute left-1/2 top-full z-50 w-[22rem] -translate-x-1/2 pt-3 transition-[opacity,transform] duration-300",
+                "absolute left-1/2 top-full z-50 w-[22rem] -translate-x-1/2 pt-3",
+                motionClass,
                 areasOpen
                   ? "visible translate-y-0 opacity-100"
                   : "invisible translate-y-1 opacity-0",
@@ -168,7 +220,7 @@ export function Header() {
             </div>
           </div>
 
-          {nav.slice(1).map((item) => (
+          {desktopNav.slice(1).map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -210,6 +262,20 @@ export function Header() {
         </div>
       </div>
 
+      {/* Backdrop — outside click closes */}
+      <button
+        type="button"
+        tabIndex={open ? 0 : -1}
+        aria-label="Close menu"
+        aria-hidden={!open}
+        className={cn(
+          "fixed inset-0 z-[55] bg-ink/40 lg:hidden",
+          motionClass,
+          open ? "opacity-100" : "pointer-events-none opacity-0",
+        )}
+        onClick={closeMenu}
+      />
+
       <div
         ref={menuRef}
         id={menuId}
@@ -219,109 +285,111 @@ export function Header() {
         aria-hidden={!open}
         {...(!open ? { inert: true } : {})}
         className={cn(
-          "fixed inset-0 z-[60] overflow-y-auto bg-ink px-4 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-[calc(1.25rem+env(safe-area-inset-top))] text-ivory transition-transform duration-300 ease-[var(--ease-cinematic)] sm:px-8 lg:hidden",
-          open ? "translate-x-0" : "pointer-events-none translate-x-full",
+          "fixed inset-0 z-[60] flex flex-col overflow-hidden bg-ivory text-tide lg:hidden",
+          motionClass,
+          open
+            ? "translate-x-0 opacity-100"
+            : "pointer-events-none translate-x-full opacity-0",
         )}
-        style={{ colorScheme: "dark" }}
       >
-        <div className="flex items-center justify-between">
-          <Logo />
-          <button
-            ref={closeRef}
-            type="button"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/30 text-ivory"
-            aria-label="Close menu"
-            onClick={() => {
-              setOpen(false);
-              menuButtonRef.current?.focus();
-            }}
-          >
-            <IconClose className="h-4 w-4" />
-          </button>
+        {/* Logo band — tide surface so the official white lock-up stays correct */}
+        <div className="shrink-0 bg-tide px-5 pb-6 pt-[calc(1.25rem+env(safe-area-inset-top))] sm:px-8">
+          <div className="flex flex-col items-center gap-5">
+            <Logo className="justify-center" />
+            <button
+              ref={closeRef}
+              type="button"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/35 text-ivory transition-colors hover:bg-ivory/10"
+              aria-label="Close menu"
+              onClick={closeMenu}
+            >
+              <IconClose className="h-4 w-4" />
+            </button>
+          </div>
         </div>
-        <nav className="mt-12 flex flex-col">
-          <Link
-            href="/collection"
-            className="min-h-11 font-serif text-[clamp(2rem,8vw,2.75rem)] text-ivory"
-            onClick={() => setOpen(false)}
-          >
-            Collection
-          </Link>
-          <p className="mt-8 text-[11px] uppercase tracking-[0.22em] text-ivory/50">
-            Areas of Operation
-          </p>
-          <div className="mt-3 flex flex-col">
-            {operationAreas.map((area) => (
-              <Link
-                key={area.id}
-                href={area.href}
-                className="flex min-h-11 items-center text-sm text-ivory/80"
-                onClick={() => setOpen(false)}
+
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-8 sm:px-8">
+          <nav className="flex flex-col" aria-label="Mobile">
+            <Link
+              href="/collection"
+              className="flex min-h-14 items-center border-b border-ink/10 font-serif text-[1.85rem] leading-none tracking-tight text-tide sm:text-[2.1rem]"
+              onClick={closeMenu}
+            >
+              Collection
+            </Link>
+
+            <div className="border-b border-ink/10">
+              <button
+                type="button"
+                className="flex min-h-14 w-full items-center justify-between font-serif text-[1.85rem] leading-none tracking-tight text-tide sm:text-[2.1rem]"
+                aria-expanded={mobileAreasOpen}
+                onClick={() => setMobileAreasOpen((value) => !value)}
               >
-                {area.name}
+                Areas
+                <IconChevronDown
+                  className={cn(
+                    "h-5 w-5 text-brass transition-transform duration-300",
+                    mobileAreasOpen && "rotate-180",
+                  )}
+                />
+              </button>
+              <div
+                className={cn(
+                  "overflow-hidden",
+                  motionClass,
+                  mobileAreasOpen
+                    ? "max-h-80 pb-5 opacity-100"
+                    : "pointer-events-none max-h-0 opacity-0",
+                )}
+                aria-hidden={!mobileAreasOpen}
+                {...(!mobileAreasOpen ? { inert: true } : {})}
+              >
+                <p className="text-[11px] uppercase tracking-[0.2em] text-brass">
+                  Areas of Operation
+                </p>
+                <ul className="mt-3 space-y-1">
+                  {operationAreas.map((area) => (
+                    <li key={area.id}>
+                      <Link
+                        href={area.href}
+                        className="flex min-h-11 items-center text-[15px] text-ink-muted transition-colors hover:text-tide"
+                        onClick={closeMenu}
+                      >
+                        {area.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-3 max-w-sm text-[13px] leading-relaxed text-ink-muted/80">
+                  {areasOfOperationCopy}
+                </p>
+              </div>
+            </div>
+
+            {mobileNav.slice(1).map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="flex min-h-14 items-center border-b border-ink/10 font-serif text-[1.85rem] leading-none tracking-tight text-tide sm:text-[2.1rem]"
+                onClick={closeMenu}
+              >
+                {item.label}
               </Link>
             ))}
-          </div>
-          <p className="mt-3 max-w-sm text-[13px] leading-relaxed text-ivory/45">
-            {areasOfOperationCopy}
-          </p>
-          {nav.slice(1).map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="mt-5 flex min-h-11 items-center font-serif text-[clamp(2rem,8vw,2.75rem)] text-ivory"
-              onClick={() => setOpen(false)}
+
+            <ButtonLink
+              href="/contact"
+              variant="dark"
+              className="mt-10 w-full sm:w-fit"
             >
-              {item.label}
-            </Link>
-          ))}
-          <ButtonLink href="/contact" className="mt-12 w-fit" variant="primary">
-            Speak to an Advisor
-          </ButtonLink>
-          <div className="mt-10 border-t border-ivory/10 pt-6 text-sm text-ivory/65">
-            <p className="font-medium text-ivory">{siteConfig.principal.name}</p>
-            <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-ivory/45">
-              {siteConfig.principal.role}
-            </p>
-            <a
-              href={siteConfig.phoneHref}
-              className="mt-4 flex min-h-11 items-center"
-            >
-              {siteConfig.phoneDisplay}
-            </a>
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="flex min-h-11 items-center break-all"
-            >
-              {siteConfig.email}
-            </a>
-            <p className="mt-2 max-w-xs text-[13px] leading-relaxed">
-              {siteConfig.address.line1}
-              <br />
-              {siteConfig.address.line2}
-              <br />
-              {siteConfig.address.line3}
-            </p>
-            <p className="mt-3 text-[11px] uppercase tracking-[0.16em] text-ivory/45">
-              Goa RERA {siteConfig.credentials.reraRegistrationNumber}
-            </p>
-            <a
-              href={whatsAppUrlForPath(pathname)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex min-h-11 items-center text-[11px] uppercase tracking-[0.18em] text-ivory/70"
-            >
-              WhatsApp
-            </a>
-          </div>
-          <Link
-            href="/emi-calculator"
-            className="mt-6 flex min-h-11 items-center text-[11px] uppercase tracking-[0.2em] text-ivory/50"
-            onClick={() => setOpen(false)}
-          >
-            EMI Calculator
-          </Link>
-        </nav>
+              Speak to a Pacific Properties Advisor
+            </ButtonLink>
+
+            <div className="mt-12 border-t border-ink/10 pt-8">
+              <ContactReachUs tone="light" showActions />
+            </div>
+          </nav>
+        </div>
       </div>
     </header>
   );

@@ -1,4 +1,5 @@
 import { operationAreas, areasOfOperationCopy } from "@/data/operations";
+import { ContactReachUs } from "@/components/contact/ContactReachUs";
 import { FooterCtaSpace } from "@/components/layout/MobileCtaBar";
 import { FooterCredentials } from "@/components/brand/TrustLines";
 import { Logo } from "@/components/brand/Logo";
@@ -24,40 +25,10 @@ export function Footer() {
         <div className="lg:col-span-5">
           <Logo size="lg" />
           <p className="mt-8 max-w-sm text-sm leading-relaxed text-ivory/65">
-            A boutique brokerage for considered property in Goa — villas,
-            residences, land and commercial space, represented with discretion.
+            {areasOfOperationCopy}
           </p>
-          <div className="mt-8 max-w-sm text-sm leading-relaxed text-ivory/70">
-            <p className="font-medium text-ivory">{siteConfig.principal.name}</p>
-            <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-brass-soft">
-              {siteConfig.principal.role}
-            </p>
-            <p className="mt-4">
-              {siteConfig.address.line1}
-              <br />
-              {siteConfig.address.line2}
-              <br />
-              {siteConfig.address.line3}
-            </p>
-            <p className="mt-4">
-              <a
-                href={siteConfig.phoneHref}
-                className="transition-colors hover:text-ivory"
-              >
-                {siteConfig.phoneDisplay}
-              </a>
-            </p>
-            <p>
-              <a
-                href={`mailto:${siteConfig.email}`}
-                className="break-all transition-colors hover:text-ivory"
-              >
-                {siteConfig.email}
-              </a>
-            </p>
-            <p className="mt-3 text-[11px] uppercase tracking-[0.16em] text-ivory/50">
-              Goa RERA {siteConfig.credentials.reraRegistrationNumber}
-            </p>
+          <div className="mt-8 max-w-sm">
+            <ContactReachUs tone="dark" showActions />
           </div>
         </div>
 
@@ -122,6 +93,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="flex min-h-11 items-center text-[11px] uppercase tracking-[0.18em] text-ivory/70 hover:text-ivory"
+              aria-label="WhatsApp Pacific Properties on +91 7517723720"
             >
               WhatsApp
             </a>

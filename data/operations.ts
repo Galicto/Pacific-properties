@@ -4,7 +4,7 @@
  */
 
 export const areasOfOperationCopy =
-  "From coastal neighbourhoods and heritage villages to emerging investment corridors, Pacific Properties represents considered opportunities across North and South Goa.";
+  "Pacific Properties represents considered homes, land and commercial opportunities across North and South Goa.";
 
 export const operationAreas = [
   {
@@ -26,7 +26,7 @@ export const operationAreas = [
     name: "Across Goa",
     href: "/collection",
     region: null,
-    note: "A considered collection across North and South Goa, shared by introduction.",
+    note: "Pacific Properties represents considered homes, land and commercial opportunities across North and South Goa.",
   },
 ] as const;
 

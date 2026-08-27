@@ -14,7 +14,7 @@ export const siteConfig = {
   secondaryTagline: "Exceptional Homes. Enduring Goa.",
   tertiaryTagline: "Property, Curated for the Way You Live.",
   description:
-    "A boutique Goa brokerage for considered buyers, investors and second-home seekers. Curated villas, residences, land and commercial space across North and South Goa.",
+    "Pacific Properties represents considered homes, land and commercial opportunities across North and South Goa.",
   url: "https://pacificpropertiesgoa.com",
   locale: "en_IN",
 
@@ -24,8 +24,8 @@ export const siteConfig = {
     role: "Chief Executive Officer",
   },
 
-  whatsappNumber: "917517723777",
-  whatsappBaseUrl: "https://wa.me/917517723777",
+  whatsappNumber: "917517723720",
+  whatsappBaseUrl: "https://wa.me/917517723720",
   defaultWhatsAppText:
     "Hello Pacific Properties, I would like to enquire about your properties in Goa.",
 
@@ -33,8 +33,39 @@ export const siteConfig = {
   instagramUrl: "https://www.instagram.com/pacificpropertiesindia/",
 
   email: "pacificpropertiesrealtygoa@gmail.com",
-  phoneDisplay: "+91 75177 23777",
-  phoneHref: "tel:+917517723777",
+
+  /**
+   * Official contact lines (Akbar Khawaja / Pacific Properties Goa).
+   * Primary WhatsApp uses phones[0]. Digits match tel: and wa.me links.
+   */
+  phones: [
+    {
+      id: "call-1",
+      label: "Call 1",
+      display: "+91 7517723720",
+      href: "tel:+917517723720",
+      digits: "917517723720",
+    },
+    {
+      id: "call-2",
+      label: "Call 2",
+      display: "+91 7517723753",
+      href: "tel:+917517723753",
+      digits: "917517723753",
+    },
+    {
+      id: "call-3",
+      label: "Call 3",
+      display: "+91 7517723754",
+      href: "tel:+917517723754",
+      digits: "917517723754",
+    },
+  ],
+
+  /** @deprecated Prefer siteConfig.phones[0].display — kept for legacy call sites. */
+  phoneDisplay: "+91 7517723720",
+  /** @deprecated Prefer siteConfig.phones[0].href */
+  phoneHref: "tel:+917517723720",
 
   address: {
     line1: "Block A, 3rd Floor, 302",
@@ -119,6 +150,7 @@ export const siteConfig = {
 
 export {
   heroMedia as heroVideos,
+  heroFilm,
   heroFilmHasFile,
   type HeroMedia as HeroVideo,
 } from "./hero-media";

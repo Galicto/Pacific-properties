@@ -1618,7 +1618,12 @@ export const properties: Property[] = [
       "Four-bedroom villas in Dona Paula, with private pool, lift, car parking, power backup, modular kitchen and a spacious lounge. Possession is expected in August 2027.",
     ],
     features: [],
-    heroImage: FALLBACK.coastal,
+    heroImage: still(
+      OCEAN,
+      "hero.webp",
+      "Indicative coastal outlook for Luxury Villas in Dona Paula — development photography available on request.",
+      "fallback",
+    ),
     media: [],
     featured: false,
     mediaStatus: "needs-approved-photography",
@@ -1679,7 +1684,12 @@ export const properties: Property[] = [
       "A three-bedroom penthouse in Dona Paula with a private terrace, rooftop pool and gazebo sit-out, with possession expected in August 2027.",
     ],
     features: [],
-    heroImage: FALLBACK.coastal,
+    heroImage: still(
+      OCEAN,
+      "10-terrace.webp",
+      "Indicative private terrace atmosphere for the Dona Paula penthouse — development photography available on request.",
+      "fallback",
+    ),
     media: [],
     featured: false,
     mediaStatus: "needs-approved-photography",
@@ -1735,7 +1745,12 @@ export const properties: Property[] = [
       "A three-bedroom apartment in Dona Paula, with swimming pool, lift, 24/7 security, power backup, modular kitchen and car parking. Possession is expected in August 2027.",
     ],
     features: [],
-    heroImage: FALLBACK.coastal,
+    heroImage: still(
+      OCEAN,
+      "10-living.webp",
+      "Indicative residence interior for the Dona Paula apartment — development photography available on request.",
+      "fallback",
+    ),
     media: [],
     featured: false,
     mediaStatus: "needs-approved-photography",
@@ -1784,7 +1799,12 @@ export const properties: Property[] = [
       "Possession is expected in December 2029. Availability is confirmed on enquiry.",
     ],
     features: [],
-    heroImage: FALLBACK.coastal,
+    heroImage: still(
+      OCEAN,
+      "03.webp",
+      "Indicative lobby atmosphere for 3 BHK residences in Dona Paula — development photography available on request.",
+      "fallback",
+    ),
     media: [],
     featured: false,
     mediaStatus: "needs-approved-photography",
@@ -1841,7 +1861,12 @@ export const properties: Property[] = [
       "Possession is expected in December 2029. Availability is confirmed on enquiry.",
     ],
     features: [],
-    heroImage: FALLBACK.coastal,
+    heroImage: still(
+      OCEAN,
+      "09b.webp",
+      "Indicative rooftop pool atmosphere for 4 BHK residences in Dona Paula — development photography available on request.",
+      "fallback",
+    ),
     media: [],
     featured: false,
     mediaStatus: "needs-approved-photography",
@@ -1898,7 +1923,12 @@ export const properties: Property[] = [
       "The published price is all-inclusive. Possession is expected in December 2029. Availability is confirmed on enquiry.",
     ],
     features: [],
-    heroImage: FALLBACK.coastal,
+    heroImage: still(
+      OCEAN,
+      "10-jacuzzi.webp",
+      "Indicative suite atmosphere for the 4 BHK penthouse in Dona Paula — development photography available on request.",
+      "fallback",
+    ),
     media: [],
     featured: false,
     mediaStatus: "needs-approved-photography",
@@ -2006,8 +2036,18 @@ export const properties: Property[] = [
       "The villa is a fully furnished 4 BHK, standing on 975.5 sqm of land, with a built-up area of 464.5 sqm.",
     ],
     features: [],
-    heroImage: FALLBACK.northVilla,
-    media: [],
+    heroImage: {
+      src: "/properties/heritage-villa-guirim/hero.webp",
+      alt: "Portuguese-Goan heritage lane atmosphere for the Guirim villa collection — site photography available on private request.",
+      kind: "fallback" as const,
+    },
+    media: [
+      {
+        src: "/properties/heritage-villa-guirim/hero.webp",
+        alt: "Portuguese-Goan heritage lane atmosphere for the Guirim villa collection — site photography available on private request.",
+        kind: "fallback" as const,
+      },
+    ],
     featured: false,
     mediaStatus: "needs-approved-photography",
     mediaFallbackText: "Private Collection",
@@ -2132,8 +2172,10 @@ export function findPropertyForEmi(opts: {
 }
 
 export function getFeaturedProperties() {
-  return properties.filter(
-    (property) => property.featured && property.category !== "commercial",
+  return uniqueProperties(
+    properties.filter(
+      (property) => property.featured && property.category !== "commercial",
+    ),
   );
 }
 
@@ -2141,20 +2183,33 @@ export function isNewLaunch(property: Property) {
   return property.collectionGroup === "new-launches";
 }
 
+export function uniqueProperties(list: Property[]) {
+  const seen = new Set<string>();
+  return list.filter((property) => {
+    const key = property.id || property.slug;
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 export function groupPropertiesByCollection(list: Property[]) {
+  const deduped = uniqueProperties(list);
   return collectionGroupOrder
     .map((id) => ({
       id,
       label: collectionGroupLabels[id],
-      properties: list.filter((item) => item.collectionGroup === id),
+      properties: deduped.filter((item) => item.collectionGroup === id),
     }))
     .filter((group) => group.properties.length > 0);
 }
 
 export function getRelatedProperties(property: Property) {
-  return property.relatedIds
-    .map((id) => properties.find((item) => item.id === id))
-    .filter((item): item is Property => Boolean(item));
+  return uniqueProperties(
+    property.relatedIds
+      .map((id) => properties.find((item) => item.id === id))
+      .filter((item): item is Property => Boolean(item)),
+  );
 }
 
 export function getAdjacentProperties(slug: string) {

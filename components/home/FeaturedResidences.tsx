@@ -58,7 +58,8 @@ export function FeaturedResidences() {
                 Selected Residences
               </p>
               <h2 className="mt-4 font-serif text-[clamp(1.85rem,4.6vw,3.1rem)] leading-[1.1]">
-                A considered collection of homes across Goa.
+                Pacific Properties represents considered homes, land and
+                commercial opportunities across North and South Goa.
               </h2>
             </div>
             <ButtonLink href="/collection" variant="ghostInk" className="w-fit">

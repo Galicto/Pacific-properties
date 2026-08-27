@@ -128,8 +128,57 @@ export default async function ContactPage({
               {siteConfig.address.line3}
             </p>
             <p className="mt-4 text-sm text-ivory/70">{siteConfig.email}</p>
-            <p className="text-sm text-ivory/70">{siteConfig.phoneDisplay}</p>
-            <p className="mt-3 text-[11px] uppercase tracking-[0.16em] text-ivory/50">
+            <ul className="mt-2 space-y-1 text-sm text-ivory/70">
+              {siteConfig.phones.map((phone) => (
+                <li key={phone.id}>
+                  <a
+                    href={phone.href}
+                    className="transition-colors hover:text-ivory"
+                    aria-label={`${phone.label}: ${phone.display}`}
+                  >
+                    {phone.display}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {siteConfig.phones.map((phone) => (
+                <a
+                  key={phone.id}
+                  href={phone.href}
+                  className="inline-flex min-h-10 items-center rounded-full border border-ivory/25 px-3 text-[10px] uppercase tracking-[0.14em] text-ivory/80 transition-colors hover:border-ivory hover:text-ivory"
+                  aria-label={`${phone.label} ${phone.display}`}
+                >
+                  {phone.label}
+                </a>
+              ))}
+              <a
+                href={whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-10 items-center rounded-full border border-ivory/25 px-3 text-[10px] uppercase tracking-[0.14em] text-ivory/80 transition-colors hover:border-ivory hover:text-ivory"
+                aria-label="WhatsApp Pacific Properties on +91 7517723720"
+              >
+                WhatsApp
+              </a>
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="inline-flex min-h-10 items-center rounded-full border border-ivory/25 px-3 text-[10px] uppercase tracking-[0.14em] text-ivory/80 transition-colors hover:border-ivory hover:text-ivory"
+                aria-label={`Email Us at ${siteConfig.email}`}
+              >
+                Email Us
+              </a>
+              <a
+                href={siteConfig.mapDirectionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-10 items-center rounded-full border border-ivory/25 px-3 text-[10px] uppercase tracking-[0.14em] text-ivory/80 transition-colors hover:border-ivory hover:text-ivory"
+                aria-label="Get directions to Pacific Properties office in Panjim"
+              >
+                Get Directions
+              </a>
+            </div>
+            <p className="mt-4 text-[11px] uppercase tracking-[0.16em] text-ivory/50">
               Goa RERA {siteConfig.credentials.reraRegistrationNumber}
             </p>
           </div>

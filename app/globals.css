@@ -83,15 +83,6 @@ summary {
   }
 }
 
-@keyframes hero-progress {
-  from {
-    transform: scaleX(0.04);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
 .hero-film-clip::-webkit-media-controls,
 .hero-film-clip::-webkit-media-controls-enclosure,
 .hero-film-clip::-webkit-media-controls-panel,
@@ -100,12 +91,6 @@ summary {
   display: none !important;
   opacity: 0;
   pointer-events: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-progress-bar {
-    animation: none;
-  }
 }
 
 /* Visible without JS. Animate only after the js class is applied. */

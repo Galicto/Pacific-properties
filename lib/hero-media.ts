@@ -1,10 +1,9 @@
 /**
- * Homepage hero films. Replace `src`, `webmSrc`, poster paths and
+ * Homepage hero film. Replace `src`, `webmSrc`, poster paths and
  * `objectPosition` here — the hero component does not need to change.
  *
- * Sources (licensed, no watermarks):
+ * Source (licensed, no watermarks):
  * - goa-waves: Mixkit 1573 aerial tropical coastline, Mixkit Stock Video Free License.
- * - goa-lanes: slow film from original villa photography (Pilerne collection).
  */
 export type HeroOverlay = "dark" | "soft";
 
@@ -21,7 +20,7 @@ export type HeroMedia = {
   alt: string;
 };
 
-export const HERO_ROTATE_MS = 12_000;
+/** Soft fade when the film becomes visible over the LCP poster. */
 export const HERO_CROSSFADE_MS = 1500;
 
 export const heroMedia: HeroMedia[] = [
@@ -37,19 +36,9 @@ export const heroMedia: HeroMedia[] = [
     overlay: "soft",
     alt: "Aerial view of a palm-lined coastline and clear water",
   },
-  {
-    id: "goa-lanes",
-    label: "The Residence",
-    src: "/videos/goa-lanes.mp4",
-    webmSrc: "/videos/goa-lanes.webm",
-    mobileSrc: "/videos/goa-lanes-mobile.mp4",
-    poster: "/videos/goa-lanes-poster.webp",
-    mobilePoster: "/videos/goa-lanes-poster-mobile.webp",
-    objectPosition: "center 42%",
-    overlay: "soft",
-    alt: "Laterite villas with terracotta roofs, tropical planting and a planted drive",
-  },
 ];
+
+export const heroFilm = heroMedia[0]!;
 
 export function heroFilmHasFile(video: HeroMedia) {
   return Boolean(video.src?.trim() || video.webmSrc?.trim());

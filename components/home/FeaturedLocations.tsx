@@ -10,14 +10,13 @@ export function FeaturedLocations() {
       <Container>
         <Reveal>
           <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-brass">
-            Areas of Operation
+            Across Goa
           </p>
           <h2 className="mt-4 max-w-2xl font-serif text-[clamp(1.85rem,4.6vw,3.1rem)] leading-[1.1]">
             Across North and South Goa.
           </h2>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-ink-muted">
-            From coastal neighbourhoods and heritage villages to emerging
-            investment corridors, Pacific Properties represents considered
+            Pacific Properties represents considered homes, land and commercial
             opportunities across North and South Goa.
           </p>
         </Reveal>

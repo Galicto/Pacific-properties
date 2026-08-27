@@ -29,7 +29,7 @@ export function WhatsAppFloat() {
       href={whatsAppUrlForPath(pathname)}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="WhatsApp Pacific Properties Goa"
+      aria-label="WhatsApp Pacific Properties on +91 7517723720"
       className={`fixed bottom-7 right-7 z-[45] hidden h-14 w-14 items-center justify-center rounded-full bg-[#215C4A] text-ivory print:hidden md:flex ${
         pulse ? "wa-pulse" : ""
       }`}

@@ -10,6 +10,7 @@ import {
   categoryLabels,
   groupPropertiesByCollection,
   properties,
+  uniqueProperties,
   type PropertyCategory,
   type PropertyPurpose,
   type PropertyStatus,
@@ -146,7 +147,8 @@ export function CollectionClient({
   }, []);
 
   const results = useMemo(() => {
-    return properties.filter((property) => {
+    return uniqueProperties(
+      properties.filter((property) => {
       if (filters.purpose !== "all" && property.purpose !== filters.purpose) {
         return false;
       }
@@ -190,7 +192,8 @@ export function CollectionClient({
         return false;
       }
       return true;
-    });
+    }),
+    );
   }, [filters]);
 
   const groups = useMemo(

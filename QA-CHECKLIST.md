@@ -45,7 +45,7 @@ Checked after hydration (DevTools device override during first paint can show a 
 - Journal: three named notes, no invented dates/authors/statistics; cinematic article heroes; empty-state branch if the array is cleared; old slugs redirect.
 - Contact: dark header; map on request; float hidden; `aria-invalid` and field errors; inputs at `text-base` (no iPhone zoom).
 - EMI: inbound `?slug=&property=&price=` still seeds the listing; session persistence kept; **URL is no longer rewritten with `history.replaceState`** (that desynced the App Router). Schedule accordion pages without blocking the UI. Zero-interest, decimals, ₹50L / ₹1 Cr / ₹3 Cr / ₹10 Cr covered by unit tests.
-- WhatsApp only `https://wa.me/917517723777`; Instagram `pacificpropertiesindia`.
+- WhatsApp only `https://wa.me/917517723720`; phones `+91 7517723720`, `+91 7517723753`, `+91 7517723754`; Instagram `pacificpropertiesindia`.
 - Copy: Built-up Area, Swimming Pool, Car Parking, Power Backup, Private Enquiry, Price on Request. Missing bathrooms are omitted, not invented.
 - Featured residences exclude commercial even if a `featured` flag is set in error.
 - Property cards are a single client component (they are used from both Collection and related listings) to avoid mixed server/client trees.

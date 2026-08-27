@@ -4,6 +4,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SmartImage } from "@/components/ui/SmartImage";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -27,23 +28,39 @@ const principles = [
   },
 ];
 
+const leadershipWhatsAppUrl = buildWhatsAppUrl(
+  "Hello Pacific Properties, I would like to speak with your leadership team.",
+);
+
 const leadership = [
   {
+    id: "arshad",
     name: "Mr. Arshad Khawaja",
-    role: "Founder",
-    text: "Founded in 2005 by Mr. Arshad Khawaja, Pacific Properties India was built on a clear belief: property decisions deserve transparency, market knowledge and personal accountability. His insight into Goa’s real estate landscape has guided local families, second-home buyers and investors for over two decades.",
+    role: "Founder and Director, Pacific Properties India",
+    email: "arshad@pacificproperties.com",
+    emailLabel: "Email Arshad",
+    credential: "RERA Registered | RERA No. AGGO06180071",
+    text: "Mr. Arshad Khawaja is a seasoned real estate leader, visionary entrepreneur and self-made professional who has shaped property consultancy and development in Goa for over two decades.\n\nHis journey in Goa began in 1984 after moving from Mumbai. In 2005, he formally entered the real estate sector as a consultant and laid the foundation of Pacific Properties. Since then, the firm has grown into a trusted name in luxury advisory, sales and leasing.\n\nHe later expanded the firm into project consultancy for developers, advising on land acquisition, project initiation and market positioning.\n\nMr. Khawaja is a Founder Member of the Goa Association of Realtors, affiliated with NAR India, and currently serves as Chairman of the GAR Goa Events Committee for 2026–2028.",
   },
   {
+    id: "akbar",
     name: "Mr. Akbar Khawaja",
-    role: "Co-Founder & CEO",
-    text: "Mr. Akbar Khawaja brings a contemporary approach to sales strategy, market expansion and strategic business development, strengthening the firm’s ability to serve a modern and nationally connected client base.",
+    role: "Co-Founder and CEO, Pacific Properties India",
+    email: "akbar@pacificproperties.com",
+    emailLabel: "Email Akbar",
+    credential: null,
+    text: "Mr. Akbar Khawaja is a second-generation real estate leader who joined the industry in 2020 with a forward-looking vision. He combines the firm’s foundational expertise with contemporary strategy, digital marketing and data-led advisory.\n\nHe has helped expand Pacific Properties across luxury lifestyle residences, high-yield rental opportunities, strategic land transactions, complex acquisitions and upscale developments across Goa, Maharashtra and Dubai.",
   },
   {
+    id: "ayman",
     name: "Mr. Ayman Xec",
-    role: "Head of Operations & Marketing",
-    text: "Mr. Ayman Xec leads operations, digital presence and client relations, ensuring every interaction is responsive, considered and aligned with the Pacific Properties standard.",
+    role: "Head of Operations and Marketing, Pacific Properties India",
+    email: "ayman@pacificproperties.com",
+    emailLabel: "Email Ayman",
+    credential: null,
+    text: "Mr. Ayman Xec leads the day-to-day operations and strategic brand positioning of Pacific Properties. He oversees digital marketing, premium property showcases, drone-led visual media, CRM workflows, client relations and administrative execution.\n\nHis work keeps the brand precise, responsive and consistent across sales, leasing and development advisory.",
   },
-];
+] as const;
 
 const timeline = [
   {
@@ -56,7 +73,7 @@ const timeline = [
   },
   {
     year: "Today",
-    text: "A considered collection across North and South Goa, including new launches, private residences, land and commercial opportunities—represented with discretion and care.",
+    text: "Pacific Properties represents considered homes, land and commercial opportunities across North and South Goa—represented with discretion and care.",
   },
 ];
 
@@ -177,7 +194,11 @@ export default function AboutPage() {
           </Reveal>
           <div className="mt-12 grid items-stretch gap-8 sm:grid-cols-3 sm:gap-5 lg:gap-6">
             {leadership.map((person, index) => (
-              <Reveal key={person.name} delay={index * 0.06}>
+              <Reveal
+                key={person.id}
+                delay={index * 0.06}
+                className="flex h-full flex-col"
+              >
                 <LeadershipProfile person={person} />
               </Reveal>
             ))}
@@ -300,17 +321,46 @@ function LeadershipProfile({
 }) {
   return (
     <article className="flex h-full flex-col">
-      <div className="flex h-[18.5rem] w-full shrink-0 flex-col justify-center bg-tide px-7 py-10 text-ivory sm:h-[20rem] sm:px-8 sm:py-12">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-brass-soft">
+      <div className="flex min-h-[17.5rem] w-full shrink-0 flex-col justify-center bg-tide px-6 py-8 text-ivory sm:min-h-[20.5rem] sm:px-7 sm:py-10">
+        <p className="text-[10px] uppercase leading-snug tracking-[0.16em] text-brass-soft sm:text-[11px] sm:tracking-[0.18em]">
           {person.role}
         </p>
-        <h3 className="mt-5 font-serif text-[clamp(1.45rem,2.4vw,1.95rem)] leading-[1.2] text-balance">
+        <h3 className="mt-4 font-serif text-[clamp(1.35rem,2.2vw,1.85rem)] leading-[1.18] text-balance">
           {person.name}
         </h3>
+        {person.credential ? (
+          <p className="mt-4 text-[11px] leading-relaxed tracking-[0.04em] text-ivory/75">
+            {person.credential}
+          </p>
+        ) : (
+          <p className="mt-4 min-h-[1.1rem]" aria-hidden>
+            {"\u00a0"}
+          </p>
+        )}
       </div>
-      <p className="mt-6 text-sm leading-relaxed text-ink-muted">
-        {person.text}
-      </p>
+      <div className="mt-6 flex flex-1 flex-col">
+        <div className="space-y-4 text-sm leading-relaxed text-ink-muted">
+          {person.text.split("\n\n").map((paragraph) => (
+            <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+          ))}
+        </div>
+        <div className="mt-auto flex flex-col gap-2 border-t border-ink/10 pt-5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-2">
+          <a
+            href={`mailto:${person.email}`}
+            className="inline-flex min-h-11 items-center text-[11px] uppercase tracking-[0.14em] text-brass transition-opacity duration-300 hover:opacity-80"
+          >
+            {person.emailLabel}
+          </a>
+          <a
+            href={leadershipWhatsAppUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center text-[11px] uppercase tracking-[0.14em] text-ink-muted transition-opacity duration-300 hover:opacity-80"
+          >
+            WhatsApp Pacific Properties
+          </a>
+        </div>
+      </div>
     </article>
   );
 }
