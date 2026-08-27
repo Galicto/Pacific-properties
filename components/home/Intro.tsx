@@ -37,8 +37,8 @@ export function Intro() {
           </Reveal>
           <Reveal className="md:col-span-5 md:mt-16" delay={0.15}>
             <SmartImage
-              src="/properties/pilerne-villa-collection/24.webp"
-              alt="Private pool and garden at the Pilerne villa collection."
+              src="/images/goa-residence.webp"
+              alt="Living room interior"
               className="aspect-[3/4] w-full"
               sizes="(min-width: 768px) 40vw, 100vw"
               quality={70}

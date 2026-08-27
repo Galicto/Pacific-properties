@@ -37,17 +37,7 @@ export function ContactReachUs({
         Reach Us
       </p>
 
-      <p className={cn("mt-5 font-medium", strong)}>
-        {siteConfig.principal.name}
-      </p>
-      <p
-        className={cn(
-          "mt-1 text-[11px] uppercase tracking-[0.16em]",
-          dark ? "text-brass-soft" : "text-brass",
-        )}
-      >
-        {siteConfig.principal.role}
-      </p>
+
 
       <ul className={cn("mt-5 space-y-1", body)}>
         {siteConfig.phones.map((phone) => (
