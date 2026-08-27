@@ -2037,14 +2037,14 @@ export const properties: Property[] = [
     ],
     features: [],
     heroImage: {
-      src: "/properties/heritage-villa-guirim/hero.webp",
-      alt: "Portuguese-Goan heritage lane atmosphere for the Guirim villa collection — site photography available on private request.",
+      src: "/properties/heritage-villa-guirim/original_hero.webp",
+      alt: "Fully Furnished Heritage Villa in Guirim",
       kind: "fallback" as const,
     },
     media: [
       {
-        src: "/properties/heritage-villa-guirim/hero.webp",
-        alt: "Portuguese-Goan heritage lane atmosphere for the Guirim villa collection — site photography available on private request.",
+        src: "/properties/heritage-villa-guirim/original_hero.webp",
+        alt: "Fully Furnished Heritage Villa in Guirim",
         kind: "fallback" as const,
       },
     ],
