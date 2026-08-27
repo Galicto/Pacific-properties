@@ -14,42 +14,53 @@ export const siteConfig = {
   secondaryTagline: "Exceptional Homes. Enduring Goa.",
   tertiaryTagline: "Property, Curated for the Way You Live.",
   description:
-    "A boutique Goa brokerage for considered buyers, investors and second-home seekers. Curated villas, residences and land across North and Central Goa.",
+    "A boutique Goa brokerage for considered buyers, investors and second-home seekers. Curated villas, residences, land and commercial space across North and South Goa.",
   url: "https://pacificpropertiesgoa.com",
   locale: "en_IN",
 
-  whatsappNumber: "917057860921",
-  whatsappBaseUrl: "https://wa.me/917057860921",
+  principal: {
+    name: "Akbar Khawaja",
+    honorificName: "Mr. Akbar Khawaja",
+    role: "Chief Executive Officer",
+  },
+
+  whatsappNumber: "917517723777",
+  whatsappBaseUrl: "https://wa.me/917517723777",
   defaultWhatsAppText:
-    "Hello Pacific Properties Goa, I would like to know more about your properties.",
+    "Hello Pacific Properties, I would like to enquire about your properties in Goa.",
 
   linkedinUrl: "https://www.linkedin.com/company/pacificpropertiesgoa/",
   instagramUrl: "https://www.instagram.com/pacificpropertiesindia/",
 
-  email: "hello@pacificpropertiesgoa.com",
-  phoneDisplay: "+91 70578 60921",
-  phoneHref: "tel:+917057860921",
+  email: "pacificpropertiesrealtygoa@gmail.com",
+  phoneDisplay: "+91 75177 23777",
+  phoneHref: "tel:+917517723777",
 
   address: {
-    line1: "Assagao, Bardez",
-    line2: "North Goa, Goa 403507",
+    line1: "Block A, 3rd Floor, 302",
+    line2: "Esmeralda Casa Do Povo, St. Inez",
+    line3: "Panjim, Goa",
+    locality: "Panjim",
+    region: "Goa",
+    postalCode: "403001",
     country: "India",
-    display: "Assagao, Bardez, North Goa, Goa 403507, India",
+    display:
+      "Block A, 3rd Floor, 302, Esmeralda Casa Do Povo, St. Inez, Panjim, Goa, India",
   },
 
   /**
    * Maps. Embed needs no API key. The static preview is first paint on Contact;
    * the iframe mounts only after IntersectionObserver / tap.
    */
-  mapQuery: "Assagao, Bardez, North Goa, Goa 403507, India",
+  mapQuery: "Esmeralda Casa Do Povo, St. Inez, Panjim, Goa",
   mapEmbedUrl:
-    "https://maps.google.com/maps?q=Assagao%2C%20Bardez%2C%20North%20Goa%2C%20Goa%20403507%2C%20India&z=12&output=embed",
+    "https://maps.google.com/maps?q=Esmeralda%20Casa%20Do%20Povo%2C%20St.%20Inez%2C%20Panjim%2C%20Goa&z=16&output=embed",
   mapPlaceUrl:
-    "https://www.google.com/maps/search/?api=1&query=Assagao%2C%20Bardez%2C%20North%20Goa%2C%20Goa%20403507%2C%20India",
+    "https://www.google.com/maps/search/?api=1&query=Esmeralda%20Casa%20Do%20Povo%2C%20St.%20Inez%2C%20Panjim%2C%20Goa",
   mapDirectionsUrl:
-    "https://www.google.com/maps/dir/?api=1&destination=Assagao%2C%20Bardez%2C%20North%20Goa%2C%20Goa%20403507%2C%20India",
-  mapPreview: "/maps/assagao.webp",
-  mapCoordinates: { latitude: 15.5989, longitude: 73.7947 },
+    "https://www.google.com/maps/dir/?api=1&destination=Esmeralda%20Casa%20Do%20Povo%2C%20St.%20Inez%2C%20Panjim%2C%20Goa",
+  mapPreview: "/maps/panjim.webp",
+  mapCoordinates: { latitude: 15.49006, longitude: 73.82706 },
 
   /**
    * Official lock-up and P-mark. One colourway only (white type + gold icon).
@@ -75,15 +86,10 @@ export const siteConfig = {
 
   /**
    * Professional credentials shown on Home, About, Contact, listing pages, and footer.
-   *
-   * TODO(client): Paste the verified Goa RERA registration number into
-   * `reraRegistrationNumber` once the client supplies it in writing.
-   * Leave the string empty until then. Never invent, guess, or copy a
-   * number from another listing. When a real value is present the site
-   * will show “RERA Registration No. {number}” and add it to JSON-LD.
+   * Goa RERA number is taken from the official business card for Akbar Khawaja.
    */
   credentials: {
-    reraRegistrationNumber: "",
+    reraRegistrationNumber: "AGGO06180071",
     heading: "Trusted in Goa Real Estate",
     supporting:
       "Established credentials, recognised industry affiliations and a commitment to professional representation.",

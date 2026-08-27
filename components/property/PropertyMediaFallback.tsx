@@ -5,59 +5,27 @@ import { cn } from "@/lib/utils";
 export function PropertyMediaFallback({
   property,
   className,
-  tone = "dark",
 }: {
   property: Pick<Property, "title" | "mediaFallbackText" | "heroImage">;
   className?: string;
-  tone?: "dark" | "light";
 }) {
-  const message =
-    property.mediaFallbackText ?? "Private preview available on request";
-  const dark = tone === "dark";
+  const label = property.mediaFallbackText ?? "Available on Request";
 
   return (
-    <div
-      className={cn(
-        "relative overflow-hidden",
-        dark ? "bg-ink" : "bg-ivory-deep",
-        className,
-      )}
-    >
+    <div className={cn("relative overflow-hidden bg-ivory-deep", className)}>
       <SmartImage
         src={property.heroImage.src}
-        alt=""
+        alt={property.heroImage.alt || property.title}
         className="absolute inset-0 h-full w-full"
         imageClassName="object-cover"
         sizes="(min-width: 1024px) 60vw, 100vw"
-        quality={55}
+        quality={60}
+        objectPosition="center 40%"
       />
-      <div
-        className={cn(
-          "absolute inset-0",
-          dark ? "bg-ink/55" : "bg-ivory/55",
-        )}
-      />
-      <div
-        className={cn(
-          "absolute inset-0 flex flex-col items-center justify-center px-6 py-12 text-center",
-          dark ? "text-ivory" : "text-ink",
-        )}
-      >
-        <p className="text-[11px] uppercase tracking-[0.22em] text-brass">
-          Photography
-        </p>
-        <p className="mt-4 max-w-md font-serif text-[clamp(1.5rem,4vw,2.1rem)] leading-[1.15]">
-          {message}
-        </p>
-        <p
-          className={cn(
-            "mt-4 max-w-sm text-sm",
-            dark ? "text-ivory/70" : "text-ink-muted",
-          )}
-        >
-          {property.title}
-        </p>
-      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-ink/45 via-ink/10 to-ink/15" />
+      <span className="absolute left-3 top-3 z-10 max-w-[calc(100%-1.5rem)] bg-ink/75 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-ivory">
+        {label}
+      </span>
     </div>
   );
 }

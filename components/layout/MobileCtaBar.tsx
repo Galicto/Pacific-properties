@@ -2,7 +2,7 @@
 
 import { ButtonLink } from "@/components/ui/Button";
 import { IconWhatsApp } from "@/components/ui/Icons";
-import { defaultWhatsAppUrl } from "@/lib/whatsapp";
+import { whatsAppUrlForPath } from "@/lib/whatsapp";
 import { usePathname } from "next/navigation";
 
 function hideMobileCta(pathname: string) {
@@ -43,7 +43,7 @@ export function MobileCtaBar() {
     >
       <div className="mx-auto flex max-w-lg min-w-0 items-center gap-3">
         <a
-          href={defaultWhatsAppUrl}
+          href={whatsAppUrlForPath(pathname)}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex h-12 min-w-12 shrink-0 items-center justify-center border border-ink/15 text-ink"

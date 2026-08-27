@@ -1,7 +1,7 @@
 "use client";
 
 import { IconWhatsApp } from "@/components/ui/Icons";
-import { defaultWhatsAppUrl } from "@/lib/whatsapp";
+import { whatsAppUrlForPath } from "@/lib/whatsapp";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -26,7 +26,7 @@ export function WhatsAppFloat() {
 
   return (
     <a
-      href={defaultWhatsAppUrl}
+      href={whatsAppUrlForPath(pathname)}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="WhatsApp Pacific Properties Goa"

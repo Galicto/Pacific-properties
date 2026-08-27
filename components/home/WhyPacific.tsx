@@ -6,7 +6,7 @@ const points = [
   {
     n: "01",
     title: "Local Intelligence",
-    text: "We live the villages we represent. Lane by lane, plot by plot — the knowledge is not borrowed from a portal.",
+    text: "We work the neighbourhoods we represent. Lane by lane, plot by plot — the knowledge is not borrowed from a portal.",
   },
   {
     n: "02",

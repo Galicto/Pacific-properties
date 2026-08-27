@@ -27,7 +27,7 @@ export function Hero() {
         <p className="mt-6 max-w-md text-[0.98rem] leading-[1.7] text-ivory/75 sm:mt-6 sm:max-w-xl sm:text-lg">
           Curated villas, residences, land and commercial space across Goa.
         </p>
-        <div className="mt-10 sm:mt-10">
+        <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-8">
           <ButtonLink
             href="/collection"
             variant="primary"
@@ -37,7 +37,7 @@ export function Hero() {
           </ButtonLink>
           <a
             href="/contact"
-            className="mt-5 hidden min-h-11 items-center text-[11px] uppercase tracking-[0.2em] text-ivory/80 hover:text-ivory sm:inline-flex"
+            className="inline-flex min-h-12 items-center justify-center px-1 text-center text-[11px] uppercase tracking-[0.2em] text-ivory/80 hover:text-ivory sm:px-2"
           >
             Arrange a private consultation
           </a>

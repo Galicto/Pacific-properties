@@ -434,5 +434,5 @@ export function financingWhatsAppText(opts: {
   const property = opts.propertyTitle
     ? ` Property: ${opts.propertyTitle}${opts.area ? ` in ${opts.area}` : ""}.`
     : "";
-  return `Hello Pacific Properties Goa, I would like to discuss financing.${property} Loan amount: ${formatInrExact(opts.loanAmount)}, estimated EMI: ${formatInrExact(opts.emi)}, rate: ${opts.rate}%, tenure: ${opts.tenureYears} years.`;
+  return `Hello Pacific Properties, I would like to discuss financing.${property} Loan amount: ${formatInrExact(opts.loanAmount)}, estimated EMI: ${formatInrExact(opts.emi)}, rate: ${opts.rate}%, tenure: ${opts.tenureYears} years.`;
 }

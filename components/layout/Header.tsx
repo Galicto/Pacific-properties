@@ -1,9 +1,11 @@
 "use client";
 
-import { areas } from "@/data/areas";
+import { operationAreas, areasOfOperationCopy } from "@/data/operations";
 import { ButtonLink } from "@/components/ui/Button";
 import { IconChevronDown, IconClose } from "@/components/ui/Icons";
 import { Logo } from "@/components/brand/Logo";
+import { siteConfig } from "@/lib/config";
+import { whatsAppUrlForPath } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -23,8 +25,7 @@ function isMediaHero(pathname: string) {
     pathname === "/about" ||
     pathname === "/collection" ||
     pathname === "/journal" ||
-    pathname.startsWith("/journal/") ||
-    pathname === "/contact"
+    pathname.startsWith("/journal/")
   ) {
     return true;
   }
@@ -135,27 +136,35 @@ export function Header() {
             </button>
             <div
               className={cn(
-                "absolute left-1/2 top-full z-50 w-64 -translate-x-1/2 pt-3 transition-[opacity,transform] duration-300",
+                "absolute left-1/2 top-full z-50 w-[22rem] -translate-x-1/2 pt-3 transition-[opacity,transform] duration-300",
                 areasOpen
                   ? "visible translate-y-0 opacity-100"
                   : "invisible translate-y-1 opacity-0",
               )}
             >
-              <ul className="border border-ivory/12 bg-ink p-3 shadow-xl shadow-ink/40">
-                {areas.map((area) => (
-                  <li key={area.slug}>
-                    <Link
-                      href={`/collection?area=${area.slug}`}
-                      className="block min-h-11 px-3 py-2.5 text-[13px] text-ivory/80 transition-colors hover:bg-ink-soft hover:text-ivory"
-                    >
-                      <span className="block font-medium">{area.name}</span>
-                      <span className="block text-[11px] text-ivory/50">
-                        {area.region}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <div className="border border-ivory/12 bg-ink p-4 shadow-xl shadow-ink/40">
+                <p className="px-3 text-[11px] uppercase tracking-[0.22em] text-ivory/50">
+                  Areas of Operation
+                </p>
+                <ul className="mt-2">
+                  {operationAreas.map((area) => (
+                    <li key={area.id}>
+                      <Link
+                        href={area.href}
+                        className="block min-h-11 px-3 py-2.5 text-[13px] text-ivory/80 transition-colors hover:bg-ink-soft hover:text-ivory"
+                      >
+                        <span className="block font-medium">{area.name}</span>
+                        <span className="mt-0.5 block text-[11px] leading-relaxed text-ivory/50">
+                          {area.note}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-2 border-t border-ivory/10 px-3 pt-3 text-[11px] leading-relaxed text-ivory/45">
+                  {areasOfOperationCopy}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -239,13 +248,13 @@ export function Header() {
             Collection
           </Link>
           <p className="mt-8 text-[11px] uppercase tracking-[0.22em] text-ivory/50">
-            Areas
+            Areas of Operation
           </p>
-          <div className="mt-3 grid grid-cols-2 gap-x-6">
-            {areas.map((area) => (
+          <div className="mt-3 flex flex-col">
+            {operationAreas.map((area) => (
               <Link
-                key={area.slug}
-                href={`/collection?area=${area.slug}`}
+                key={area.id}
+                href={area.href}
                 className="flex min-h-11 items-center text-sm text-ivory/80"
                 onClick={() => setOpen(false)}
               >
@@ -253,6 +262,9 @@ export function Header() {
               </Link>
             ))}
           </div>
+          <p className="mt-3 max-w-sm text-[13px] leading-relaxed text-ivory/45">
+            {areasOfOperationCopy}
+          </p>
           {nav.slice(1).map((item) => (
             <Link
               key={item.href}
@@ -266,6 +278,42 @@ export function Header() {
           <ButtonLink href="/contact" className="mt-12 w-fit" variant="primary">
             Speak to an Advisor
           </ButtonLink>
+          <div className="mt-10 border-t border-ivory/10 pt-6 text-sm text-ivory/65">
+            <p className="font-medium text-ivory">{siteConfig.principal.name}</p>
+            <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-ivory/45">
+              {siteConfig.principal.role}
+            </p>
+            <a
+              href={siteConfig.phoneHref}
+              className="mt-4 flex min-h-11 items-center"
+            >
+              {siteConfig.phoneDisplay}
+            </a>
+            <a
+              href={`mailto:${siteConfig.email}`}
+              className="flex min-h-11 items-center break-all"
+            >
+              {siteConfig.email}
+            </a>
+            <p className="mt-2 max-w-xs text-[13px] leading-relaxed">
+              {siteConfig.address.line1}
+              <br />
+              {siteConfig.address.line2}
+              <br />
+              {siteConfig.address.line3}
+            </p>
+            <p className="mt-3 text-[11px] uppercase tracking-[0.16em] text-ivory/45">
+              Goa RERA {siteConfig.credentials.reraRegistrationNumber}
+            </p>
+            <a
+              href={whatsAppUrlForPath(pathname)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex min-h-11 items-center text-[11px] uppercase tracking-[0.18em] text-ivory/70"
+            >
+              WhatsApp
+            </a>
+          </div>
           <Link
             href="/emi-calculator"
             className="mt-6 flex min-h-11 items-center text-[11px] uppercase tracking-[0.2em] text-ivory/50"

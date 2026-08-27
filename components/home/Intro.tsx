@@ -28,8 +28,8 @@ export function Intro() {
         <div className="mt-16 grid gap-8 md:grid-cols-12 md:gap-6">
           <Reveal className="md:col-span-7">
             <SmartImage
-              src="/properties/aldona-twin-villas/hero.webp"
-              alt="Twin villas in Aldona, North Goa."
+              src="/properties/aldona-twin-villas/06.webp"
+              alt="Living room of a North Goa villa, opening to garden light."
               className="aspect-[4/3] w-full"
               sizes="(min-width: 768px) 58vw, 100vw"
               quality={70}

@@ -4,7 +4,7 @@
  *
  * Sources (licensed, no watermarks):
  * - goa-waves: Mixkit 1573 aerial tropical coastline, Mixkit Stock Video Free License.
- * - goa-lanes: Mixkit 2592 quiet residential lane, Mixkit Stock Video Free License.
+ * - goa-lanes: slow film from original villa photography (Pilerne collection).
  */
 export type HeroOverlay = "dark" | "soft";
 
@@ -39,15 +39,15 @@ export const heroMedia: HeroMedia[] = [
   },
   {
     id: "goa-lanes",
-    label: "The Neighbourhood",
+    label: "The Residence",
     src: "/videos/goa-lanes.mp4",
     webmSrc: "/videos/goa-lanes.webm",
     mobileSrc: "/videos/goa-lanes-mobile.mp4",
     poster: "/videos/goa-lanes-poster.webp",
     mobilePoster: "/videos/goa-lanes-poster-mobile.webp",
-    objectPosition: "center 52%",
+    objectPosition: "center 42%",
     overlay: "soft",
-    alt: "A quiet residential lane with pastel façades and flowering plants",
+    alt: "Laterite villas with terracotta roofs, tropical planting and a planted drive",
   },
 ];
 

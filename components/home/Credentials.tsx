@@ -56,15 +56,15 @@ export function Credentials() {
           </p>
         </Reveal>
 
-        <ul className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+        <ul className="mt-14 grid auto-rows-fr grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {credentialCards.map((item, index) => {
             const Icon = icons[item.id];
             return (
-              <li key={item.id}>
-                <Reveal delay={index * 0.06}>
+              <li key={item.id} className="h-full min-h-0">
+                <Reveal delay={index * 0.06} className="flex h-full min-h-0 flex-col">
                   <article
                     className={cn(
-                      "flex h-full flex-col border border-ivory/12 bg-ink/35 p-5 shadow-[0_0_40px_rgba(196,174,120,0.06)]",
+                      "flex h-full min-h-0 flex-col border border-ivory/12 bg-ink/35 p-5 shadow-[0_0_40px_rgba(196,174,120,0.06)]",
                       "transition-transform duration-300 ease-[var(--ease-cinematic)] motion-reduce:transition-none",
                       "hover:-translate-y-1 motion-reduce:hover:translate-y-0",
                     )}
@@ -72,34 +72,32 @@ export function Credentials() {
                     <button
                       type="button"
                       onClick={() => setOpen(item)}
-                      className="group block w-full overflow-hidden border border-ivory/10 bg-ivory text-left"
+                      className="group block w-full shrink-0 overflow-hidden border border-ivory/10 bg-[#f4f0e8] text-left"
                       aria-label={`View certificate: ${item.title}`}
                     >
                       <SmartImage
                         src={item.preview}
                         alt=""
-                        className="aspect-[4/3] w-full bg-ivory"
-                        imageClassName="object-contain"
+                        className="aspect-[3/2] w-full bg-[#f4f0e8]"
+                        imageClassName="!object-contain object-top"
                         sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"
                         quality={55}
                       />
                     </button>
-                    <Icon className="mt-6 h-6 w-6 text-brass-soft" />
-                    <h3 className="mt-4 font-serif text-[1.35rem] leading-tight tracking-tight text-ivory">
+                    <Icon className="mt-6 h-6 w-6 shrink-0 text-brass-soft" />
+                    <h3 className="mt-4 min-h-[5rem] font-serif text-[1.35rem] leading-tight tracking-tight text-ivory">
                       {item.title}
                     </h3>
-                    <p className="mt-3 flex-1 text-sm leading-relaxed text-ivory/65">
+                    <p className="mt-3 min-h-[4.5rem] text-sm leading-relaxed text-ivory/65">
                       {item.body}
                     </p>
-                    {item.detail ? (
-                      <p className="mt-3 text-[12px] tracking-[0.04em] text-ivory/80">
-                        {item.detail}
-                      </p>
-                    ) : null}
+                    <p className="mt-3 min-h-[1.25rem] text-[12px] tracking-[0.04em] text-ivory/80">
+                      {item.detail ?? "\u00a0"}
+                    </p>
                     <button
                       type="button"
                       onClick={() => setOpen(item)}
-                      className="mt-6 min-h-11 self-start text-[11px] uppercase tracking-[0.16em] text-brass-soft transition-opacity duration-300 hover:opacity-80 motion-reduce:transition-none"
+                      className="mt-auto min-h-11 self-start pt-6 text-[11px] uppercase tracking-[0.16em] text-brass-soft transition-opacity duration-300 hover:opacity-80 motion-reduce:transition-none"
                     >
                       View Certificate
                     </button>

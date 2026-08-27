@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { IconChevronDown, IconClose, IconGrid, IconList } from "@/components/ui/Icons";
 import { areas } from "@/data/areas";
+import { parseOperationRegion, type OperationAreaId } from "@/data/operations";
 import {
   categoryLabels,
   groupPropertiesByCollection,
@@ -22,6 +23,7 @@ type Filters = {
   purpose: "all" | PropertyPurpose;
   type: "all" | PropertyCategory;
   area: string;
+  region: OperationAreaId | "";
   bedrooms: string;
   price: string;
   status: "all" | PropertyStatus;
@@ -33,6 +35,7 @@ const emptyFilters: Filters = {
   purpose: "all",
   type: "all",
   area: "",
+  region: "",
   bedrooms: "",
   price: "",
   status: "all",
@@ -116,6 +119,7 @@ export function CollectionClient({
     purpose: parsePurpose(first(initial.purpose)),
     type: parseType(first(initial.type)),
     area: first(initial.area),
+    region: parseOperationRegion(initial.region),
     bedrooms: first(initial.bedrooms),
     price: first(initial.price),
     status: parseStatus(first(initial.status)),
@@ -150,6 +154,12 @@ export function CollectionClient({
         return false;
       }
       if (filters.area && property.areaSlug !== filters.area) return false;
+      if (filters.region === "north-goa" && property.region !== "North Goa") {
+        return false;
+      }
+      if (filters.region === "south-goa" && property.region !== "South Goa") {
+        return false;
+      }
       if (filters.bedrooms === "4+") {
         if (!property.bedrooms || property.bedrooms < 4) return false;
       } else if (filters.bedrooms === "3") {
@@ -189,11 +199,14 @@ export function CollectionClient({
   );
 
   const shown = results.slice(0, visible);
-  const filtersActive =
+  const extraFiltersActive =
     filters.purpose !== "all" ||
     filters.type !== "all" ||
     filters.status !== "all" ||
     Boolean(filters.area || filters.bedrooms || filters.price);
+  const filtersActive =
+    extraFiltersActive ||
+    Boolean(filters.region && filters.region !== "across-goa");
 
   const update = (partial: Partial<Filters>) => {
     setFilters((current) => ({ ...current, ...partial }));
@@ -427,7 +440,7 @@ export function CollectionClient({
             Clear filters
           </Button>
         </div>
-      ) : !filtersActive ? (
+      ) : !extraFiltersActive ? (
         <div className="mt-4">
           {groups.map((group) => (
             <section key={group.id} className="mt-14 first:mt-10">

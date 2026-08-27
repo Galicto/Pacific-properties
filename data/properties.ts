@@ -164,7 +164,7 @@ const FALLBACK = {
   },
   land: {
     src: "/properties/_fallbacks/land.webp",
-    alt: "Private land dossier available on request.",
+    alt: "Indicative Goa land — open tropical plot available on request.",
     kind: "fallback" as const,
   },
   plans: {
@@ -172,10 +172,25 @@ const FALLBACK = {
     alt: "Private preview and detailed plans available on request.",
     kind: "fallback" as const,
   },
+  northVilla: {
+    src: "/properties/pilerne-villa-collection/41.webp",
+    alt: "A Goan villa interior with arched windows and tropical light.",
+    kind: "fallback" as const,
+  },
+  coastal: {
+    src: "/properties/ocean-cloud/02.webp",
+    alt: "Coastal residences in Goa, available privately on request.",
+    kind: "fallback" as const,
+  },
+  lush: {
+    src: "/properties/pilerne-villa-collection/24.webp",
+    alt: "Lush villa gardens and private outdoor living in North Goa.",
+    kind: "fallback" as const,
+  },
 };
 
-function enquiry(title: string, location: string) {
-  return `Hello Pacific Properties Goa, I would like more details about ${title} in ${location}.`;
+function enquiry(title: string) {
+  return `Hello Pacific Properties, I would like to enquire about ${title}.`;
 }
 
 function still(
@@ -219,7 +234,7 @@ function listing(
   );
   return {
     currency: "INR",
-    whatsAppEnquiryText: enquiry(property.title, property.location),
+    whatsAppEnquiryText: enquiry(property.title),
     ...property,
     collectionGroup:
       property.collectionGroup ?? defaultCollectionGroup(property.category),
@@ -250,14 +265,13 @@ const SALVADOR_VILLA_3317 = "private-pool-villa-salvador-3317-sq-ft";
 const CONFIRM =
   "Prices and availability are subject to confirmation.";
 
-function salvadorEnquiry(detail: string) {
-  return `Hello Pacific Properties Goa, I'm interested in ${detail}.`;
+function salvadorEnquiry(title: string) {
+  return `Hello Pacific Properties, I would like to enquire about ${title}.`;
 }
 
 function interestCopy(prompt: string) {
   return {
     enquiryPrompt: prompt,
-    whatsAppEnquiryText: `Hello Pacific Properties Goa, ${prompt}`,
   };
 }
 
@@ -350,7 +364,7 @@ export const properties: Property[] = [
     mapEmbedUrl: mapsEmbedUrl("Salvador do Mundo, Goa, India"),
     enquiryPrompt: "I'm interested in the 3 BHK Apartments in Salvador.",
     whatsAppEnquiryText: salvadorEnquiry(
-      "the 3 BHK Apartments in Salvador",
+      "3 BHK Apartments in Salvador",
     ),
     availabilityDisclaimer: CONFIRM,
     availabilityUpdatedOn: null,
@@ -479,7 +493,7 @@ export const properties: Property[] = [
     enquiryPrompt:
       "I'm interested in the Private Pool Villa in Salvador — 2,803 sq ft.",
     whatsAppEnquiryText: salvadorEnquiry(
-      "the Private Pool Villa in Salvador — 2,803 sq ft",
+      "Private Pool Villa in Salvador — 2,803 sq ft",
     ),
     availabilityDisclaimer: CONFIRM,
     availabilityUpdatedOn: null,
@@ -577,7 +591,7 @@ export const properties: Property[] = [
     enquiryPrompt:
       "I'm interested in the Private Pool Villa in Salvador — 3,317 sq ft.",
     whatsAppEnquiryText: salvadorEnquiry(
-      "the Private Pool Villa in Salvador — 3,317 sq ft",
+      "Private Pool Villa in Salvador — 3,317 sq ft",
     ),
     availabilityDisclaimer: CONFIRM,
     availabilityUpdatedOn: null,
@@ -1328,11 +1342,11 @@ export const properties: Property[] = [
       "A private four-bedroom villa opportunity in Saipem, designed for buyers seeking a substantial North Goa residence with lift access, dedicated parking and a private pool.",
     ],
     features: [],
-    heroImage: FALLBACK.preview,
+    heroImage: FALLBACK.northVilla,
     media: [],
     featured: true,
     mediaStatus: "needs-approved-photography",
-    mediaFallbackText: "Private preview available on request",
+    mediaFallbackText: "Private Collection",
     nearbyHighlights: [],
     mapEmbedUrl: mapsEmbedUrl("Saipem, North Goa, India"),
     relatedIds: [ALDONA, PILERNE, REIS],
@@ -1545,11 +1559,15 @@ export const properties: Property[] = [
       "An old-settlement land opportunity in Ucassaim, North Goa, with 6-metre road access and potential for a high-end villa development.",
     ],
     features: [],
-    heroImage: FALLBACK.land,
+    heroImage: {
+      src: "/properties/ucassaim-land/hero.webp",
+      alt: "Indicative North Goa land — laterite track, open plot and coconut palms. Site photography available on request.",
+      kind: "fallback" as const,
+    },
     media: [],
     featured: false,
     mediaStatus: "needs-site-photography",
-    mediaFallbackText: "Private land dossier available on request",
+    mediaFallbackText: "Available on Request",
     nearbyHighlights: [],
     mapEmbedUrl: mapsEmbedUrl("Ucassaim, North Goa, India"),
     relatedIds: [ALDONA, PILERNE, REIS],
@@ -1600,12 +1618,11 @@ export const properties: Property[] = [
       "Four-bedroom villas in Dona Paula, with private pool, lift, car parking, power backup, modular kitchen and a spacious lounge. Possession is expected in August 2027.",
     ],
     features: [],
-    heroImage: FALLBACK.plans,
+    heroImage: FALLBACK.coastal,
     media: [],
     featured: false,
     mediaStatus: "needs-approved-photography",
-    mediaFallbackText:
-      "Private preview and detailed plans available on request",
+    mediaFallbackText: "Coming Soon",
     nearbyHighlights: [],
     mapEmbedUrl: mapsEmbedUrl("Dona Paula, Goa, India"),
     relatedIds: [
@@ -1662,12 +1679,11 @@ export const properties: Property[] = [
       "A three-bedroom penthouse in Dona Paula with a private terrace, rooftop pool and gazebo sit-out, with possession expected in August 2027.",
     ],
     features: [],
-    heroImage: FALLBACK.plans,
+    heroImage: FALLBACK.coastal,
     media: [],
     featured: false,
     mediaStatus: "needs-approved-photography",
-    mediaFallbackText:
-      "Private preview and detailed plans available on request",
+    mediaFallbackText: "Coming Soon",
     nearbyHighlights: [],
     mapEmbedUrl: mapsEmbedUrl("Dona Paula, Goa, India"),
     relatedIds: ["dona-paula-villas", "dona-paula-apartment", REIS],
@@ -1719,12 +1735,11 @@ export const properties: Property[] = [
       "A three-bedroom apartment in Dona Paula, with swimming pool, lift, 24/7 security, power backup, modular kitchen and car parking. Possession is expected in August 2027.",
     ],
     features: [],
-    heroImage: FALLBACK.plans,
+    heroImage: FALLBACK.coastal,
     media: [],
     featured: false,
     mediaStatus: "needs-approved-photography",
-    mediaFallbackText:
-      "Private preview and detailed plans available on request",
+    mediaFallbackText: "Coming Soon",
     nearbyHighlights: [],
     mapEmbedUrl: mapsEmbedUrl("Dona Paula, Goa, India"),
     relatedIds: ["dona-paula-villas", "dona-paula-penthouse", REIS],
@@ -1769,12 +1784,11 @@ export const properties: Property[] = [
       "Possession is expected in December 2029. Availability is confirmed on enquiry.",
     ],
     features: [],
-    heroImage: FALLBACK.plans,
+    heroImage: FALLBACK.coastal,
     media: [],
     featured: false,
     mediaStatus: "needs-approved-photography",
-    mediaFallbackText:
-      "Private preview and detailed plans available on request",
+    mediaFallbackText: "Coming Soon",
     nearbyHighlights: [],
     mapEmbedUrl: mapsEmbedUrl("Dona Paula, Goa, India"),
     relatedIds: [
@@ -1827,12 +1841,11 @@ export const properties: Property[] = [
       "Possession is expected in December 2029. Availability is confirmed on enquiry.",
     ],
     features: [],
-    heroImage: FALLBACK.plans,
+    heroImage: FALLBACK.coastal,
     media: [],
     featured: false,
     mediaStatus: "needs-approved-photography",
-    mediaFallbackText:
-      "Private preview and detailed plans available on request",
+    mediaFallbackText: "Coming Soon",
     nearbyHighlights: [],
     mapEmbedUrl: mapsEmbedUrl("Dona Paula, Goa, India"),
     relatedIds: [
@@ -1885,12 +1898,11 @@ export const properties: Property[] = [
       "The published price is all-inclusive. Possession is expected in December 2029. Availability is confirmed on enquiry.",
     ],
     features: [],
-    heroImage: FALLBACK.plans,
+    heroImage: FALLBACK.coastal,
     media: [],
     featured: false,
     mediaStatus: "needs-approved-photography",
-    mediaFallbackText:
-      "Private preview and detailed plans available on request",
+    mediaFallbackText: "Coming Soon",
     nearbyHighlights: [],
     mapEmbedUrl: mapsEmbedUrl("Dona Paula, Goa, India"),
     relatedIds: [
@@ -1943,11 +1955,11 @@ export const properties: Property[] = [
       "The residences are ready to move. Layouts, pricing and availability are shared privately on request.",
     ],
     features: [],
-    heroImage: FALLBACK.preview,
+    heroImage: FALLBACK.lush,
     media: [],
     featured: false,
     mediaStatus: "needs-approved-photography",
-    mediaFallbackText: "Private preview available on request",
+    mediaFallbackText: "Available on Request",
     nearbyHighlights: [],
     mapEmbedUrl: mapsEmbedUrl("Pilerne, Goa, India"),
     relatedIds: [PILERNE, "heritage-villa-guirim", REIS],
@@ -1994,11 +2006,11 @@ export const properties: Property[] = [
       "The villa is a fully furnished 4 BHK, standing on 975.5 sqm of land, with a built-up area of 464.5 sqm.",
     ],
     features: [],
-    heroImage: FALLBACK.preview,
+    heroImage: FALLBACK.northVilla,
     media: [],
     featured: false,
     mediaStatus: "needs-approved-photography",
-    mediaFallbackText: "Private preview available on request",
+    mediaFallbackText: "Private Collection",
     nearbyHighlights: [],
     mapEmbedUrl: mapsEmbedUrl("Guirim, Goa, India"),
     relatedIds: [ALDONA, "waterfront-villas-pilerne", PILERNE],
@@ -2048,11 +2060,15 @@ export const properties: Property[] = [
       "The holding has main-road access, an open-field outlook and lush tropical surroundings.",
     ],
     features: [],
-    heroImage: FALLBACK.land,
+    heroImage: {
+      src: "/properties/prime-land-assagao/hero.webp",
+      alt: "Indicative North Goa land — open tropical field with laterite earth and palms. Site photography available on request.",
+      kind: "fallback" as const,
+    },
     media: [],
     featured: false,
     mediaStatus: "needs-site-photography",
-    mediaFallbackText: "Private land dossier available on request",
+    mediaFallbackText: "Available on Request",
     nearbyHighlights: [
       "Main-road access",
       "Open-field outlook",

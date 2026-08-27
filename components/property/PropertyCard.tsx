@@ -127,7 +127,8 @@ export function PropertyCard({
       />
     );
 
-  const badgeEl = badge ? (
+  const badgeEl =
+    photo && badge ? (
     <span className="absolute left-3 top-3 z-10 max-w-[calc(100%-1.5rem)] bg-ink/75 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-ivory">
       {badge}
     </span>

@@ -41,11 +41,11 @@ Checked after hydration (DevTools device override during first paint can show a 
 - Collection mobile filters remain a bottom sheet; status chip is **Available**; empty state; desktop Clear filters. Commercial filter returns only Verna.
 - Property pages: enquiry column sits beside gallery/facts (sticky on desktop).
 - Galleries: previous/next on all breakpoints; lightbox focus trap, Escape/arrows, backdrop close; media deduped by `src`.
-- About: official lock-up; credentials GAR / NAR-India / RERA Registered (no invented number).
+- About: official lock-up; credentials GAR / NAR-India / RERA AGGO06180071.
 - Journal: three named notes, no invented dates/authors/statistics; cinematic article heroes; empty-state branch if the array is cleared; old slugs redirect.
 - Contact: dark header; map on request; float hidden; `aria-invalid` and field errors; inputs at `text-base` (no iPhone zoom).
 - EMI: inbound `?slug=&property=&price=` still seeds the listing; session persistence kept; **URL is no longer rewritten with `history.replaceState`** (that desynced the App Router). Schedule accordion pages without blocking the UI. Zero-interest, decimals, ₹50L / ₹1 Cr / ₹3 Cr / ₹10 Cr covered by unit tests.
-- WhatsApp only `https://wa.me/917057860921`; Instagram `pacificpropertiesindia`; no `751772` strings.
+- WhatsApp only `https://wa.me/917517723777`; Instagram `pacificpropertiesindia`.
 - Copy: Built-up Area, Swimming Pool, Car Parking, Power Backup, Private Enquiry, Price on Request. Missing bathrooms are omitted, not invented.
 - Featured residences exclude commercial even if a `featured` flag is set in error.
 - Property cards are a single client component (they are used from both Collection and related listings) to avoid mixed server/client trees.
@@ -67,6 +67,6 @@ Dev-only Next.js issue badges appeared when `history.replaceState` ran or when f
 4. **Founder/advisor portrait and biography** — not invented; About uses the official mark.
 5. **Live enquiry inbox** — form validates and stores the session; WhatsApp remains the prompt reply path until `NEXT_PUBLIC_FORM_ENDPOINT` is set.
 6. **Full privacy policy and terms of use** — placeholders until legal copy is supplied.
-7. **Assagao office pin** — map query is village-level, not a street address.
+7. **Panjim office pin** — map query is Esmeralda Casa Do Povo, St. Inez, Panjim.
 8. **Pilerne plot** — source data is `400–535 sq yd` (not converted to sq m).
 9. Collection chip filters do not write the URL (Areas menu `?area=` still works). EMI slider state is stored in the session, not rewritten into the address bar.

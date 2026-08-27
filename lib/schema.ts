@@ -27,13 +27,28 @@ export function localBusinessJsonLd() {
     },
     address: {
       "@type": "PostalAddress",
-      streetAddress: siteConfig.address.line1,
-      addressLocality: "Assagao",
-      addressRegion: "Goa",
-      postalCode: "403507",
+      streetAddress: `${siteConfig.address.line1}, ${siteConfig.address.line2}`,
+      addressLocality: siteConfig.address.locality,
+      addressRegion: siteConfig.address.region,
+      postalCode: siteConfig.address.postalCode,
       addressCountry: "IN",
     },
-    areaServed: ["North Goa", "Central Goa", "South Goa", "Goa"],
+    employee: {
+      "@type": "Person",
+      name: siteConfig.principal.name,
+      jobTitle: siteConfig.principal.role,
+      telephone: siteConfig.phoneDisplay,
+      email: siteConfig.email,
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      telephone: siteConfig.phoneDisplay,
+      email: siteConfig.email,
+      areaServed: "IN",
+      availableLanguage: ["English", "Hindi"],
+    },
+    areaServed: ["North Goa", "South Goa", "Goa"],
     sameAs: [siteConfig.linkedinUrl, siteConfig.instagramUrl],
     hasCredential: [
       {

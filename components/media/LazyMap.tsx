@@ -98,7 +98,8 @@ export function LazyMap({
           fill
           sizes={sizes}
           quality={65}
-          preload={preload}
+          priority={preload}
+          fetchPriority={preload ? "high" : "auto"}
           loading={preload ? "eager" : "lazy"}
           decoding="async"
           placeholder="blur"

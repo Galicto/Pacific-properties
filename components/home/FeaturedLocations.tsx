@@ -10,19 +10,24 @@ export function FeaturedLocations() {
       <Container>
         <Reveal>
           <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-brass">
-            Explore Goa by Address
+            Areas of Operation
           </p>
           <h2 className="mt-4 max-w-2xl font-serif text-[clamp(1.85rem,4.6vw,3.1rem)] leading-[1.1]">
-            Villages we know by name, not by pin on a map.
+            Across North and South Goa.
           </h2>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-ink-muted">
+            From coastal neighbourhoods and heritage villages to emerging
+            investment corridors, Pacific Properties represents considered
+            opportunities across North and South Goa.
+          </p>
         </Reveal>
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+        <div className="mt-14 grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {areas.map((area, index) => (
-            <Reveal key={area.slug} delay={index * 0.05}>
+            <Reveal key={area.slug} delay={index * 0.05} className="flex h-full flex-col">
               <Link
                 href={`/collection?area=${area.slug}`}
-                className="group relative block aspect-[4/5] overflow-hidden"
+                className="group relative block h-full min-h-[22rem] overflow-hidden sm:min-h-0 sm:aspect-[4/5]"
               >
                 <SmartImage
                   src={area.image}

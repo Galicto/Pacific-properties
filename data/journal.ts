@@ -44,7 +44,7 @@ export const journalArticles: JournalArticle[] = [
     body: [
       "A North Goa villa is often chosen for a feeling: laterite, a pool, a garden that holds the afternoon. Those things matter. What lasts is usually less photogenic — the way the house sits on its plot, the privacy of the compound, and whether the lane still feels like a place to live.",
       "We look at orientation and breeze before interior finishes. A beautiful room on the wrong side of the day becomes a house that is lived with the shutters down. We look at parking, service access and the neighbours’ roofs. We look at whether a pool is a pleasure or a calendar of maintenance you did not plan to keep.",
-      "The villages we currently represent — among them Aldona, Pilerne, Saipem and Reis Magos — do not behave as one market. A house that is right in one will not automatically be right in another. That is the point of walking them, rather than collecting them from a screen.",
+      "The neighbourhoods we represent across North and South Goa do not behave as one market. A house that is right in one will not automatically be right in another. That is the point of walking them, rather than collecting them from a screen.",
       "If you are considering a villa, we would rather begin with how you spend an ordinary Tuesday in Goa than with a list of amenities.",
     ],
   },

@@ -1,0 +1,5 @@
+Illustrative land stills for listings without site photography.
+
+These are generated images of typical North Goa plots (laterite earth, palms, open field).
+They are not photographs of the Ucassaim or Assagao holdings.
+Keep mediaStatus as needs-site-photography until verified site stills are supplied.

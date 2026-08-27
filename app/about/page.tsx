@@ -4,7 +4,6 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SmartImage } from "@/components/ui/SmartImage";
-import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -32,19 +31,16 @@ const leadership = [
   {
     name: "Mr. Arshad Khawaja",
     role: "Founder",
-    monogram: "Arshad",
     text: "Founded in 2005 by Mr. Arshad Khawaja, Pacific Properties India was built on a clear belief: property decisions deserve transparency, market knowledge and personal accountability. His insight into Goa’s real estate landscape has guided local families, second-home buyers and investors for over two decades.",
   },
   {
     name: "Mr. Akbar Khawaja",
     role: "Co-Founder & CEO",
-    monogram: "Akbar",
     text: "Mr. Akbar Khawaja brings a contemporary approach to sales strategy, market expansion and strategic business development, strengthening the firm’s ability to serve a modern and nationally connected client base.",
   },
   {
     name: "Mr. Ayman Xec",
     role: "Head of Operations & Marketing",
-    monogram: "Ayman",
     text: "Mr. Ayman Xec leads operations, digital presence and client relations, ensuring every interaction is responsive, considered and aligned with the Pacific Properties standard.",
   },
 ];
@@ -60,7 +56,7 @@ const timeline = [
   },
   {
     year: "Today",
-    text: "A considered collection across Salvador, Aldona, Pilerne, Saipem, Reis Magos, Ucassaim, Dona Paula and Verna, with new launches represented as they are ready — and the quiet work of representing it well.",
+    text: "A considered collection across North and South Goa, including new launches, private residences, land and commercial opportunities—represented with discretion and care.",
   },
 ];
 
@@ -179,13 +175,10 @@ export default function AboutPage() {
               Experience shaped by trust.
             </h2>
           </Reveal>
-          <div className="mt-12 divide-y divide-ink/10 border-t border-ink/10">
+          <div className="mt-12 grid items-stretch gap-8 sm:grid-cols-3 sm:gap-5 lg:gap-6">
             {leadership.map((person, index) => (
               <Reveal key={person.name} delay={index * 0.06}>
-                <LeadershipProfile
-                  person={person}
-                  reverse={index % 2 === 1}
-                />
+                <LeadershipProfile person={person} />
               </Reveal>
             ))}
           </div>
@@ -264,16 +257,16 @@ export default function AboutPage() {
           </div>
           <div className="lg:col-span-6 lg:col-start-7">
             <SmartImage
-              src="/properties/pilerne-villa-collection/18.webp"
-              alt="Staircase and double-height volume in the Pilerne villa collection."
+              src="/images/goa-office.webp"
+              alt="A considered meeting room for private appointments in Panjim."
               className="aspect-[4/5] w-full max-w-md rounded-[4px]"
               sizes="(min-width: 1024px) 40vw, 100vw"
-              quality={65}
+              quality={70}
+              objectPosition="center 40%"
             />
             <p className="mt-5 max-w-md text-sm leading-relaxed text-ink-muted">
-              We work from Assagao, by appointment, across the addresses we
-              currently represent. Introductions are made with care, and only
-              when they fit.
+              We work from Panjim, by appointment, across North and South Goa.
+              Introductions are made with care, and only when they fit.
             </p>
           </div>
         </div>
@@ -302,47 +295,22 @@ export default function AboutPage() {
 
 function LeadershipProfile({
   person,
-  reverse = false,
 }: {
   person: (typeof leadership)[number];
-  reverse?: boolean;
 }) {
   return (
-    <article className="grid items-center gap-8 py-12 lg:grid-cols-12 lg:gap-10">
-      <div
-        className={cn(
-          "lg:col-span-4",
-          reverse && "lg:col-start-9 lg:row-start-1",
-        )}
-      >
-        <div
-          className="flex aspect-[5/4] w-full max-w-md items-end bg-tide px-8 py-10 text-ivory sm:aspect-[4/5]"
-          aria-hidden="true"
-        >
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-brass-soft">
-              {person.role}
-            </p>
-            <p className="mt-4 font-serif text-[clamp(2rem,4vw,3rem)] leading-[1.08]">
-              {person.monogram}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div
-        className={cn(
-          "lg:col-span-7",
-          reverse ? "lg:col-start-1 lg:row-start-1" : "lg:col-start-6",
-        )}
-      >
-        <p className="text-[11px] uppercase tracking-[0.18em] text-brass">
+    <article className="flex h-full flex-col">
+      <div className="flex h-[18.5rem] w-full shrink-0 flex-col justify-center bg-tide px-7 py-10 text-ivory sm:h-[20rem] sm:px-8 sm:py-12">
+        <p className="text-[11px] uppercase tracking-[0.22em] text-brass-soft">
           {person.role}
         </p>
-        <h3 className="mt-3 font-serif text-2xl sm:text-3xl">{person.name}</h3>
-        <p className="mt-5 max-w-xl text-sm leading-relaxed text-ink-muted">
-          {person.text}
-        </p>
+        <h3 className="mt-5 font-serif text-[clamp(1.45rem,2.4vw,1.95rem)] leading-[1.2] text-balance">
+          {person.name}
+        </h3>
       </div>
+      <p className="mt-6 text-sm leading-relaxed text-ink-muted">
+        {person.text}
+      </p>
     </article>
   );
 }

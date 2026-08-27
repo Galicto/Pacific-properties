@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -105,67 +106,140 @@ def poster(src: str, dest: Path, vf: str, seek: str = "00:00:02.5") -> None:
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     POSTER.mkdir(parents=True, exist_ok=True)
+    only = sys.argv[1] if len(sys.argv) > 1 else "all"
     candidates = SRC / ".candidates"
 
-    coast = SRC / "coast-1573-1080.mp4"
-    if not coast.exists():
-        src = candidates / "1573-1080.mp4"
-        if src.exists():
-            coast.write_bytes(src.read_bytes())
-        else:
-            curl("https://assets.mixkit.co/videos/1573/1573-1080.mp4", coast)
+    if only in ("all", "waves"):
+        coast = SRC / "coast-1573-1080.mp4"
+        if not coast.exists():
+            src = candidates / "1573-1080.mp4"
+            if src.exists():
+                coast.write_bytes(src.read_bytes())
+            else:
+                curl("https://assets.mixkit.co/videos/1573/1573-1080.mp4", coast)
 
-    coast_vf = (
-        "scale=1920:1080:flags=lanczos,"
-        "eq=saturation=1.06:gamma=1.02:contrast=1.03,"
-        "format=yuv420p"
-    )
-    coast_mobile_vf = (
-        "scale=1280:720:flags=lanczos,"
-        "eq=saturation=1.06:gamma=1.02:contrast=1.03,"
-        "format=yuv420p"
-    )
-    encode_mp4(str(coast), OUT / "goa-waves.mp4", coast_vf, duration="12.2")
-    encode_mp4(str(coast), OUT / "goa-waves-mobile.mp4", coast_mobile_vf, duration="12.2")
-    encode_webm(OUT / "goa-waves.mp4", OUT / "goa-waves.webm", bitrate="2.2M")
-    poster(str(OUT / "goa-waves.mp4"), POSTER / "goa-waves-poster.webp", "scale=1920:1080:flags=lanczos")
-    poster(
-        str(OUT / "goa-waves.mp4"),
-        POSTER / "goa-waves-poster-mobile.webp",
-        "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920",
-        seek="00:00:03",
+        coast_vf = (
+            "scale=1920:1080:flags=lanczos,"
+            "eq=saturation=1.06:gamma=1.02:contrast=1.03,"
+            "format=yuv420p"
+        )
+        coast_mobile_vf = (
+            "scale=1280:720:flags=lanczos,"
+            "eq=saturation=1.06:gamma=1.02:contrast=1.03,"
+            "format=yuv420p"
+        )
+        encode_mp4(str(coast), OUT / "goa-waves.mp4", coast_vf, duration="12.2")
+        encode_mp4(str(coast), OUT / "goa-waves-mobile.mp4", coast_mobile_vf, duration="12.2")
+        encode_webm(OUT / "goa-waves.mp4", OUT / "goa-waves.webm", bitrate="2.2M")
+        poster(str(OUT / "goa-waves.mp4"), POSTER / "goa-waves-poster.webp", "scale=1920:1080:flags=lanczos")
+        poster(
+            str(OUT / "goa-waves.mp4"),
+            POSTER / "goa-waves-poster-mobile.webp",
+            "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920",
+            seek="00:00:03",
+        )
+
+    if only not in ("all", "residence"):
+        for path in sorted(OUT.glob("*")):
+            print(f"{path.stat().st_size / 1024 / 1024:.2f} MB  {path.name}")
+        return
+
+    still = ROOT / "public/properties/la-demure/02c.webp"
+    still_jpg = SRC / "residence-la-demure.jpg"
+    SRC.mkdir(parents=True, exist_ok=True)
+    run(
+        [
+            "/usr/bin/sips",
+            "-s",
+            "format",
+            "jpeg",
+            "-s",
+            "formatOptions",
+            "90",
+            str(still),
+            "--out",
+            str(still_jpg),
+        ]
     )
 
-    lanes = SRC / "lanes-2592-1080.mp4"
-    if not lanes.exists():
-        src = candidates / "2592-1080.mp4"
-        if src.exists():
-            lanes.write_bytes(src.read_bytes())
-        else:
-            curl("https://assets.mixkit.co/videos/2592/2592-1080.mp4", lanes)
-
-    # Slight zoom crops overhead wires while keeping façades and the lane.
-    lanes_vf = (
-        "scale=2880:1620:flags=lanczos,"
-        "crop=1920:1080:480:540,"
-        "eq=saturation=1.04:gamma=1.02:contrast=1.03,"
+    # Slow Ken Burns over original villa photography — not a street/travel film.
+    residence_vf = (
+        "scale=2880:-2:flags=lanczos,"
+        "zoompan=z='min(1.12,1+0.00038*on)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=305:s=1920x1080:fps=25,"
+        "eq=saturation=1.03:gamma=1.02:contrast=1.02,"
+        "unsharp=5:5:0.4:5:5:0.0,"
         "format=yuv420p"
     )
-    lanes_mobile_vf = (
-        "scale=1920:1080:flags=lanczos,"
-        "crop=1280:720:320:360,"
-        "eq=saturation=1.04:gamma=1.02:contrast=1.03,"
+    residence_mobile_vf = (
+        "scale=2160:-2:flags=lanczos,"
+        "zoompan=z='min(1.14,1+0.00042*on)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=305:s=1080x1920:fps=25,"
+        "eq=saturation=1.03:gamma=1.02:contrast=1.02,"
+        "unsharp=5:5:0.4:5:5:0.0,"
         "format=yuv420p"
     )
-    encode_mp4(str(lanes), OUT / "goa-lanes.mp4", lanes_vf)
-    encode_mp4(str(lanes), OUT / "goa-lanes-mobile.mp4", lanes_mobile_vf)
-    encode_webm(OUT / "goa-lanes.mp4", OUT / "goa-lanes.webm")
-    poster(str(OUT / "goa-lanes.mp4"), POSTER / "goa-lanes-poster.webp", "scale=1920:1080:flags=lanczos", seek="00:00:02")
-    poster(
+    ffmpeg(
+        "-loop",
+        "1",
+        "-framerate",
+        "25",
+        "-i",
+        str(still_jpg),
+        "-t",
+        "12.2",
+        "-vf",
+        residence_vf,
+        "-an",
+        "-c:v",
+        "libx264",
+        "-preset",
+        "medium",
+        "-crf",
+        "26",
+        "-maxrate",
+        "4M",
+        "-bufsize",
+        "8M",
+        "-pix_fmt",
+        "yuv420p",
+        "-movflags",
+        "+faststart",
         str(OUT / "goa-lanes.mp4"),
+    )
+    ffmpeg(
+        "-loop",
+        "1",
+        "-framerate",
+        "25",
+        "-i",
+        str(still_jpg),
+        "-t",
+        "12.2",
+        "-vf",
+        residence_mobile_vf,
+        "-an",
+        "-c:v",
+        "libx264",
+        "-preset",
+        "medium",
+        "-crf",
+        "26",
+        "-maxrate",
+        "2.4M",
+        "-bufsize",
+        "4.8M",
+        "-pix_fmt",
+        "yuv420p",
+        "-movflags",
+        "+faststart",
+        str(OUT / "goa-lanes-mobile.mp4"),
+    )
+    encode_webm(OUT / "goa-lanes.mp4", OUT / "goa-lanes.webm")
+    poster(str(OUT / "goa-lanes.mp4"), POSTER / "goa-lanes-poster.webp", "scale=1920:1080:flags=lanczos", seek="00:00:04")
+    poster(
+        str(OUT / "goa-lanes-mobile.mp4"),
         POSTER / "goa-lanes-poster-mobile.webp",
-        "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920",
-        seek="00:00:02",
+        "scale=1080:1920:flags=lanczos",
+        seek="00:00:04",
     )
 
     for path in sorted(OUT.glob("*")):

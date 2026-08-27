@@ -879,24 +879,26 @@ function RangeInput({
   const pct = span <= 0 ? 0 : ((value - min) / span) * 100;
 
   return (
-    <input
-      type="range"
-      className="emi-range mt-4"
-      min={min}
-      max={max}
-      step={step}
-      value={value}
-      aria-label={label}
-      aria-valuetext={valuetext}
-      style={{
-        backgroundImage: `linear-gradient(to right, var(--color-brass) ${pct}%, color-mix(in srgb, var(--color-ink) 12%, transparent) ${pct}%)`,
-        backgroundSize: "100% 3px",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-      }}
-      onChange={(event) => onChange(Number(event.target.value))}
-      {...dragBind}
-    />
+    <div className="relative mt-4 h-[22px] overflow-visible">
+      <input
+        type="range"
+        className="emi-range absolute inset-x-0 top-[9.5px]"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        aria-label={label}
+        aria-valuetext={valuetext}
+        style={{
+          backgroundImage: `linear-gradient(to right, var(--color-brass) ${pct}%, color-mix(in srgb, var(--color-ink) 12%, transparent) ${pct}%)`,
+          backgroundSize: "100% 3px",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        }}
+        onChange={(event) => onChange(Number(event.target.value))}
+        {...dragBind}
+      />
+    </div>
   );
 }
 

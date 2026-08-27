@@ -57,9 +57,9 @@ Edit `lib/config.ts`:
 
 Helpers in `lib/whatsapp.ts` build personalised `wa.me` links. The default enquiry link is:
 
-`https://wa.me/917057860921?text=Hello%20Pacific%20Properties%20Goa%2C%20I%20would%20like%20to%20know%20more%20about%20your%20properties.`
+`https://wa.me/917517723777?text=Hello%20Pacific%20Properties%2C%20I%20would%20like%20to%20enquire%20about%20your%20properties%20in%20Goa.`
 
-Property pages use: *Hello Pacific Properties Goa, I would like more details about {title} in {location}.*
+Property pages use: *Hello Pacific Properties, I would like to enquire about {title}.*
 
 All external links open with `target="_blank"` and `rel="noopener noreferrer"`.
 
@@ -124,16 +124,9 @@ To replace the artwork:
 
 Edit **`lib/config.ts` → `siteConfig.credentials.reraRegistrationNumber`**.
 
-```ts
-credentials: {
-  // TODO(client): paste the verified Goa RERA registration number here.
-  reraRegistrationNumber: "",
-}
-```
+The current Goa RERA number is `AGGO06180071` (from the official business card).
 
-- Leave `""` until the client supplies a number **in writing**.
-- When a real value is present, the site shows `RERA Registration No. [NUMBER]` on the home credentials band and in compact trust lines, and adds it to Organisation / RealEstateAgent JSON-LD plus a `rera:registrationNumber` meta tag.
-- While empty, copy stays **“RERA-Registered Real Estate Agent”** with no fabricated number.
+- The site shows `RERA Registration No. [NUMBER]` on the home credentials band and in compact trust lines, and adds it to Organisation / RealEstateAgent JSON-LD plus a `rera:registrationNumber` meta tag.
 
 Do not add official GAR, NAR-India, or RERA logos unless the client provides licensed assets. The site uses neutral line marks only.
 ---

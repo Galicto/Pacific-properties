@@ -1,4 +1,4 @@
-import { areas } from "@/data/areas";
+import { operationAreas, areasOfOperationCopy } from "@/data/operations";
 import { FooterCtaSpace } from "@/components/layout/MobileCtaBar";
 import { FooterCredentials } from "@/components/brand/TrustLines";
 import { Logo } from "@/components/brand/Logo";
@@ -27,6 +27,38 @@ export function Footer() {
             A boutique brokerage for considered property in Goa — villas,
             residences, land and commercial space, represented with discretion.
           </p>
+          <div className="mt-8 max-w-sm text-sm leading-relaxed text-ivory/70">
+            <p className="font-medium text-ivory">{siteConfig.principal.name}</p>
+            <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-brass-soft">
+              {siteConfig.principal.role}
+            </p>
+            <p className="mt-4">
+              {siteConfig.address.line1}
+              <br />
+              {siteConfig.address.line2}
+              <br />
+              {siteConfig.address.line3}
+            </p>
+            <p className="mt-4">
+              <a
+                href={siteConfig.phoneHref}
+                className="transition-colors hover:text-ivory"
+              >
+                {siteConfig.phoneDisplay}
+              </a>
+            </p>
+            <p>
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="break-all transition-colors hover:text-ivory"
+              >
+                {siteConfig.email}
+              </a>
+            </p>
+            <p className="mt-3 text-[11px] uppercase tracking-[0.16em] text-ivory/50">
+              Goa RERA {siteConfig.credentials.reraRegistrationNumber}
+            </p>
+          </div>
         </div>
 
         <div className="lg:col-span-3">
@@ -49,13 +81,13 @@ export function Footer() {
 
         <div className="lg:col-span-4">
           <p className="text-[11px] uppercase tracking-[0.22em] text-brass-soft">
-            Areas
+            Areas of Operation
           </p>
-          <ul className="mt-5 grid grid-cols-2 gap-2.5">
-            {areas.map((area) => (
-              <li key={area.slug}>
+          <ul className="mt-5 space-y-1">
+            {operationAreas.map((area) => (
+              <li key={area.id}>
                 <Link
-                  href={`/collection?area=${area.slug}`}
+                  href={area.href}
                   className="flex min-h-11 items-center text-sm text-ivory/70 transition-colors hover:text-ivory"
                 >
                   {area.name}
@@ -63,6 +95,9 @@ export function Footer() {
               </li>
             ))}
           </ul>
+          <p className="mt-4 max-w-sm text-[13px] leading-relaxed text-ivory/50">
+            {areasOfOperationCopy}
+          </p>
           <div className="mt-8 flex items-center gap-4">
             <a
               href={siteConfig.linkedinUrl}

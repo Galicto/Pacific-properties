@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/Button";
 import { IconCheck, IconShare } from "@/components/ui/Icons";
 import { propertyWhatsAppUrl } from "@/lib/whatsapp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function PropertyActions({
   title,
@@ -21,7 +21,19 @@ export function PropertyActions({
   price?: number | null;
 }) {
   const [copied, setCopied] = useState(false);
+  const [pastTitle, setPastTitle] = useState(false);
   const whatsapp = propertyWhatsAppUrl(title, area, enquiryText);
+
+  useEffect(() => {
+    const heading = document.querySelector("h1");
+    if (!heading) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setPastTitle(!entry.isIntersecting),
+      { threshold: 0, rootMargin: "-96px 0px 0px 0px" },
+    );
+    io.observe(heading);
+    return () => io.disconnect();
+  }, []);
 
   const share = async () => {
     const url =
@@ -51,7 +63,14 @@ export function PropertyActions({
   return (
     <div className="sticky top-[calc(4rem+env(safe-area-inset-top))] z-30 -mx-7 mb-14 border-y border-ink/10 bg-ivory px-7 py-3.5 print:hidden sm:top-[calc(5rem+env(safe-area-inset-top))] sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0">
       <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-3">
-        <p className="hidden truncate font-serif text-xl lg:block">{title}</p>
+        <p
+          className={`hidden truncate font-serif text-xl lg:block ${
+            pastTitle ? "opacity-100" : "pointer-events-none opacity-0"
+          }`}
+          aria-hidden={!pastTitle}
+        >
+          {title}
+        </p>
         <div className="flex w-full min-w-0 items-center gap-2 sm:gap-3 lg:w-auto lg:justify-end">
           <ButtonLink
             href={`/contact?property=${slug}`}

@@ -1,6 +1,7 @@
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
+import { consultationWhatsAppUrl } from "@/lib/whatsapp";
 
 export function ConsultationCta() {
   return (
@@ -17,9 +18,17 @@ export function ConsultationCta() {
             Tell us what you are looking for. We will return with opportunities
             worth your time.
           </p>
-          <div className="mt-10">
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
             <ButtonLink href="/contact" variant="primary" className="w-full sm:w-auto">
               Start a Private Enquiry
+            </ButtonLink>
+            <ButtonLink
+              href={consultationWhatsAppUrl}
+              variant="ghost"
+              external
+              className="w-full sm:w-auto"
+            >
+              WhatsApp
             </ButtonLink>
           </div>
         </Reveal>

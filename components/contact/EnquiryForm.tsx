@@ -193,14 +193,14 @@ export function EnquiryForm({
             }
           >
             <option value="">Any / not sure</option>
+            <option value="North Goa">North Goa</option>
+            <option value="South Goa">South Goa</option>
+            <option value="Across Goa">Across Goa</option>
             {areas.map((area) => (
               <option key={area.slug} value={area.name}>
                 {area.name}
               </option>
             ))}
-            <option value="North Goa">North Goa</option>
-            <option value="Central Goa">Central Goa</option>
-            <option value="South Goa">South Goa</option>
           </select>
         </Field>
       </div>

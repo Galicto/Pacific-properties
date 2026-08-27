@@ -170,21 +170,23 @@ export function HeroFilm({ videos }: { videos: readonly HeroMedia[] }) {
                 aria-selected={i === index}
                 aria-label={video.label}
                 onClick={() => select(i)}
-                className="relative h-11 min-w-11 overflow-hidden"
+                className="relative flex h-11 min-w-11 items-center overflow-hidden"
               >
-                <span className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-ivory/25" />
-                <span
-                  key={`${video.id}-${i === index ? index : "idle"}-${motion}`}
-                  className={cn(
-                    "absolute left-0 top-1/2 h-px w-10 origin-left bg-ivory",
-                    i === index && motion && "hero-progress-bar",
-                  )}
-                  style={{
-                    transform: `translateY(-50%) scaleX(${
-                      i < index || (i === index && !motion) ? 1 : i === index ? 0.04 : 0
-                    })`,
-                  }}
-                />
+                <span className="absolute inset-x-0 top-1/2 h-px w-10 -translate-y-1/2 bg-ivory/25" />
+                <span className="absolute inset-x-0 top-1/2 w-10 -translate-y-1/2">
+                  <span
+                    key={`${video.id}-${i === index ? index : "idle"}-${motion}`}
+                    className={cn(
+                      "block h-px w-10 origin-left bg-ivory",
+                      i === index && motion && "hero-progress-bar",
+                    )}
+                    style={{
+                      transform: `scaleX(${
+                        i < index || (i === index && !motion) ? 1 : i === index ? 0.04 : 0
+                      })`,
+                    }}
+                  />
+                </span>
               </button>
             ))}
           </div>
@@ -192,8 +194,9 @@ export function HeroFilm({ videos }: { videos: readonly HeroMedia[] }) {
       </div>
 
       <p className="sr-only">
-        Coast and neighbourhood films from Mixkit, used under the Mixkit Stock
-        Video Free License.
+        Coast and residence films. The coastline is Mixkit stock under the
+        Mixkit Stock Video Free License. The residence film is original
+        villa photography from the collection.
       </p>
     </div>
   );
@@ -246,7 +249,7 @@ function HeroClip({
     <video
       ref={ref}
       className={cn(
-        "absolute inset-0 h-full w-full object-cover",
+        "hero-film-clip absolute inset-0 h-full w-full object-cover",
         active && on ? "opacity-100" : "opacity-0",
       )}
       style={{
@@ -260,6 +263,8 @@ function HeroClip({
       loop
       controls={false}
       disablePictureInPicture
+      disableRemotePlayback
+      controlsList="nodownload nofullscreen noremoteplayback"
       preload="metadata"
       poster={narrow ? video.mobilePoster : video.poster}
       aria-hidden={!active}

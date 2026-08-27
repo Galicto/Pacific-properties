@@ -43,8 +43,8 @@ export const areas: Area[] = [
     descriptor: "Waterfront villas and a gated four-bedroom collection.",
     longer:
       "Pilerne, North Goa. Current inventory includes waterfront villas ready to move, and a gated collection of four-bedroom villas with private outdoor space.",
-    image: "/properties/pilerne-villa-collection/24.webp",
-    imageAlt: "Private pool and garden at the Pilerne villa collection.",
+    image: "/properties/pilerne-villa-collection/hero.webp",
+    imageAlt: "Principal living interior of a villa in Pilerne, North Goa.",
   },
   {
     slug: "saipem",
@@ -53,8 +53,8 @@ export const areas: Area[] = [
     descriptor: "A private four-bedroom villa opportunity in North Goa.",
     longer:
       "Saipem, North Goa. A four-bedroom villa listing; approved photography is available privately on request.",
-    image: "/properties/_fallbacks/preview.webp",
-    imageAlt: "Saipem, North Goa — private preview available on request.",
+    image: "/properties/la-demure/04.webp",
+    imageAlt: "Saipem, North Goa — private collection, available on request.",
   },
   {
     slug: "reis-magos",
@@ -63,8 +63,8 @@ export const areas: Area[] = [
     descriptor: "Villas under construction, with possession expected in April 2026.",
     longer:
       "Reis Magos, North Goa. A limited collection of 3.5-bedroom villas, currently under construction, with possession expected in April 2026.",
-    image: "/properties/reis-magos-villas/53.webp",
-    imageAlt: "Construction progress at villas in Reis Magos, North Goa.",
+    image: "/properties/reis-magos-villas/54.webp",
+    imageAlt: "Villas taking shape among palms in Reis Magos, North Goa.",
   },
   {
     slug: "verna",
@@ -73,8 +73,8 @@ export const areas: Area[] = [
     descriptor: "Warehouse space for logistics, storage and distribution.",
     longer:
       "Verna, Goa. Flexible commercial warehouse space from 5,000 to 113,000 square feet.",
-    image: "/properties/verna-warehouse/61.webp",
-    imageAlt: "Access to warehouse space in Verna, Goa.",
+    image: "/properties/verna-warehouse/hero.webp",
+    imageAlt: "Warehouse space in Verna, Goa.",
   },
   {
     slug: "ucassaim",
@@ -83,8 +83,8 @@ export const areas: Area[] = [
     descriptor: "Old-settlement land, close to Mapusa, with 6-metre road access.",
     longer:
       "Ucassaim, North Goa. An old-settlement land holding of 4,625 square metres, close to Mapusa.",
-    image: "/properties/_fallbacks/land.webp",
-    imageAlt: "Ucassaim, North Goa — private land dossier available on request.",
+    image: "/properties/ucassaim-land/hero.webp",
+    imageAlt: "Ucassaim, North Goa — old-settlement land, available on request.",
   },
   {
     slug: "dona-paula",
@@ -94,8 +94,8 @@ export const areas: Area[] = [
       "Residences, a penthouse and villas, with possession in 2027 and 2029.",
     longer:
       "Dona Paula, Goa. Current inventory includes 3 BHK and 4 BHK residences and a 4 BHK penthouse with possession expected in December 2029, together with four-bedroom villas, a three-bedroom penthouse and a three-bedroom apartment with possession expected in August 2027.",
-    image: "/properties/_fallbacks/plans.webp",
-    imageAlt: "Dona Paula, Goa — private preview and detailed plans available on request.",
+    image: "/properties/ocean-cloud/hero.webp",
+    imageAlt: "Dona Paula, Goa — coastal residences available on request.",
   },
   {
     slug: "guirim",
@@ -104,8 +104,8 @@ export const areas: Area[] = [
     descriptor: "A restored Goan-Portuguese heritage villa.",
     longer:
       "Guirim, North Goa. Current inventory includes a fully furnished four-bedroom heritage villa on a private plot.",
-    image: "/properties/_fallbacks/preview.webp",
-    imageAlt: "Guirim, Goa — private preview available on request.",
+    image: "/images/contact-goa-villa.webp",
+    imageAlt: "Guirim, Goa — heritage villa collection available on request.",
   },
   {
     slug: "assagao",
@@ -114,8 +114,8 @@ export const areas: Area[] = [
     descriptor: "Prime land with main-road access in North Goa.",
     longer:
       "Assagao, North Goa. Current inventory includes 3,850 sqm of land with main-road access and an open-field outlook.",
-    image: "/properties/_fallbacks/land.webp",
-    imageAlt: "Assagao, North Goa — private land dossier available on request.",
+    image: "/properties/prime-land-assagao/hero.webp",
+    imageAlt: "Assagao, North Goa — prime land with an open-field outlook, available on request.",
   },
 ];
 

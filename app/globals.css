@@ -85,15 +85,21 @@ summary {
 
 @keyframes hero-progress {
   from {
-    transform: translateY(-50%) scaleX(0.04);
+    transform: scaleX(0.04);
   }
   to {
-    transform: translateY(-50%) scaleX(1);
+    transform: scaleX(1);
   }
 }
 
-.hero-progress-bar {
-  animation: hero-progress 12s linear forwards;
+.hero-film-clip::-webkit-media-controls,
+.hero-film-clip::-webkit-media-controls-enclosure,
+.hero-film-clip::-webkit-media-controls-panel,
+.hero-film-clip::-webkit-media-controls-timeline,
+.hero-film-clip::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -353,8 +359,9 @@ textarea {
   display: block;
   width: 100%;
   max-width: 100%;
-  height: 24px;
+  height: 3px;
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
   border-radius: 99px;
   background-color: transparent;
@@ -372,6 +379,7 @@ textarea {
 
 .emi-range::-webkit-slider-runnable-track {
   height: 3px;
+  border: none;
   border-radius: 99px;
   background: transparent;
 }
@@ -379,9 +387,10 @@ textarea {
 .emi-range::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
+  box-sizing: border-box;
   width: 22px;
   height: 22px;
-  margin-top: 0;
+  margin-top: -9.5px;
   border-radius: 99px;
   background: var(--color-brass);
   border: 2px solid var(--color-ink);
@@ -389,7 +398,22 @@ textarea {
   cursor: pointer;
 }
 
+.emi-range::-moz-range-track {
+  height: 3px;
+  border: none;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--color-ink) 12%, transparent);
+}
+
+.emi-range::-moz-range-progress {
+  height: 3px;
+  border: none;
+  border-radius: 99px;
+  background: var(--color-brass);
+}
+
 .emi-range::-moz-range-thumb {
+  box-sizing: border-box;
   width: 22px;
   height: 22px;
   border-radius: 99px;

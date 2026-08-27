@@ -1,3 +1,4 @@
+import { operationAreas, areasOfOperationCopy } from "@/data/operations";
 import { Logo } from "@/components/brand/Logo";
 import { CredentialsContactLine } from "@/components/brand/TrustLines";
 import { EnquiryForm } from "@/components/contact/EnquiryForm";
@@ -7,7 +8,7 @@ import { InstagramIcon, LinkedInIcon } from "@/components/ui/SocialIcons";
 import { LazyMap } from "@/components/media/LazyMap";
 import { getPropertyBySlug } from "@/data/properties";
 import { siteConfig } from "@/lib/config";
-import { defaultWhatsAppUrl, propertyWhatsAppUrl } from "@/lib/whatsapp";
+import { consultationWhatsAppUrl, propertyWhatsAppUrl } from "@/lib/whatsapp";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,11 +17,10 @@ export const metadata: Metadata = {
     "Start a confidential conversation with Pacific Properties Goa — buying, selling, investing, or simply exploring Goa.",
 };
 
-const serviceAreas = [
-  { name: "North Goa", note: "Salvador, Aldona, Pilerne, Saipem, Reis Magos, Ucassaim, Guirim, Assagao." },
-  { name: "Central Goa", note: "Dona Paula." },
-  { name: "South Goa", note: "Verna — warehouse and commercial space." },
-];
+const serviceAreas = operationAreas.map((area) => ({
+  name: area.name,
+  note: area.note,
+}));
 
 export default async function ContactPage({
   searchParams,
@@ -38,7 +38,7 @@ export default async function ContactPage({
         property.location,
         property.whatsAppEnquiryText,
       )
-    : defaultWhatsAppUrl;
+    : consultationWhatsAppUrl;
 
   return (
     <>
@@ -100,9 +100,9 @@ export default async function ContactPage({
         <div className="relative min-h-[55vh] bg-forest lg:min-h-full">
           <LazyMap
             src={siteConfig.mapEmbedUrl}
-            title="Pacific Properties Goa — Assagao, North Goa"
+            title="Pacific Properties Goa — St. Inez, Panjim"
             previewSrc={siteConfig.mapPreview}
-            previewAlt="Map of Assagao, Bardez, North Goa"
+            previewAlt="Map of Esmeralda Casa Do Povo, St. Inez, Panjim, Goa"
             mapsUrl={siteConfig.mapPlaceUrl}
             className="absolute inset-0"
             heightClass="h-full min-h-[55vh] lg:min-h-full"
@@ -115,20 +115,31 @@ export default async function ContactPage({
             </p>
             <p className="mt-3 font-serif text-2xl">{siteConfig.companyName}</p>
             <p className="mt-2 text-sm text-ivory/70">
-              {siteConfig.address.display}
+              {siteConfig.principal.name}
+              <span className="block text-[11px] uppercase tracking-[0.16em] text-ivory/45">
+                {siteConfig.principal.role}
+              </span>
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-ivory/70">
+              {siteConfig.address.line1}
+              <br />
+              {siteConfig.address.line2}
+              <br />
+              {siteConfig.address.line3}
             </p>
             <p className="mt-4 text-sm text-ivory/70">{siteConfig.email}</p>
             <p className="text-sm text-ivory/70">{siteConfig.phoneDisplay}</p>
+            <p className="mt-3 text-[11px] uppercase tracking-[0.16em] text-ivory/50">
+              Goa RERA {siteConfig.credentials.reraRegistrationNumber}
+            </p>
           </div>
         </div>
       </section>
 
       <Container className="py-20">
-        <h2 className="font-serif text-3xl">Service areas</h2>
-        <p className="mt-3 text-sm text-ink-muted">
-          By appointment across Goa. New launches appear in the collection;
-          exact localities are confirmed with you when they are not yet
-          verified for publication.
+        <h2 className="font-serif text-3xl">Areas of Operation</h2>
+        <p className="mt-3 max-w-2xl text-sm text-ink-muted">
+          {areasOfOperationCopy}
         </p>
         <div className="mt-10 grid gap-8 sm:grid-cols-3">
           {serviceAreas.map((area) => (
