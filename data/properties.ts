@@ -261,6 +261,7 @@ const DEMURE = "la-demure";
 const SALVADOR_APT = "3-bhk-apartments-salvador";
 const SALVADOR_VILLA_2803 = "private-pool-villa-salvador-2803-sq-ft";
 const SALVADOR_VILLA_3317 = "private-pool-villa-salvador-3317-sq-ft";
+const GUIRIM = "heritage-villa-guirim";
 
 const CONFIRM =
   "Prices and availability are subject to confirmation.";
@@ -1992,16 +1993,16 @@ export const properties: Property[] = [
     mediaFallbackText: "Available on Request",
     nearbyHighlights: [],
     mapEmbedUrl: mapsEmbedUrl("Pilerne, Goa, India"),
-    relatedIds: [PILERNE, "heritage-villa-guirim", REIS],
+    relatedIds: [PILERNE, GUIRIM, REIS],
     ctaLabel: "Request Private Details",
     ...interestCopy("I'm interested in the Waterfront Villas in Pilerne."),
   }),
 
   listing({
-    id: "heritage-villa-guirim",
-    slug: "heritage-villa-guirim",
+    id: GUIRIM,
+    slug: GUIRIM,
     title: "Fully Furnished Heritage Villa in Guirim",
-    location: "Guirim, Goa",
+    location: "Guirim, North Goa",
     propertyType: "Villa",
     purpose: "For Sale",
     category: "villa",
@@ -2016,45 +2017,108 @@ export const properties: Property[] = [
     area: "Guirim",
     areaSlug: "guirim",
     region: "North Goa",
-    builtUpArea: "464.5 sqm",
-    landArea: "975.5 sqm",
+    builtUpArea: null,
+    landArea: null,
     plotArea: null,
     areaRange: null,
     communitySize: null,
     roadAccess: null,
-    parking: null,
+    parking: "Private parking",
     possession: null,
     furnishing: "Fully furnished",
     reraNumber: null,
-    amenities: [],
-    description:
-      "A restored Goan-Portuguese heritage residence in Guirim, Goa. Fully furnished 4 BHK, on 975.5 sqm of land, with 464.5 sqm built-up area.",
-    shortDescription:
-      "A fully furnished 4 BHK restored Goan-Portuguese heritage villa in Guirim, Goa.",
-    longDescription: [
-      "A restored Goan-Portuguese heritage residence in Guirim, Goa.",
-      "The villa is a fully furnished 4 BHK, standing on 975.5 sqm of land, with a built-up area of 464.5 sqm.",
+    amenities: [
+      "Private swimming pool",
+      "Internal courtyard",
+      "Spacious verandahs",
+      "Private parking",
     ],
-    features: [],
-    heroImage: {
-      src: "/properties/heritage-villa-guirim/original_hero.webp",
-      alt: "Fully Furnished Heritage Villa in Guirim",
-      kind: "fallback" as const,
-    },
+    description:
+      "A fully furnished heritage villa in Guirim, North Goa, with Goan-Portuguese character, a private swimming pool and generous outdoor living.",
+    shortDescription:
+      "A fully furnished heritage villa in Guirim with private pool, courtyard and verandahs.",
+    longDescription: [
+      "A fully furnished heritage villa in Guirim, North Goa, offered with Goan-Portuguese character and private outdoor living.",
+      "The residence includes a private swimming pool, an internal courtyard, spacious verandahs and private parking within a peaceful residential setting.",
+      "Detailed specifications available on request.",
+      CONFIRM,
+    ],
+    features: [
+      "Goan-Portuguese heritage character",
+      "Private swimming pool",
+      "Internal courtyard",
+      "Spacious verandahs and outdoor areas",
+      "Private parking",
+      "Peaceful residential setting",
+    ],
+    heroImage: still(
+      GUIRIM,
+      "01-exterior.webp",
+      "Fully furnished heritage villa exterior in Guirim, Goa.",
+    ),
     media: [
-      {
-        src: "/properties/heritage-villa-guirim/original_hero.webp",
-        alt: "Fully Furnished Heritage Villa in Guirim",
-        kind: "fallback" as const,
-      },
+      still(
+        GUIRIM,
+        "01-exterior.webp",
+        "Fully furnished heritage villa exterior in Guirim, Goa.",
+      ),
+      still(
+        GUIRIM,
+        "02-pool.webp",
+        "Private swimming pool at a heritage villa in Guirim, Goa.",
+      ),
+      still(
+        GUIRIM,
+        "02-verandah.webp",
+        "Spacious heritage verandah with timber ceiling at a villa in Guirim, Goa.",
+      ),
+      still(
+        GUIRIM,
+        "02-bedroom.webp",
+        "Fully furnished heritage villa bedroom interior in Guirim, Goa.",
+      ),
+      still(
+        GUIRIM,
+        "06-living.webp",
+        "Heritage villa living room with stained glass in Guirim, Goa.",
+      ),
+      still(
+        GUIRIM,
+        "06-dining.webp",
+        "Heritage villa dining room with patterned tiles in Guirim, Goa.",
+      ),
+      still(
+        GUIRIM,
+        "06-foyer.webp",
+        "Heritage villa foyer opening to courtyard in Guirim, Goa.",
+      ),
+      still(
+        GUIRIM,
+        "06-kitchen.webp",
+        "Heritage villa kitchen interior in Guirim, Goa.",
+      ),
+      still(
+        GUIRIM,
+        "06-staircase.webp",
+        "Wooden staircase at a heritage villa in Guirim, Goa.",
+      ),
+      still(
+        GUIRIM,
+        "06-entertainment.webp",
+        "Entertainment den with timber ceiling at a heritage villa in Guirim, Goa.",
+      ),
     ],
     featured: false,
-    mediaStatus: "needs-approved-photography",
-    mediaFallbackText: "Private Collection",
+    mediaStatus: "ready",
+    mediaFallbackText: null,
     nearbyHighlights: [],
-    mapEmbedUrl: mapsEmbedUrl("Guirim, Goa, India"),
-    relatedIds: [ALDONA, "waterfront-villas-pilerne", PILERNE],
+    mapEmbedUrl: mapsEmbedUrl("Guirim, North Goa, India"),
+    relatedIds: [ALDONA, PILERNE, "waterfront-villas-pilerne"],
     ctaLabel: "Request Private Viewing",
+    availabilityDisclaimer:
+      "Detailed specifications available on request. Prices and availability are subject to confirmation.",
+    whatsAppEnquiryText:
+      "Hello Pacific Properties, I would like to enquire about the Fully Furnished Heritage Villa in Guirim.",
     ...interestCopy(
       "I'm interested in the Fully Furnished Heritage Villa in Guirim.",
     ),

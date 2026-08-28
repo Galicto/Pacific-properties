@@ -101,11 +101,12 @@ export const areas: Area[] = [
     slug: "guirim",
     name: "Guirim",
     region: "North Goa",
-    descriptor: "A restored Goan-Portuguese heritage villa.",
+    descriptor:
+      "A fully furnished heritage villa in a peaceful residential setting.",
     longer:
-      "Guirim, North Goa. Current inventory includes a fully furnished four-bedroom heritage villa on a private plot.",
-    image: "/properties/heritage-villa-guirim/hero.webp",
-    imageAlt: "Guirim, Goa — heritage villa collection available on request.",
+      "Guirim, North Goa. A discreet private offering — a fully furnished heritage villa with private pool and outdoor living.",
+    image: "/properties/heritage-villa-guirim/01-exterior.webp",
+    imageAlt: "Fully furnished heritage villa in Guirim, North Goa.",
   },
   {
     slug: "assagao",

@@ -1,20 +1,21 @@
 @import "tailwindcss";
 
 @theme inline {
+  /* ── Brand Palette: Dark Teal + Golden Amber ── */
   --color-ivory: #ffffff;
-  --color-ivory-deep: #F7F7F7;
-  --color-mist: #E4E4E4;
-  --color-sand: #D1D5DB;
-  --color-ink: #161E2D;
-  --color-ink-soft: #1C2536;
-  --color-ink-muted: #5C6368;
-  --color-brass: #1563DF;
-  --color-brass-soft: #6E9EF5;
-  --color-tide: #161E2D;
-  --color-forest: #1A2332;
-  --color-olive: #6B7280;
-  --color-sea: #2563EB;
-  --color-sea-soft: #60A5FA;
+  --color-ivory-deep: #F4F6F6;
+  --color-mist: #DAE0E0;
+  --color-sand: #C2CBCB;
+  --color-ink: #1A2F30;
+  --color-ink-soft: #213E40;
+  --color-ink-muted: #5A7374;
+  --color-brass: #D4A843;
+  --color-brass-soft: #E4C478;
+  --color-tide: #1D3B3D;
+  --color-forest: #182F31;
+  --color-olive: #6B8082;
+  --color-sea: #2D5558;
+  --color-sea-soft: #4D7578;
   --font-serif: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
@@ -42,8 +43,8 @@ body {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--color-brass) 25%, var(--color-ivory));
-  color: #ffffff;
+  background: color-mix(in srgb, var(--color-brass) 30%, var(--color-ivory));
+  color: var(--color-ink);
 }
 
 :focus-visible {
@@ -435,8 +436,8 @@ textarea {
 
   .emi-result {
     background: white !important;
-    color: #161E2D !important;
-    border: 1px solid #161E2D !important;
+    color: #1A2F30 !important;
+    border: 1px solid #1A2F30 !important;
     box-shadow: none !important;
     position: static !important;
     break-inside: avoid;
@@ -445,6 +446,6 @@ textarea {
   .emi-result dt,
   .emi-result .text-ivory\/55,
   .emi-result .text-ivory\/65 {
-    color: #5C6368 !important;
+    color: #5A7374 !important;
   }
 }

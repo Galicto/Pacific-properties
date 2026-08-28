@@ -1,4 +1,28 @@
-Guirim listing still — Portuguese-Goan heritage lane atmosphere.
-Derived from the existing Guirim area still / goa-lanes poster (the only
-Guirim-mapped heritage visual in the library). Not verified site photography
-of the villa interior; mediaStatus remains needs-approved-photography.
+Guirim heritage villa — internal asset notes (not for public display).
+
+Source:
+- Private brochure PDF archived as brochure-source.pdf (internal only).
+- Public stills extracted via scripts/process-guirim-media.py.
+
+Published public stills (WebP):
+- 01-exterior — dusk exterior (footer branding cropped out)
+- 02-pool, 02-bedroom, 02-verandah — page-2 photo panel
+- 06-living, 06-dining, 06-foyer, 06-kitchen, 06-staircase, 06-entertainment — page-6 grid
+
+Excluded from public site:
+- Brochure cover/footer branding
+- Builder/developer name, logo and contact page
+- Floor-plan pages
+- Brochure text panels and room labels (trimmed where possible)
+
+Confidentiality:
+- No builder/developer name, brochure PDF, logo or source project name on site.
+- Public title: Fully Furnished Heritage Villa in Guirim.
+
+Area figures:
+- Source materials contain conflicting built-up and land measurements.
+- CONFIRM final approved figures with the client before publishing area values.
+- Until then: "Detailed specifications available on request."
+
+Price:
+- ₹13 Cr retained from prior approved property data.

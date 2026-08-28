@@ -137,10 +137,8 @@ export function Header() {
 
   const linkClass = (active: boolean) =>
     cn(
-      "inline-flex min-h-11 items-center text-[11px] font-medium uppercase tracking-[0.2em] transition-colors duration-300",
-      overMedia
-        ? cn("text-ivory/80 hover:text-ivory", active && "text-ivory")
-        : cn("text-ink/70 hover:text-ink", active && "text-ink"),
+      "inline-flex min-h-11 items-center text-[11px] font-medium uppercase tracking-[0.2em] text-ivory/80 transition-colors duration-300 hover:text-ivory",
+      active && "text-ivory",
     );
 
   const motionClass = reduceMotion
@@ -153,13 +151,11 @@ export function Header() {
         "fixed inset-x-0 top-0 z-50 border-b pt-[env(safe-area-inset-top)] transition-colors duration-300",
         overMedia
           ? "border-transparent bg-transparent"
-          : "border-ink/8 bg-white/95 backdrop-blur-lg shadow-sm",
+          : "border-ivory/10 bg-ink/95",
       )}
     >
       <div className="mx-auto flex h-16 min-w-0 max-w-[1400px] items-center justify-between gap-3 px-4 sm:h-20 sm:px-8 lg:px-12">
-        <span className={cn("transition-[filter] duration-300", !overMedia && "invert")}>
-          <Logo priority />
-        </span>
+        <Logo priority />
 
         <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary">
           <Link
@@ -198,8 +194,8 @@ export function Header() {
                   : "invisible translate-y-1 opacity-0",
               )}
             >
-              <div className={cn("border bg-white p-4 shadow-xl shadow-ink/8", overMedia ? "border-ivory/12" : "border-ink/8")}>
-                <p className={cn("px-3 text-[11px] uppercase tracking-[0.22em]", overMedia ? "text-ivory/50" : "text-ink-muted")}>
+              <div className="border border-ivory/12 bg-ink p-4 shadow-xl shadow-ink/40">
+                <p className="px-3 text-[11px] uppercase tracking-[0.22em] text-ivory/50">
                   Areas of Operation
                 </p>
                 <ul className="mt-2">
@@ -207,28 +203,17 @@ export function Header() {
                     <li key={area.id}>
                       <Link
                         href={area.href}
-                        className={cn(
-                          "block min-h-11 px-3 py-2.5 text-[13px] transition-colors",
-                          overMedia
-                            ? "text-ivory/80 hover:bg-ink-soft hover:text-ivory"
-                            : "text-ink-muted hover:bg-ivory-deep hover:text-ink",
-                        )}
+                        className="block min-h-11 px-3 py-2.5 text-[13px] text-ivory/80 transition-colors hover:bg-ink-soft hover:text-ivory"
                       >
                         <span className="block font-medium">{area.name}</span>
-                        <span className={cn(
-                          "mt-0.5 block text-[11px] leading-relaxed",
-                          overMedia ? "text-ivory/50" : "text-ink-muted/60",
-                        )}>
+                        <span className="mt-0.5 block text-[11px] leading-relaxed text-ivory/50">
                           {area.note}
                         </span>
                       </Link>
                     </li>
                   ))}
                 </ul>
-                <p className={cn(
-                  "mt-2 border-t px-3 pt-3 text-[11px] leading-relaxed",
-                  overMedia ? "border-ivory/10 text-ivory/45" : "border-ink/8 text-ink-muted/60",
-                )}>
+                <p className="mt-2 border-t border-ivory/10 px-3 pt-3 text-[11px] leading-relaxed text-ivory/45">
                   {areasOfOperationCopy}
                 </p>
               </div>
@@ -263,12 +248,7 @@ export function Header() {
           <button
             ref={menuButtonRef}
             type="button"
-            className={cn(
-              "flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-300 lg:hidden",
-              overMedia
-                ? "border-ivory/30 text-ivory hover:bg-ivory/10"
-                : "border-ink/20 text-ink hover:bg-ink/5",
-            )}
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/30 text-ivory transition-colors duration-300 hover:bg-ivory/10 lg:hidden"
             aria-expanded={open}
             aria-controls={menuId}
             aria-label={open ? "Close menu" : "Open menu"}

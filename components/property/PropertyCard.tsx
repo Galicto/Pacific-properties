@@ -52,6 +52,12 @@ function statusBadge(property: Property) {
   if (isSalvadorListing(property) && property.category === "villa") {
     return "Private Pool";
   }
+  if (
+    property.amenities.some((item) => /private pool/i.test(item)) ||
+    property.features.some((item) => /private pool/i.test(item))
+  ) {
+    return "Private Pool";
+  }
   if (isNewLaunch(property)) return "New Launch";
   if (property.status === "under-construction") return property.statusLabel;
   if (property.purpose === "For Rent") return "For Rent";
