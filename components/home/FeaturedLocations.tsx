@@ -26,7 +26,7 @@ export function FeaturedLocations() {
             <Reveal key={area.slug} delay={index * 0.05} className="flex h-full flex-col">
               <Link
                 href={`/collection?area=${area.slug}`}
-                className="group relative block h-full min-h-[22rem] overflow-hidden sm:min-h-0 sm:aspect-[4/5]"
+                className="group relative block h-full min-h-[22rem] overflow-hidden rounded-xl sm:min-h-0 sm:aspect-[4/5]"
               >
                 <SmartImage
                   src={area.image}

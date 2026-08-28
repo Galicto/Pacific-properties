@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { MobileCtaBar } from "@/components/layout/MobileCtaBar";
@@ -9,19 +9,10 @@ import { verifiedReraNumber } from "@/lib/credentials";
 import { localBusinessJsonLd } from "@/lib/schema";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  weight: ["500"],
-  variable: "--font-cormorant",
-  display: "swap",
-  preload: false,
-  adjustFontFallback: true,
-});
-
-const manrope = Manrope({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-manrope",
+  weight: ["400", "500", "700"],
+  variable: "--font-dm-sans",
   display: "swap",
   preload: true,
   adjustFontFallback: true,
@@ -81,7 +72,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#171715",
+  themeColor: "#161E2D",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -94,7 +85,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en-IN"
       suppressHydrationWarning
-      className={`${cormorant.variable} ${manrope.variable} h-full antialiased`}
+      className={`${dmSans.variable} h-full antialiased`}
     >
       <head>
         <script

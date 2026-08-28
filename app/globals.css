@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-ivory: #f7f4ee;
-  --color-ivory-deep: #efe8dc;
-  --color-mist: #e7e1d6;
-  --color-sand: #d9cdb8;
-  --color-ink: #171715;
-  --color-ink-soft: #2a2926;
-  --color-ink-muted: #5c594f;
-  --color-brass: #745e2c;
-  --color-brass-soft: #c4ae78;
-  --color-tide: #143234;
-  --color-forest: #2f3829;
-  --color-olive: #5c6554;
-  --color-sea: #3a4c5c;
-  --color-sea-soft: #5a6e7e;
-  --font-serif: var(--font-cormorant), ui-serif, Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --color-ivory: #ffffff;
+  --color-ivory-deep: #F7F7F7;
+  --color-mist: #E4E4E4;
+  --color-sand: #D1D5DB;
+  --color-ink: #161E2D;
+  --color-ink-soft: #1C2536;
+  --color-ink-muted: #5C6368;
+  --color-brass: #1563DF;
+  --color-brass-soft: #6E9EF5;
+  --color-tide: #161E2D;
+  --color-forest: #1A2332;
+  --color-olive: #6B7280;
+  --color-sea: #2563EB;
+  --color-sea-soft: #60A5FA;
+  --font-serif: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -42,8 +42,8 @@ body {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--color-brass) 35%, var(--color-ivory));
-  color: var(--color-ink);
+  background: color-mix(in srgb, var(--color-brass) 25%, var(--color-ivory));
+  color: #ffffff;
 }
 
 :focus-visible {
@@ -60,7 +60,7 @@ summary {
 
 .font-serif {
   font-family: var(--font-serif);
-  font-weight: 500;
+  font-weight: 700;
   font-feature-settings: "kern" 1, "liga" 1;
 }
 
@@ -76,7 +76,7 @@ summary {
     position: fixed;
     inset: 0;
     z-index: 20;
-    opacity: 0.04;
+    opacity: 0.02;
     mix-blend-mode: multiply;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
     background-size: 120px 120px;
@@ -435,8 +435,8 @@ textarea {
 
   .emi-result {
     background: white !important;
-    color: #171715 !important;
-    border: 1px solid #171715 !important;
+    color: #161E2D !important;
+    border: 1px solid #161E2D !important;
     box-shadow: none !important;
     position: static !important;
     break-inside: avoid;
@@ -445,6 +445,6 @@ textarea {
   .emi-result dt,
   .emi-result .text-ivory\/55,
   .emi-result .text-ivory\/65 {
-    color: #5c594f !important;
+    color: #5C6368 !important;
   }
 }

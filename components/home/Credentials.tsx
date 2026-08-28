@@ -64,7 +64,7 @@ export function Credentials() {
                 <Reveal delay={index * 0.06} className="flex h-full min-h-0 flex-col">
                   <article
                     className={cn(
-                      "flex h-full min-h-0 flex-col border border-ivory/12 bg-ink/35 p-5 shadow-[0_0_40px_rgba(196,174,120,0.06)]",
+                      "flex h-full min-h-0 flex-col rounded-xl border border-ivory/12 bg-ink/35 p-5 shadow-[0_0_40px_rgba(21,99,223,0.06)]",
                       "transition-transform duration-300 ease-[var(--ease-cinematic)] motion-reduce:transition-none",
                       "hover:-translate-y-1 motion-reduce:hover:translate-y-0",
                     )}
@@ -72,7 +72,7 @@ export function Credentials() {
                     <button
                       type="button"
                       onClick={() => setOpen(item)}
-                      className="group block w-full shrink-0 overflow-hidden border border-ivory/10 bg-[#f4f0e8] text-left"
+                      className="group block w-full shrink-0 overflow-hidden rounded-lg border border-ivory/10 bg-[#f4f0e8] text-left"
                       aria-label={`View certificate: ${item.title}`}
                     >
                       <SmartImage

@@ -88,7 +88,7 @@ function Set({
         <div
           key={`${decorative ? "dup" : "src"}-${image.src}-${index}`}
           className={cn(
-            "marquee-card relative h-[180px] shrink-0 overflow-hidden sm:h-[260px] md:h-[300px]",
+            "marquee-card relative h-[180px] shrink-0 overflow-hidden rounded-xl sm:h-[260px] md:h-[300px]",
             widths[image.width],
           )}
         >

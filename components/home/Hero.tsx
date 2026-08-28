@@ -14,8 +14,8 @@ export function Hero() {
 
       <HeroFilm video={heroFilm} />
 
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-tide/55 via-tide/10 to-ink/20" />
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-ink/25 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-ink/60 via-ink/15 to-ink/20" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-ink/30 via-transparent to-transparent" />
 
       <div className="relative z-[2] flex h-full flex-col justify-end px-7 pb-[calc(10.5rem+env(safe-area-inset-bottom))] pt-28 sm:px-8 sm:pb-28 lg:px-12 lg:pb-32">
         <p className="text-[10px] uppercase tracking-[0.28em] text-brass-soft sm:text-[11px] sm:tracking-[0.3em]">

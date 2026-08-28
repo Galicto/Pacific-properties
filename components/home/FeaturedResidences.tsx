@@ -70,7 +70,7 @@ export function FeaturedResidences() {
 
         <div className="mt-12 grid items-stretch gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="relative lg:col-span-7">
-            <div className="relative overflow-hidden rounded-[4px]" {...swipe}>
+            <div className="relative overflow-hidden rounded-xl" {...swipe}>
               {current ? (
                 <SmartImage
                   key={`${property.slug}-${imageIndex}`}
@@ -178,7 +178,7 @@ export function FeaturedResidences() {
               {property.shortDescription}
             </p>
 
-            <dl className="mt-10 grid grid-cols-2 gap-px border border-ink/10 bg-ink/10">
+            <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-ink/10 bg-ink/10">
               <Fact
                 label={
                   property.bedroomsDisplay

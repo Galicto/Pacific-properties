@@ -46,7 +46,7 @@ export function MobileCtaBar() {
           href={whatsAppUrlForPath(pathname)}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex h-12 min-w-12 shrink-0 items-center justify-center border border-ink/15 text-ink"
+          className="inline-flex h-12 min-w-12 shrink-0 items-center justify-center rounded-lg border border-ink/15 text-ink"
           aria-label="WhatsApp Pacific Properties on +91 7517723720"
         >
           <IconWhatsApp className="h-5 w-5" />

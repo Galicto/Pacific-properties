@@ -39,7 +39,7 @@ export function SmartImage({
   const isRemote = src.startsWith("http://") || src.startsWith("https://");
 
   return (
-    <div className={cn("relative overflow-hidden bg-ivory-deep", className)}>
+    <div className={cn("relative overflow-hidden rounded-lg bg-ivory-deep", className)}>
       <Image
         src={src}
         alt={alt}
